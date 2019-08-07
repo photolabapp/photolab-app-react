@@ -1,2 +1,10 @@
 node_modules/
-package-lock.js
+package-lock.json
+
+.gradle
+android/local.properties
+android/DS_Store
+build
+android/*.idea
+*.iml
+
