@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import api from '../../services/Api'
 import {
     StyleSheet,
     Text,
@@ -8,17 +9,30 @@ import {
     TouchableHighlight,
     Image,
     Alert
-} from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+} from 'react-native'
 
-export default class Login extends Component {
+export default class SignUp extends Component {
 
     constructor(props) {
         super(props);
         state = {
+            name: '',
             email: '',
             password: '',
         }
+    }
+
+    save = () => {
+        user = {name: this.state.name, email: this.state.email, password: this.state.password}
+        api.createUser(user)
+            .then(response => {
+                Alert.alert("success", "success");
+                console.log(response)
+            })
+            .catch(error => {
+                Alert.alert("error", "error");
+                console.log(error)
+            });
     }
 
     onClickListener = (viewId) => {
@@ -30,6 +44,14 @@ export default class Login extends Component {
             <View style={styles.container}>
                 <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }} 
                 style={{ width: 150, height: 30, marginBottom: 60 }} />
+
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.inputs}
+                        placeholder="nome:"
+                        placeholderTextColor="#787d82"
+                        underlineColorAndroid='transparent'
+                        onChangeText={(name) => this.setState({ name })} />
+                </View>
 
                 <View style={styles.inputContainer}>
                     <TextInput style={styles.inputs}
@@ -49,23 +71,19 @@ export default class Login extends Component {
                         onChangeText={(password) => this.setState({ password })} />
                 </View>
 
-                <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
-                    <Text style={styles.loginText}>Login</Text>
-                </TouchableHighlight>
-
-                <TouchableHighlight style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('SignUp')}>
-                    <Text style={styles.registerText}>Cadastrar</Text>
+                <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.save()}>
+                    <Text style={styles.loginText}>Cadastrar</Text>
                 </TouchableHighlight>
             </View>
-        );
+        )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: '#31383E',
     },
     inputContainer: {
