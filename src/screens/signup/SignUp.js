@@ -5,25 +5,34 @@ import {
     Text,
     View,
     TextInput,
-    Button,
     TouchableHighlight,
     Image,
     Alert
 } from 'react-native'
+import { throwStatement } from '@babel/types';
 
 export default class SignUp extends Component {
 
     constructor(props) {
         super(props);
-        state = {
+        this.state = {
             name: '',
             email: '',
             password: '',
+            cellPhone: '',
+            error: new Map()
         }
     }
 
     save = () => {
-        user = {name: this.state.name, email: this.state.email, password: this.state.password}
+        this.setState({ error: this.state.error.set('name', 'Error no e-mail1') })
+
+        if (this.state.error.size == 0){
+
+        }
+
+        /*
+        user = { name: this.state.name, email: this.state.email, password: this.state.password }
         api.createUser(user)
             .then(response => {
                 Alert.alert("success", "success");
@@ -33,6 +42,7 @@ export default class SignUp extends Component {
                 Alert.alert("error", "error");
                 console.log(error)
             });
+            */
     }
 
     onClickListener = (viewId) => {
@@ -42,8 +52,8 @@ export default class SignUp extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }} 
-                style={{ width: 150, height: 30, marginBottom: 60 }} />
+                <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
+                    style={{ width: 150, height: 30, marginBottom: 60 }} />
 
                 <View style={styles.inputContainer}>
                     <TextInput style={styles.inputs}
@@ -51,6 +61,12 @@ export default class SignUp extends Component {
                         placeholderTextColor="#787d82"
                         underlineColorAndroid='transparent'
                         onChangeText={(name) => this.setState({ name })} />
+                </View>
+
+                <View style={styles.containerError}>
+                    <Text style={styles.error}>
+                        {this.state.error.get('name')}
+                    </Text>
                 </View>
 
                 <View style={styles.inputContainer}>
@@ -62,6 +78,27 @@ export default class SignUp extends Component {
                         onChangeText={(email) => this.setState({ email })} />
                 </View>
 
+                <View style={styles.containerError}>
+                    <Text style={styles.error}>
+                        {this.state.errorName}
+                    </Text>
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.inputs}
+                        placeholder="celular:"
+                        placeholderTextColor="#787d82"
+                        keyboardType="email-address"
+                        underlineColorAndroid='transparent'
+                        onChangeText={(cellPhone) => this.setState({ cellPhone })} />
+                </View>
+
+                <View style={styles.containerError}>
+                    <Text style={styles.error}>
+                        {this.state.errorName}
+                    </Text>
+                </View>
+
                 <View style={styles.inputContainer}>
                     <TextInput style={styles.inputs}
                         placeholder="senha:"
@@ -69,6 +106,12 @@ export default class SignUp extends Component {
                         secureTextEntry={true}
                         underlineColorAndroid='transparent'
                         onChangeText={(password) => this.setState({ password })} />
+                </View>
+
+                <View style={styles.containerError}>
+                    <Text style={styles.error}>
+                        {this.state.errorName}
+                    </Text>
                 </View>
 
                 <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.save()}>
@@ -82,6 +125,7 @@ export default class SignUp extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#31383E',
@@ -124,5 +168,10 @@ const styles = StyleSheet.create({
     },
     registerText: {
         color: 'white',
+    },
+    containerError: {
+    },
+    error: {
+        color: 'red'
     }
 });
