@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import api from '../../services/Api'
+import validate from 'Validate'
 import {
     StyleSheet,
     Text,
@@ -9,7 +10,6 @@ import {
     Image,
     Alert
 } from 'react-native'
-import { throwStatement } from '@babel/types';
 
 export default class SignUp extends Component {
 
@@ -25,10 +25,12 @@ export default class SignUp extends Component {
     }
 
     save = () => {
-        this.setState({ error: this.state.error.set('name', 'Error no e-mail1') })
-
-        if (this.state.error.size == 0){
-
+        
+        let error = validate.validate(...this.state)
+        if (error.size > 0) {
+            this.setState({ error: error })
+        } else {
+            Alert.alert("Submit", "Success")
         }
 
         /*
@@ -80,7 +82,7 @@ export default class SignUp extends Component {
 
                 <View style={styles.containerError}>
                     <Text style={styles.error}>
-                        {this.state.errorName}
+                        {this.state.error.get('email')}
                     </Text>
                 </View>
 
@@ -95,7 +97,7 @@ export default class SignUp extends Component {
 
                 <View style={styles.containerError}>
                     <Text style={styles.error}>
-                        {this.state.errorName}
+                        {this.state.error.get('cellPhone')}
                     </Text>
                 </View>
 
@@ -110,7 +112,7 @@ export default class SignUp extends Component {
 
                 <View style={styles.containerError}>
                     <Text style={styles.error}>
-                        {this.state.errorName}
+                        {this.state.error.get('password')}
                     </Text>
                 </View>
 
