@@ -3,7 +3,7 @@ const email = new RegExp("/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i")
 const cellPhone = new RegExp("^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$")
 const password = new RegExp("/^[a-zA-Z0-9.]{8-20}")
 
-const validate = (user) => {
+export default (user) => {
     
     let error = new Map()
     
@@ -20,10 +20,8 @@ const validate = (user) => {
     }
 
     if (!password.test(user.password)){
-        error.set("cellPhone", "Senha inválido")
+        error.set("password", "Senha inválido")
     }
 
     return error
 }
-
-export default validate

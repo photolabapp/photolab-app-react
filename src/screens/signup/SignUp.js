@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import api from '../../services/Api'
-import validate from 'Validate'
+import validate from './Validate'
 import {
     StyleSheet,
     Text,
     View,
-    TextInput,
     TouchableHighlight,
     Image,
     Alert
 } from 'react-native'
+import { TextInputMask } from 'react-native-masked-text'
 
 export default class SignUp extends Component {
 
@@ -25,8 +25,14 @@ export default class SignUp extends Component {
     }
 
     save = () => {
-        
-        let error = validate.validate(...this.state)
+        user = {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            cellPhone: this.state.cellPhone
+        }
+
+        let error = validate(user)
         if (error.size > 0) {
             this.setState({ error: error })
         } else {
@@ -58,7 +64,7 @@ export default class SignUp extends Component {
                     style={{ width: 150, height: 30, marginBottom: 60 }} />
 
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputs}
+                    <TextInputMask style={styles.inputs}
                         placeholder="nome:"
                         placeholderTextColor="#787d82"
                         underlineColorAndroid='transparent'
@@ -72,7 +78,7 @@ export default class SignUp extends Component {
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputs}
+                    <TextInputMask style={styles.inputs}
                         placeholder="email:"
                         placeholderTextColor="#787d82"
                         keyboardType="email-address"
@@ -87,10 +93,14 @@ export default class SignUp extends Component {
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputs}
+                    <TextInputMask style={styles.inputs}
+                        options={{
+                            maskType: 'BRL',
+                            withDDD: true,
+                            dddMask: '(99) '
+                        }}
                         placeholder="celular:"
                         placeholderTextColor="#787d82"
-                        keyboardType="email-address"
                         underlineColorAndroid='transparent'
                         onChangeText={(cellPhone) => this.setState({ cellPhone })} />
                 </View>
@@ -102,7 +112,7 @@ export default class SignUp extends Component {
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputs}
+                    <TextInputMask style={styles.inputs}
                         placeholder="senha:"
                         placeholderTextColor="#787d82"
                         secureTextEntry={true}
@@ -137,7 +147,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         width: 250,
         height: 45,
-        marginBottom: 20,
+        marginBottom: 1,
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -159,21 +169,25 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 20,
+        marginTop: 20,
         width: 250,
     },
     loginButton: {
         backgroundColor: "#00b5ec",
     },
     loginText: {
-        color: 'white',
+        color: "white"
     },
     registerText: {
-        color: 'white',
+        color: "white"
     },
     containerError: {
+        width: 250,
+        marginBottom: 4,
+        flexDirection: "column",
+        justifyContent: "flex-start"
     },
     error: {
-        color: 'red'
+        color: "red"
     }
 });
