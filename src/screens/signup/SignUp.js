@@ -5,11 +5,11 @@ import {
     StyleSheet,
     Text,
     View,
+    TextInput,
     TouchableHighlight,
     Image,
     Alert
 } from 'react-native'
-import { TextInputMask } from 'react-native-masked-text'
 
 export default class SignUp extends Component {
 
@@ -36,21 +36,12 @@ export default class SignUp extends Component {
         if (error.size > 0) {
             this.setState({ error: error })
         } else {
-            Alert.alert("Submit", "Success")
-        }
-
-        /*
-        user = { name: this.state.name, email: this.state.email, password: this.state.password }
-        api.createUser(user)
-            .then(response => {
-                Alert.alert("success", "success");
+            api.createUser(user).then(response => {
                 console.log(response)
-            })
-            .catch(error => {
-                Alert.alert("error", "error");
-                console.log(error)
-            });
-            */
+                Alert.alert("Cadastro", "Cadastro realiado com sucesso!!!!")
+                this.props.navigation.navigate('Login')
+            }).catch( error => console.log(error) );
+        }
     }
 
     onClickListener = (viewId) => {
@@ -64,7 +55,7 @@ export default class SignUp extends Component {
                     style={{ width: 150, height: 30, marginBottom: 60 }} />
 
                 <View style={styles.inputContainer}>
-                    <TextInputMask style={styles.inputs}
+                    <TextInput style={styles.inputs}
                         placeholder="nome:"
                         placeholderTextColor="#787d82"
                         underlineColorAndroid='transparent'
@@ -78,7 +69,8 @@ export default class SignUp extends Component {
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <TextInputMask style={styles.inputs}
+                    <TextInput
+                        style={styles.inputs}
                         placeholder="email:"
                         placeholderTextColor="#787d82"
                         keyboardType="email-address"
@@ -93,13 +85,11 @@ export default class SignUp extends Component {
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <TextInputMask style={styles.inputs}
-                        options={{
-                            maskType: 'BRL',
-                            withDDD: true,
-                            dddMask: '(99) '
-                        }}
+                    <TextInput
+                        style={styles.inputs}
                         placeholder="celular:"
+                        keyboardType="phone-pad"
+                        size="11" s
                         placeholderTextColor="#787d82"
                         underlineColorAndroid='transparent'
                         onChangeText={(cellPhone) => this.setState({ cellPhone })} />
@@ -112,7 +102,7 @@ export default class SignUp extends Component {
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <TextInputMask style={styles.inputs}
+                    <TextInput style={styles.inputs}
                         placeholder="senha:"
                         placeholderTextColor="#787d82"
                         secureTextEntry={true}

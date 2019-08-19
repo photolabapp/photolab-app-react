@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import api from '../../services/Api'
 import {
     StyleSheet,
     Text,
@@ -9,27 +10,50 @@ import {
     Image,
     Alert
 } from 'react-native';
+import validate from './Validate'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 export default class Login extends Component {
 
     constructor(props) {
         super(props);
-        state = {
+        this.state = {
             email: '',
             password: '',
+            error: new Map()
         }
     }
 
-    onClickListener = (viewId) => {
-        Alert.alert("Alert", "Button pressed " + viewId);
+    login = () => {
+        user = {
+            email: this.state.email,
+            password: this.state.password
+        }
+
+        let error = validate(user)
+        if (error.size > 0) {
+            this.setState({ error: error })
+        } else {
+            api.doLogin(user).then(response => {
+                this.setToken(response.accessToken)
+                console.log(response)
+            }).catch(error => console.log(error) );
+        }
+    }
+
+    setToken = (token) => {
+        _storeData = async () => {
+            try {
+                await AsyncStorage.setItem('ACCESS_TOKEN', token);
+            } catch (error) { }
+        };
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }} 
-                style={{ width: 150, height: 30, marginBottom: 60 }} />
+                <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
+                    style={{ width: 150, height: 30, marginBottom: 60 }} />
 
                 <View style={styles.inputContainer}>
                     <TextInput style={styles.inputs}
@@ -38,6 +62,12 @@ export default class Login extends Component {
                         keyboardType="email-address"
                         underlineColorAndroid='transparent'
                         onChangeText={(email) => this.setState({ email })} />
+                </View>
+
+                <View style={styles.containerError}>
+                    <Text style={styles.error}>
+                        {this.state.error.get('email')}
+                    </Text>
                 </View>
 
                 <View style={styles.inputContainer}>
@@ -49,7 +79,13 @@ export default class Login extends Component {
                         onChangeText={(password) => this.setState({ password })} />
                 </View>
 
-                <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
+                <View style={styles.containerError}>
+                    <Text style={styles.error}>
+                        {this.state.error.get('password')}
+                    </Text>
+                </View>
+
+                <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.login()}>
                     <Text style={styles.loginText}>Login</Text>
                 </TouchableHighlight>
 
@@ -57,7 +93,7 @@ export default class Login extends Component {
                     <Text style={styles.registerText}>Cadastrar</Text>
                 </TouchableHighlight>
             </View>
-        );
+        )
     }
 }
 
@@ -73,7 +109,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         width: 250,
         height: 45,
-        marginBottom: 20,
+        marginBottom: 1,
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -106,5 +142,14 @@ const styles = StyleSheet.create({
     },
     registerText: {
         color: 'white',
+    },
+    containerError: {
+        width: 250,
+        marginBottom: 4,
+        flexDirection: "column",
+        justifyContent: "flex-start"
+    },
+    error: {
+        color: "red"
     }
 });

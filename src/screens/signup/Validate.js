@@ -1,7 +1,4 @@
-const name = new RegExp("/^[a-zA-Z0-9.]{5-20}")
-const email = new RegExp("/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i")
-const cellPhone = new RegExp("^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$")
-const password = new RegExp("/^[a-zA-Z0-9.]{8-20}")
+import {name, email, cellPhone, password} from '../../utils/RegexUtil'
 
 export default (user) => {
     

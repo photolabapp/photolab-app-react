@@ -1,9 +1,10 @@
+import React from 'react'
 import Axios from 'axios'
 
 class Api {
     constructor() {
         let request = Axios.create({
-            baseURL: "http://192.168.1.106:8080/user",
+            baseURL: "http://192.168.1.106:8080",
             responseType: "json"
         });
 
@@ -11,7 +12,12 @@ class Api {
     }
 
     createUser = (user) => {
-        return this.request.post(this.baseURL, user)
+        return this.request.post("/user", user)
+    }
+
+    doLogin = (user) => {
+        console.log(user)
+        return this.requet.post("/login", user)
     }
 }
 
