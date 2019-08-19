@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import api from '../../services/Api'
+import { login } from '../../services/Api'
 import {
     StyleSheet,
     Text,
@@ -34,7 +34,8 @@ export default class Login extends Component {
         if (error.size > 0) {
             this.setState({ error: error })
         } else {
-            api.doLogin(user).then(response => {
+            console.log("LOG --------- call login")
+            login(user).then(response => {
                 this.setToken(response.accessToken)
                 console.log(response)
             }).catch(error => console.log(error) );

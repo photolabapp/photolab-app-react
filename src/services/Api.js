@@ -1,6 +1,19 @@
-import React from 'react'
 import Axios from 'axios'
 
+const axios = Axios.create({
+    baseURL: "http://localhost:8080",
+    responseType: "json"
+});
+
+export const login = (user) => {
+    return axios.post("login/", user)
+}
+
+export const create = (user) => {
+    return axios.post("user/", user)
+}
+
+/*
 class Api {
     constructor() {
         let request = Axios.create({
@@ -11,18 +24,24 @@ class Api {
         this.request = request
     }
 
+    post = (path, obj) => {
+        return this.request.post(path, obj)
+    }
+
     createUser = (user) => {
-        return this.request.post("/user", user)
+        //return this.request.post("/user", user)
+        return this.post("/user", user)
     }
 
     doLogin = (user) => {
         console.log(user)
-        return this.requet.post("/login", user)
+        return this.post("/login", user)
     }
 }
 
-const api = new Api()
-export default api
+//const api = new Api()
+export default Api
+*/
 
 /*
 

@@ -1,11 +1,10 @@
-import { AsyncStorage } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation'
+import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation'
 import Login from '../screens/login/Login'
 import SignUp from '../screens/signup/SignUp'
 import Home from '../screens/home/Home'
+import Splash from '../screens/splash/Splash'
 
-
-const loginNavigator = createStackNavigator({
+const loginStackNavigator = createStackNavigator({
   Login: {
     screen: Login,
   },
@@ -18,13 +17,26 @@ const loginNavigator = createStackNavigator({
   }
 )
 
-const homeNavigator = createStackNavigator({
+const homeStackNavigator = createStackNavigator({
   Home: {
     screen: Home
   },
 })
 
-export default createAppContainer(loginNavigator)
+const switchNavigator = createSwitchNavigator(
+  {
+      Splash: { screen: Splash, navigationOptions: { header: null } },
+      App: homeStackNavigator,
+      Auth: loginStackNavigator,
+  },
+  {
+      initialRouteName: 'Splash'
+  },
+);
+
+export default createAppContainer(switchNavigator)
+
+//export default createAppContainer(loginNavigator)
 
 /*
 const navigator = () => {

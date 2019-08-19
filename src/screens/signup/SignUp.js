@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import api from '../../services/Api'
+import { create } from '../../services/Api'
 import validate from './Validate'
 import {
     StyleSheet,
@@ -14,7 +14,7 @@ import {
 export default class SignUp extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             name: '',
             email: '',
@@ -36,7 +36,7 @@ export default class SignUp extends Component {
         if (error.size > 0) {
             this.setState({ error: error })
         } else {
-            api.createUser(user).then(response => {
+            create(user).then(response => {
                 console.log(response)
                 Alert.alert("Cadastro", "Cadastro realiado com sucesso!!!!")
                 this.props.navigation.navigate('Login')
