@@ -37,6 +37,7 @@ export default class Login extends Component {
             console.log("LOG --------- call login")
             login(user).then(response => {
                 this.setToken(response.accessToken)
+                this.props.navigation.navigate('Auth')
                 console.log(response)
             }).catch(error => console.log(error) );
         }

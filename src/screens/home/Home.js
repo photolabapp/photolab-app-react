@@ -3,12 +3,9 @@ import {
     StyleSheet,
     Text,
     View,
-    TextInput,
-    Button,
-    TouchableHighlight,
-    Image,
-    Alert
+    TouchableHighlight
 } from 'react-native';
+import ImagePicker from 'react-native-image-picker'
 
 
 export default class Home extends Component {
@@ -17,12 +14,25 @@ export default class Home extends Component {
         super(props);
     }
 
+    upload = () => {
+        ImagePicker.launchImageLibrary({
+            title: 'Select Avatar',
+            customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            }
+        }, (response) => {
+            // Same code as in above section!
+        });
+    }
+
     render() {
         return (
             <View styles={styles.container}>
-                <Text>
-                    TESTE
-                </Text>
+                <TouchableHighlight onPress={() => this.upload()}>
+                    <Text style={styles.buttonText}>Cadastrar</Text>
+                </TouchableHighlight>
             </View>
         )
     }
@@ -33,6 +43,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#31383E',
-    }
+        backgroundColor: '#969696'
+    },
+    buttonText: {
+        color: "black"
+    },
 })

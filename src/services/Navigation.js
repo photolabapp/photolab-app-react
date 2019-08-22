@@ -1,8 +1,10 @@
+import React from 'react'
 import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation'
 import Login from '../screens/login/Login'
 import SignUp from '../screens/signup/SignUp'
 import Home from '../screens/home/Home'
 import Splash from '../screens/splash/Splash'
+import HeaderLogo from '../components/HeaderLogo'
 
 const loginStackNavigator = createStackNavigator({
   Login: {
@@ -19,18 +21,28 @@ const loginStackNavigator = createStackNavigator({
 
 const homeStackNavigator = createStackNavigator({
   Home: {
-    screen: Home
+    screen: Home,
+    navigationOptions: {
+      headerTitle: <HeaderLogo />,
+      headerStyle: {
+        backgroundColor: '#31383E',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      }
+    }
   },
 })
 
 const switchNavigator = createSwitchNavigator(
   {
-      Splash: { screen: Splash, navigationOptions: { header: null } },
-      App: homeStackNavigator,
-      Auth: loginStackNavigator,
+    Splash: { screen: Splash, navigationOptions: { header: null } },
+    App: homeStackNavigator,
+    Auth: loginStackNavigator,
   },
   {
-      initialRouteName: 'Splash'
+    initialRouteName: 'Splash'
   },
 );
 

@@ -5,7 +5,8 @@ import { createStackNavigator, createAppContainer, createSwitchNavigator } from 
 export default class Splash extends Component {
     constructor(props) {
         super(props)
-        this.isLogged()
+        //this.isLogged()
+        this.props.navigation.navigate('App');
     }
 
     render() {
@@ -14,13 +15,18 @@ export default class Splash extends Component {
         )
     }
 
+    getItem = async (key) => {
+        var value = await AsyncStorage.getItem(key)
+        return value
+    }
+
     isLogged = () => {
-        AsyncStorage.getItem('ACCESS_TOKEN', function (err, value) {
+        this.getItem('ACCESS_TOKEN').then(value => {
             if (value == null) {
                 this.props.navigation.navigate('Auth');
             } else {
                 this.props.navigation.navigate('App');
             }
-        })
+        });
     }
 }
