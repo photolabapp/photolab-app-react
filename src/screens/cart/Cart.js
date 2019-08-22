@@ -8,7 +8,7 @@ import {
 import ImagePicker from 'react-native-image-picker'
 
 
-export default class Home extends Component {
+export default class Cart extends Component {
 
     constructor(props) {
         super(props);
@@ -30,9 +30,6 @@ export default class Home extends Component {
     render() {
         return (
             <View styles={styles.container}>
-                <TouchableHighlight style={styles.button} onPress={() => this.upload()}>
-                    <Text style={styles.buttonText}>Cadastrar</Text>
-                </TouchableHighlight>
             </View>
         )
     }

@@ -10,7 +10,11 @@ buildscript {
     }
     repositories {
         google()
-        jcenter()
+        //jcenter()
+        jcenter {
+            url("http://nexus-cloud.riachuelo.net/nexus/repository/maven-public/")
+        }
+
     }
     dependencies {
         classpath('com.android.tools.build:gradle:3.4.2')
@@ -33,6 +37,10 @@ allprojects {
         }
 
         google()
-        jcenter()
+        //jcenter()
+        jcenter {
+            url("http://nexus-cloud.riachuelo.net/nexus/repository/maven-public/")
+        }
+
     }
 }
