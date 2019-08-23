@@ -11,64 +11,53 @@ import HeaderLogo from '../components/HeaderLogo'
 const loginStackNavigator = createStackNavigator({
   Login: {
     screen: Login,
+    headerMode: 'none',
+    navigationOptions: {
+
+    }
   },
   SignUp: {
     screen: SignUp,
+    headerMode: 'screen',
+    navigationOptions: {
+
+    }
   }
 }, {
-    initialRouteName: 'Login',
-    headerMode: 'none'
+    initialRouteName: 'Login'
   }
 )
 
-/*
-const homeStackNavigator = createStackNavigator({
-  Home: {
-    screen: Home,
+const header = {
+  headerMode: 'screen',
+  headerTitle: <HeaderLogo />,
+  headerStyle: { backgroundColor: '#31383E' },
+  headerTintColor: '#fff',
+  headerTitleStyle: { fontWeight: 'bold' },
+}
+
+const bottomTab = createStackNavigator({
+  Config: { screen: Config, navigationOptions: { headerTitle: 'Configuração' } },
+  Upload: { screen: Home, navigationOptions: { headerTitle: 'Album' }  },
+  Cart: { screen: Cart, navigationOptions: { headerTitle: 'Carrinho' }  }
+}, {
+    initialRouteName: 'Upload',
+    headerMode: 'screen'
+    /*
     navigationOptions: {
       headerTitle: <HeaderLogo />,
-      headerStyle: {
-        backgroundColor: '#31383E',
-      },
+      headerStyle: { backgroundColor: '#31383E' },
       headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      }
+      headerTitleStyle: { fontWeight: 'bold' },
     }
-  },
-})
-*/
-
-/*
-const home = {
-  screen: Home,
-  navigationOptions: {
-    headerTitle: <HeaderLogo />,
-    headerStyle: {
-      backgroundColor: '#31383E',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    }
+    */
   }
-}
-*/
-
-const bottomTab = createBottomTabNavigator({
-  Home: {screen: Home},
-  Config: {screen: Config},
-  Cart: {screen: Cart}
-})
+)
 
 const switchNavigator = createSwitchNavigator({
-  Splash: { screen: Splash, navigationOptions: { header: null } },
+  Splash: { screen: Splash, headerMode: 'none' },
   App: bottomTab,
   Auth: loginStackNavigator,
-},
-  {
-    initialRouteName: 'Splash'
-  },
-);
+}, { initialRouteName: 'Splash' });
 
-export default createAppContainer(switchNavigator)
+export default createAppContainer(bottomTab)
