@@ -1,5 +1,8 @@
 import React from 'react'
+import Colors from '../utils/Colors'
+import { Icon } from 'react-native-elements'
 import { createStackNavigator, createSwitchNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
+
 
 import Login from '../screens/login/Login'
 import SignUp from '../screens/signup/SignUp'
@@ -28,39 +31,67 @@ const uploadStackNavigator = createStackNavigator({
     screen: Add,
     navigationOptions: {
       headerTitle: 'Adicionar Fotos',
-      headerStyle: { backgroundColor: '#31383E' }
+      headerTintColor: 'white',
+      headerStyle: { backgroundColor: Colors.greyPrimary }
     }
   }
-})
+}, {
+    headerLayoutPreset: 'center'
+  })
 
 const configStackNavigator = createStackNavigator({
-  Config: { screen: Config, navigationOptions: { headerTitle: 'Configuração' } }
-})
+  Config: {
+    screen: Config,
+    navigationOptions: {
+      headerTitle: 'Configuração',
+      headerTintColor: 'white',
+      headerStyle: { backgroundColor: Colors.greyPrimary }
+    }
+  }
+}, {
+    headerLayoutPreset: 'center'
+  })
 
 const cartStackNavigator = createStackNavigator({
-  Cart: { screen: Cart, navigationOptions: { headerTitle: 'Carrinho' } }
-})
-
-const header = {
-  headerMode: 'screen',
-  headerTitle: <HeaderLogo />,
-  headerStyle: { backgroundColor: '#31383E' },
-  headerTintColor: '#fff',
-  headerTitleStyle: { fontWeight: 'bold' },
-}
+  Cart: {
+    screen: Cart,
+    navigationOptions: {
+      headerTitle: 'Carrinho',
+      headerTintColor: 'white',
+      headerStyle: { backgroundColor: Colors.greyPrimary },
+    }
+  }
+}, {
+    headerLayoutPreset: 'center'
+  })
 
 const bottomTab = createBottomTabNavigator({
-  Album: uploadStackNavigator,
-  Cart: uploadStackNavigator,
+  Album: configStackNavigator,
+  Cart: configStackNavigator,
   Add: uploadStackNavigator,
   Credito: configStackNavigator,
   Usuario: cartStackNavigator
-})
+}, {
+    initialRouteName: 'Album',
+    lazy: false,
+    navigationOptions: {
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        return <Icon name='g-translate' color='#ffffff' />
+      }
+    },
+    tabBarOptions: {
+      inactiveTintColor: 'white',
+      inactiveBackgroundColor: Colors.greyPrimary,
+      activeBackgroundColor: Colors.greySecundary,
+      activeTintColor: 'white'
+    }
+  }
+)
 
 const switchNavigator = createSwitchNavigator({
   Splash: { screen: Splash, headerMode: 'none' },
   App: bottomTab,
   Auth: loginStackNavigator,
-}, { initialRouteName: 'Splash' });
+}, { initialRouteName: 'Splash' })
 
 export default createAppContainer(bottomTab)
