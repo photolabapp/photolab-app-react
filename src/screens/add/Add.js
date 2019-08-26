@@ -8,10 +8,11 @@ import {
 import ImagePicker from 'react-native-image-picker'
 
 
-export default class Home extends Component {
+export default class Add extends Component {
 
     constructor(props) {
         super(props);
+        this.upload()
     }
 
     upload = () => {
@@ -30,9 +31,7 @@ export default class Home extends Component {
     render() {
         return (
             <View styles={styles.container}>
-                <TouchableHighlight style={styles.button} onPress={() => this.upload()}>
-                    <Text style={styles.buttonText}>Cadastrar</Text>
-                </TouchableHighlight>
+                
             </View>
         )
     }
@@ -44,17 +43,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    buttonText: {
-        color: "white"
-    },
-    button: {
-        height: 45,
-        flexDirection: "column",
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 20,
-        width: 250,
-        backgroundColor: "#00b5ec",
+        backgroundColor: '#D2D2D2'
     }
 })

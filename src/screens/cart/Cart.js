@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#D2D2D2'
     },
     buttonText: {
         color: "white"

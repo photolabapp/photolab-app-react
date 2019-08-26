@@ -1,8 +1,9 @@
 import React from 'react'
 import { createStackNavigator, createSwitchNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
+
 import Login from '../screens/login/Login'
 import SignUp from '../screens/signup/SignUp'
-import Home from '../screens/home/Home'
+import Add from '../screens/add/Add'
 import Splash from '../screens/splash/Splash'
 import Config from '../screens/config/Config'
 import Cart from '../screens/cart/Cart'
@@ -11,22 +12,34 @@ import HeaderLogo from '../components/HeaderLogo'
 const loginStackNavigator = createStackNavigator({
   Login: {
     screen: Login,
-    headerMode: 'none',
-    navigationOptions: {
-
-    }
+    headerMode: 'none'
   },
   SignUp: {
     screen: SignUp,
-    headerMode: 'screen',
-    navigationOptions: {
-
-    }
+    headerMode: 'screen'
   }
 }, {
     initialRouteName: 'Login'
   }
 )
+
+const uploadStackNavigator = createStackNavigator({
+  Upload: {
+    screen: Add,
+    navigationOptions: {
+      headerTitle: 'Adicionar Fotos',
+      headerStyle: { backgroundColor: '#31383E' }
+    }
+  }
+})
+
+const configStackNavigator = createStackNavigator({
+  Config: { screen: Config, navigationOptions: { headerTitle: 'Configuração' } }
+})
+
+const cartStackNavigator = createStackNavigator({
+  Cart: { screen: Cart, navigationOptions: { headerTitle: 'Carrinho' } }
+})
 
 const header = {
   headerMode: 'screen',
@@ -36,23 +49,13 @@ const header = {
   headerTitleStyle: { fontWeight: 'bold' },
 }
 
-const bottomTab = createStackNavigator({
-  Config: { screen: Config, navigationOptions: { headerTitle: 'Configuração' } },
-  Upload: { screen: Home, navigationOptions: { headerTitle: 'Album' }  },
-  Cart: { screen: Cart, navigationOptions: { headerTitle: 'Carrinho' }  }
-}, {
-    initialRouteName: 'Upload',
-    headerMode: 'screen'
-    /*
-    navigationOptions: {
-      headerTitle: <HeaderLogo />,
-      headerStyle: { backgroundColor: '#31383E' },
-      headerTintColor: '#fff',
-      headerTitleStyle: { fontWeight: 'bold' },
-    }
-    */
-  }
-)
+const bottomTab = createBottomTabNavigator({
+  Album: uploadStackNavigator,
+  Cart: uploadStackNavigator,
+  Add: uploadStackNavigator,
+  Credito: configStackNavigator,
+  Usuario: cartStackNavigator
+})
 
 const switchNavigator = createSwitchNavigator({
   Splash: { screen: Splash, headerMode: 'none' },

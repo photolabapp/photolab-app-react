@@ -7,4 +7,5 @@ android/DS_Store
 build
 android/*.idea
 *.iml
+yarn-error.log
 
