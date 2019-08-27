@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Colors from '../utils/Colors'
-import { Icon } from 'react-native-elements'
+import { View } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+//'react-native-vector-icons/FontAwesome'
 import { createStackNavigator, createSwitchNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
 
 
@@ -32,7 +34,7 @@ const uploadStackNavigator = createStackNavigator({
     navigationOptions: {
       headerTitle: 'Adicionar Fotos',
       headerTintColor: 'white',
-      headerStyle: { backgroundColor: Colors.greyPrimary }
+      headerStyle: { backgroundColor: Colors.greyPrimary },
     }
   }
 }, {
@@ -45,7 +47,7 @@ const configStackNavigator = createStackNavigator({
     navigationOptions: {
       headerTitle: 'Configuração',
       headerTintColor: 'white',
-      headerStyle: { backgroundColor: Colors.greyPrimary }
+      headerStyle: { backgroundColor: Colors.greyPrimary },
     }
   }
 }, {
@@ -58,7 +60,7 @@ const cartStackNavigator = createStackNavigator({
     navigationOptions: {
       headerTitle: 'Carrinho',
       headerTintColor: 'white',
-      headerStyle: { backgroundColor: Colors.greyPrimary },
+      headerStyle: { backgroundColor: Colors.greyPrimary }
     }
   }
 }, {
@@ -74,13 +76,27 @@ const bottomTab = createBottomTabNavigator({
 }, {
     initialRouteName: 'Album',
     lazy: false,
-    navigationOptions: {
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        return <Icon name='g-translate' color='#ffffff' />
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ tintColor }) => {
+        const { routeName } = navigation.state
+        console.log("LOG ---------1 " + routeName)
+        if (routeName === 'Add') {
+          return <Icon name="add-circle-outline" size={40} color="#fff" />
+        } else if (routeName === 'Album') {
+          return <Icon name="photo-album" size={22} color="#fff" />
+        } else if (routeName === 'Cart') {
+          return <Icon name="shopping-cart" size={22} color="#fff" />
+        } else if (routeName === 'Credito') {
+          return <Icon name="credit-card" size={25} color="#fff" />
+        } else if (routeName === 'Usuario') {
+          return <Icon name="perm-identity" size={25} color="#fff" />
+        }
       }
-    },
+    }),
     tabBarOptions: {
       inactiveTintColor: 'white',
+      showIcon: true,
+      showLabel: false,
       inactiveBackgroundColor: Colors.greyPrimary,
       activeBackgroundColor: Colors.greySecundary,
       activeTintColor: 'white'

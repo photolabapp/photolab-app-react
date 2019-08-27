@@ -6,13 +6,15 @@ import {
     TouchableHighlight
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Iconn from 'react-native-vector-icons/FontAwesome';
 
 
 export default class Add extends Component {
 
     constructor(props) {
         super(props);
-        this.upload()
+        //ssthis.upload()
     }
 
     upload = () => {
@@ -31,7 +33,8 @@ export default class Add extends Component {
     render() {
         return (
             <View styles={styles.container}>
-                
+                <Icon name='add-box' size={50} color='#000000' />
+                <Iconn name="home" size={18} color="#999" />
             </View>
         )
     }
