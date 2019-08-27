@@ -1,26 +1,20 @@
 import React, { Component } from 'react'
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableHighlight
-} from 'react-native';
+import { View } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Iconn from 'react-native-vector-icons/FontAwesome';
+import { withNavigationFocus } from "react-navigation";
 
+class Add extends Component {
 
-export default class Add extends Component {
-
-    constructor(props) {
-        super(props);
-        //ssthis.upload()
+    componentDidUpdate(prevProps) {
+        if (prevProps.isFocused !== this.props.isFocused) {
+            this.upload()
+        }
     }
 
     upload = () => {
         ImagePicker.launchImageLibrary({
-            title: 'Select Avatar',
-            customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+            title: 'Selecionar Foto',
+            customButtons: [{ name: 'adicionar', title: 'Selecione a foto' }],
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
@@ -32,20 +26,9 @@ export default class Add extends Component {
 
     render() {
         return (
-            <View styles={styles.container}>
-                <Icon name='add-box' size={50} color='#000000' />
-                <Iconn name="home" size={18} color="#999" />
-            </View>
+            <View></View>
         )
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#D2D2D2'
-    }
-})
+export default withNavigationFocus(Add)

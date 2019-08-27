@@ -30,7 +30,7 @@ const loginStackNavigator = createStackNavigator({
 
 const uploadStackNavigator = createStackNavigator({
   Upload: {
-    screen: Add,
+    screen: Cart,
     navigationOptions: {
       headerTitle: 'Adicionar Fotos',
       headerTintColor: 'white',
