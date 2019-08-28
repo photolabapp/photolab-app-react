@@ -12,6 +12,7 @@ import Add from '../screens/add/Add'
 import Splash from '../screens/splash/Splash'
 import Config from '../screens/config/Config'
 import Cart from '../screens/cart/Cart'
+import Album from '../screens/album/Album'
 import HeaderLogo from '../components/HeaderLogo'
 
 const loginStackNavigator = createStackNavigator({
@@ -27,6 +28,19 @@ const loginStackNavigator = createStackNavigator({
     initialRouteName: 'Login'
   }
 )
+
+const albumStackNavigator = createStackNavigator({
+  Upload: {
+    screen: Album,
+    navigationOptions: {
+      headerTitle: 'Album',
+      headerTintColor: 'white',
+      headerStyle: { backgroundColor: Colors.greyPrimary },
+    }
+  }
+}, {
+    headerLayoutPreset: 'center'
+  })
 
 const uploadStackNavigator = createStackNavigator({
   Upload: {
@@ -68,18 +82,16 @@ const cartStackNavigator = createStackNavigator({
   })
 
 const bottomTab = createBottomTabNavigator({
-  Album: configStackNavigator,
-  Cart: configStackNavigator,
+  Album: albumStackNavigator,
+  Cart: cartStackNavigator,
   Add: uploadStackNavigator,
   Credito: configStackNavigator,
-  Usuario: cartStackNavigator
+  Usuario: configStackNavigator
 }, {
     initialRouteName: 'Album',
-    lazy: false,
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => {
         const { routeName } = navigation.state
-        console.log("LOG ---------1 " + routeName)
         if (routeName === 'Add') {
           return <Icon name="add-circle-outline" size={40} color="#fff" />
         } else if (routeName === 'Album') {
@@ -110,4 +122,4 @@ const switchNavigator = createSwitchNavigator({
   Auth: loginStackNavigator,
 }, { initialRouteName: 'Splash' })
 
-export default createAppContainer(bottomTab)
+export default createAppContainer(albumStackNavigator)
