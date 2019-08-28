@@ -75,7 +75,6 @@ const bottomTab = createBottomTabNavigator({
   Usuario: cartStackNavigator
 }, {
     initialRouteName: 'Album',
-    lazy: false,
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => {
         const { routeName } = navigation.state
