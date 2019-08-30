@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
     View,
     Text,
@@ -8,60 +9,27 @@ import {
 } from 'react-native'
 import Carousel from 'react-native-snap-carousel';
 
-
-const entries = [
-    {
-        title: 'TESTE 1',
-        subtitle: 'TESTE 1',
-        uri: 'http://www.quintoandar.com.br/img/xxl/892954573-591.33623099889475andar13.jpg'
-    },
-    {
-        title: 'TESTE 2',
-        subtitle: 'TESTE 2',
-        uri: 'http://www.quintoandar.com.br/img/xxl/892954573-329.9942198966845andar14.jpg'
-    },
-    {
-        title: 'TESTE 3',
-        subtitle: 'TESTE 4',
-        uri: 'http://www.quintoandar.com.br/img/xxl/892954573-165.144933116816565andar18.jpg'
-    },
-    {
-        title: 'TESTE 3',
-        subtitle: 'TESTE 4',
-        uri: 'http://www.quintoandar.com.br/img/xxl/892954573-165.144933116816565andar18.jpg'
-    },
-    {
-        title: 'TESTE 3',
-        subtitle: 'TESTE 4',
-        uri: 'http://www.quintoandar.com.br/img/xxl/892954573-165.144933116816565andar18.jpg'
-    },
-    {
-        title: 'TESTE 3',
-        subtitle: 'TESTE 4',
-        uri: 'http://www.quintoandar.com.br/img/xxl/892954573-165.144933116816565andar18.jpg'
-    },
-    {
-        title: 'TESTE 3',
-        subtitle: 'TESTE 4',
-        uri: 'http://www.quintoandar.com.br/img/xxl/892954573-165.144933116816565andar18.jpg'
-    }
-]
-
-export default class Album extends Component {
+class Album extends Component {
     constructor(props) {
         super(props)
+
+        console.log("pqpqqppqpq" + props.album.album)
     }
 
     screenWidth = Math.round(Dimensions.get('window').width);
     screenHeight = Math.round(Dimensions.get('window').height);
 
     renderItem = ({ item, index }) => {
-        const { uri, title, content } = item;
+        const { uri } = item;
+        //console.log("pqpqqppqpq uri " + uri)
         return (
-            <ImageBackground
-                style={{ width: this.screenWidth / 1.2, height: this.screenHeight / 2 }}
-                source={{ uri: uri }} >
-            </ImageBackground>
+            <View>
+                <ImageBackground
+                    style={{ width: this.screenWidth / 1.2, height: this.screenHeight / 2 }}
+                    source={{ uri: uri }} >
+                </ImageBackground>
+                <Text style={{ color: "#000" }}>{index}</Text>
+            </View>
         )
     }
 
@@ -69,7 +37,7 @@ export default class Album extends Component {
         return (
             <View style={styles.container}>
                 <Carousel
-                    data={entries}
+                    data={this.props.album.album}
                     itemWidth={this.screenWidth / 1.2}
                     sliderWidth={this.screenWidth / 1.1}
                     itemHeight={this.screenHeight / 2}
@@ -89,3 +57,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#D2D2D2'
     },
 })
+
+const mapsStateToProps = ({ album }) => {
+    console.log("sdsdsdsd " + album.album[0].uri)
+    return {
+        album: album
+    }
+}
+
+//export default connect(mapsStateToProps)(Album)
+export default connect(album => ({ album: album.album }))(Album)

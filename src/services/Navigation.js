@@ -33,9 +33,10 @@ const albumStackNavigator = createStackNavigator({
   Upload: {
     screen: Album,
     navigationOptions: {
+      headerTransparent: true,
       headerTitle: 'Album',
-      headerTintColor: 'white',
-      headerStyle: { backgroundColor: Colors.greyPrimary },
+      headerTintColor: Colors.greySecundary,
+      headerStyle: { backgroundColor: Colors.greyBackground },
     }
   }
 }, {
@@ -44,7 +45,7 @@ const albumStackNavigator = createStackNavigator({
 
 const uploadStackNavigator = createStackNavigator({
   Upload: {
-    screen: Cart,
+    screen: Add,
     navigationOptions: {
       headerTitle: 'Adicionar Fotos',
       headerTintColor: 'white',
@@ -122,4 +123,4 @@ const switchNavigator = createSwitchNavigator({
   Auth: loginStackNavigator,
 }, { initialRouteName: 'Splash' })
 
-export default createAppContainer(albumStackNavigator)
+export default createAppContainer(switchNavigator)
