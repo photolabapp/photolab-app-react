@@ -28,6 +28,10 @@ class Album extends Component {
     width = this.screenWidth / 1.2
     height = this.screenHeight / 1.8
 
+    cropImage = photo => {
+        
+    }
+
     renderItem = ({ item, index }) => {
         //this.setState({ current: index + 1 })
 
@@ -35,6 +39,7 @@ class Album extends Component {
         return (
             <View>
                 <ImageBackground
+                    ref={c => this.cropImage(c)}
                     style={{
                         width: this.width,
                         height: this.height,
@@ -44,7 +49,8 @@ class Album extends Component {
                         elevation: this.props.album.album.length - index
                     }}
                     imageStyle={{ borderRadius: 20 }}
-                    source={{ uri: uri }} >
+                    source={{ uri: uri }} 
+                    nPress={() => this.login()}>
                 </ImageBackground>
             </View>
         )
