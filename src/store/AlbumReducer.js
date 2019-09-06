@@ -1,8 +1,5 @@
-import Login from "../screens/login/Login";
-
-const UPDATE_ALBUM = "UPDATE_ALBUM"
-
 const initialState = {
+    /*
     album: [
         {
             uri: 'http://conteudo.imguol.com.br/c/entretenimento/1b/2019/09/01/porsche-macan-1567368649708_v2_750x421.jpg'
@@ -17,16 +14,22 @@ const initialState = {
             uri: 'http://conteudo.imguol.com.br/c/entretenimento/2f/2019/09/01/porsche-macan-1567368615884_v2_750x421.jpg'
         }
     ]
+    */
+   album: []
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case UPDATE_ALBUM:
+        case "ADD_PHOTO":
             return {
                 album: [...state.album, action.payload]
             }
+        case "UPDATE_PHOTO":
+            return {
+                album: [...state.album][action.index] = action.payload
+            }
         default:
             return state
-               
+
     }
 }

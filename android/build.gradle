@@ -10,10 +10,10 @@ buildscript {
     }
     repositories {
         google()
-        //jcenter()
-        jcenter {
-            url("http://nexus-cloud.riachuelo.net/nexus/repository/maven-public/")
-        }
+        jcenter()
+        //jcenter {
+        //    url("http://nexus-cloud.riachuelo.net/nexus/repository/maven-public/")
+        //}
 
     }
     dependencies {
@@ -35,12 +35,14 @@ allprojects {
             // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")
         }
+        maven { url "https://jitpack.io" }
 
         google()
-        //jcenter()
-        jcenter {
-            url("http://nexus-cloud.riachuelo.net/nexus/repository/maven-public/")
-        }
+        jcenter()
+
+        //jcenter {
+        //    url("http://nexus-cloud.riachuelo.net/nexus/repository/maven-public/")
+        //}
 
     }
 }

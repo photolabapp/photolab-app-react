@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { updatePhoto } from '../../store/AlbumAction'
 import {
     View,
     Text,
@@ -9,7 +10,7 @@ import {
     TouchableHighlight
 } from 'react-native'
 import Carousel from 'react-native-snap-carousel';
-import { ThemeConsumer } from 'react-native-elements';
+import ImagePicker from 'react-native-image-crop-picker'
 
 class Album extends Component {
     constructor(props) {
@@ -24,22 +25,36 @@ class Album extends Component {
 
     screenWidth = Math.round(Dimensions.get('window').width);
     screenHeight = Math.round(Dimensions.get('window').height);
-
     width = this.screenWidth / 1.2
     height = this.screenHeight / 1.8
 
-    cropImage = photo => {
-        
+    _currentItem = {}
+
+    cropImage = () => {
+        console.log("SDSDSDSD ----- LOG --- click crop")
+        /*
+        ImagePicker.openCropper({
+            path: this._carousel.uri,
+            width: 300,
+            height: 400
+        }).then(image => {
+            console.log(image);
+            this.props.updatePhoto
+        });
+        */
     }
 
-    renderItem = ({ item, index }) => {
-        //this.setState({ current: index + 1 })
+    onSnapToItem = (index) => {
+        _currentItem = this.props.album.album[index]
+        console.log("SDSDSDSD ----- LOG --- call crop " + this._currentItem.uri)
+    }
 
+    //TODO - Adicionar uma moldura cinza nas fotos
+    renderItem = ({ item, index }) => {
         const { uri } = item
         return (
             <View>
                 <ImageBackground
-                    ref={c => this.cropImage(c)}
                     style={{
                         width: this.width,
                         height: this.height,
@@ -49,8 +64,8 @@ class Album extends Component {
                         elevation: this.props.album.album.length - index
                     }}
                     imageStyle={{ borderRadius: 20 }}
-                    source={{ uri: uri }} 
-                    nPress={() => this.login()}>
+                    source={{ uri: uri }}
+                    onPress={this.cropImage()}>
                 </ImageBackground>
             </View>
         )
@@ -60,6 +75,7 @@ class Album extends Component {
         return (
             <View style={styles.container}>
                 <Carousel
+                    onSnapToItem={this.onSnapToItem}
                     data={this.props.album.album}
                     itemWidth={this.width}
                     sliderWidth={this.screenWidth}
@@ -68,7 +84,7 @@ class Album extends Component {
 
                 <Text style={styles.info}>Quantidade: {this.props.album.album.length} fotos</Text>
                 <Text style={styles.info}>Valor Total: R$ {this.props.album.album.length * this.state.value}</Text>
-                <TouchableHighlight style={[styles.buttonContainer, styles.button]} onPress={() => this.login()}>
+                <TouchableHighlight style={[styles.buttonContainer, styles.button]} >
                     <Text style={{ color: '#FFF' }}>FINALIZAR COMPRA</Text>
                 </TouchableHighlight>
             </View>

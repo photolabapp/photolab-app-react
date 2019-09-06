@@ -10,18 +10,15 @@ class Add extends Component {
 
     constructor(props) {
         super(props);
-        console.log("SDSDSSDDSD constructor")
     }
 
     componentDidUpdate(prevProps) {
-        console.log("SDSDSSDDSD " + prevProps.isFocused + " " + this.props.isFocused)
         if (this.props.isFocused) {
             this.upload()
         }
     }
 
     componentDidMount() {
-        console.log("SDSDSSDDSD MONTED")
         this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     }
 
@@ -33,15 +30,6 @@ class Add extends Component {
         this.props.navigation.navigate('Album')
         return true;
     }
-
-    /*
-    updateAlbum = (photo) => {
-        return {
-            type: "ALBUM_UPDATE",
-            payload: { uri: photo.uri }
-        }
-    }
-    */
 
     upload = () => {
         ImagePicker.launchImageLibrary({
