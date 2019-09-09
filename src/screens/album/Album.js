@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updatePhoto } from '../../store/AlbumAction'
+import { bindActionCreators } from 'redux';
 import {
     View,
     Text,
     StyleSheet,
     Dimensions,
     ImageBackground,
-    TouchableHighlight
+    TouchableHighlight,
+    TouchableOpacity
 } from 'react-native'
 import Carousel from 'react-native-snap-carousel';
 import ImagePicker from 'react-native-image-crop-picker'
@@ -30,22 +32,22 @@ class Album extends Component {
 
     _currentItem = {}
 
-    cropImage = () => {
-        console.log("SDSDSDSD ----- LOG --- click crop")
-        /*
+    cropImage = (index) => {
+        console.log("SDSDSDSD ----- LOG --- click cropppppppp " + index)
+        let photo = this.props.album.album[index]
         ImagePicker.openCropper({
-            path: this._carousel.uri,
+            path: photo.uri,
             width: 300,
             height: 400
         }).then(image => {
-            console.log(image);
-            this.props.updatePhoto
+            console.log("SDSDSDSD ----- LOG --- click image cropped" + image.path);
+            this.props.updatePhoto({ uri: image.path }, index)
         });
-        */
     }
 
     onSnapToItem = (index) => {
         _currentItem = this.props.album.album[index]
+        console.log("SDSDSDSD ----- LOG --- call index " + index)
         console.log("SDSDSDSD ----- LOG --- call crop " + this._currentItem.uri)
     }
 
@@ -54,19 +56,20 @@ class Album extends Component {
         const { uri } = item
         return (
             <View>
-                <ImageBackground
-                    style={{
-                        width: this.width,
-                        height: this.height,
-                        borderRadius: 20,
-                        borderWidth: 1,
-                        borderColor: '#D2D2D2',
-                        elevation: this.props.album.album.length - index
-                    }}
-                    imageStyle={{ borderRadius: 20 }}
-                    source={{ uri: uri }}
-                    onPress={this.cropImage()}>
-                </ImageBackground>
+                <TouchableOpacity onPress={() => this.cropImage(index)}>
+                    <ImageBackground
+                        style={{
+                            width: this.width,
+                            height: this.height,
+                            borderRadius: 20,
+                            borderWidth: 1,
+                            borderColor: '#D2D2D2',
+                            elevation: this.props.album.album.length - index
+                        }}
+                        imageStyle={{ borderRadius: 20 }}
+                        source={{ uri: uri }}>
+                    </ImageBackground>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -75,7 +78,7 @@ class Album extends Component {
         return (
             <View style={styles.container}>
                 <Carousel
-                    onSnapToItem={this.onSnapToItem}
+                    //onSnapToItem={this.onSnapToItem}
                     data={this.props.album.album}
                     itemWidth={this.width}
                     sliderWidth={this.screenWidth}
@@ -124,4 +127,8 @@ const styles = StyleSheet.create({
     },
 })
 
-export default connect(album => ({ album: album.album }))(Album)
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({ updatePhoto }, dispatch)
+);
+
+export default connect(album => ({ album: album.album }), mapDispatchToProps)(Album)

@@ -1,3 +1,5 @@
+import react from 'react'
+
 const initialState = {
     /*
     album: [
@@ -25,8 +27,12 @@ export default (state = initialState, action) => {
                 album: [...state.album, action.payload]
             }
         case "UPDATE_PHOTO":
+            console.log("SDSDSDSDSD " + action.index + " " + action.payload.uri)
+            let newState = [...state]
+            newState[action.index] = action.payload
             return {
-                album: [...state.album][action.index] = action.payload
+                //album: [newState]
+                album: [...state.album, action.payload]
             }
         default:
             return state

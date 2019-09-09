@@ -7,9 +7,10 @@ export const addPhoto = photo => {
     }
 }
 
-export const updatePhoto = photo => {
+export const updatePhoto = (photo, index) => {
     return {
         type: "UPDATE_PHOTO",
+        index: index,
         payload: {
             uri: photo.uri
         }
