@@ -1,23 +1,13 @@
 import react from 'react'
 
 const initialState = {
-    /*
     album: [
         {
-            uri: 'http://conteudo.imguol.com.br/c/entretenimento/1b/2019/09/01/porsche-macan-1567368649708_v2_750x421.jpg'
-        },
-        {
-            uri: 'http://conteudo.imguol.com.br/c/entretenimento/29/2019/09/01/porsche-macan-1567368584320_v2_750x421.jpg'
-        },
-        {
-            uri: 'http://conteudo.imguol.com.br/c/entretenimento/67/2019/09/01/porsche-macan-1567368444505_v2_750x421.jpg'
-        },
-        {
-            uri: 'http://conteudo.imguol.com.br/c/entretenimento/2f/2019/09/01/porsche-macan-1567368615884_v2_750x421.jpg'
+            raw: 'https://a-static.mlcdn.com.br/618x463/quadro-decorativo-canvas-p-escritorios-casas-de-praia-paisagem-praia-ii-incasa-design/incasadesign/cv0133pri/f45e60739214167a99eea02c17016b91.jpg',
+            cropped: 'https://a-static.mlcdn.com.br/618x463/quadro-decorativo-canvas-p-escritorios-casas-de-praia-paisagem-praia-ii-incasa-design/incasadesign/cv0133pri/f45e60739214167a99eea02c17016b91.jpg'
         }
     ]
-    */
-   album: []
+    //album: []
 }
 
 export default (state = initialState, action) => {
@@ -27,12 +17,11 @@ export default (state = initialState, action) => {
                 album: [...state.album, action.payload]
             }
         case "UPDATE_PHOTO":
-            console.log("SDSDSDSDSD " + action.index + " " + action.payload.uri)
-            let newState = [...state]
-            newState[action.index] = action.payload
+            var newState = [...state.album]
+            newState[action.index].cropped = action.payload.cropped
+            
             return {
-                //album: [newState]
-                album: [...state.album, action.payload]
+                album: newState
             }
         default:
             return state

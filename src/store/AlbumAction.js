@@ -2,17 +2,19 @@ export const addPhoto = photo => {
     return {
         type: "ADD_PHOTO",
         payload: {
-            uri: photo.uri
+            raw: photo.uri,
+            cropped: photo.uri
         }
     }
 }
 
 export const updatePhoto = (photo, index) => {
+    console.log("SDSDDSD CALLL updatePhoto " + photo.uri + " index " + index);
     return {
         type: "UPDATE_PHOTO",
         index: index,
         payload: {
-            uri: photo.uri
+            cropped: photo.uri
         }
     }
 }

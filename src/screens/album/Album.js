@@ -30,30 +30,22 @@ class Album extends Component {
     width = this.screenWidth / 1.2
     height = this.screenHeight / 1.8
 
-    _currentItem = {}
-
     cropImage = (index) => {
-        console.log("SDSDSDSD ----- LOG --- click cropppppppp " + index)
         let photo = this.props.album.album[index]
         ImagePicker.openCropper({
-            path: photo.uri,
+            path: photo.raw,
             width: 300,
             height: 400
         }).then(image => {
-            console.log("SDSDSDSD ----- LOG --- click image cropped" + image.path);
             this.props.updatePhoto({ uri: image.path }, index)
+        }).catch((err) => {
+            console.log("SDSDSDSDSD crop error " + err)
         });
-    }
-
-    onSnapToItem = (index) => {
-        _currentItem = this.props.album.album[index]
-        console.log("SDSDSDSD ----- LOG --- call index " + index)
-        console.log("SDSDSDSD ----- LOG --- call crop " + this._currentItem.uri)
     }
 
     //TODO - Adicionar uma moldura cinza nas fotos
     renderItem = ({ item, index }) => {
-        const { uri } = item
+        const { cropped } = item
         return (
             <View>
                 <TouchableOpacity onPress={() => this.cropImage(index)}>
@@ -67,7 +59,7 @@ class Album extends Component {
                             elevation: this.props.album.album.length - index
                         }}
                         imageStyle={{ borderRadius: 20 }}
-                        source={{ uri: uri }}>
+                        source={{ uri: cropped }}>
                     </ImageBackground>
                 </TouchableOpacity>
             </View>
@@ -78,7 +70,6 @@ class Album extends Component {
         return (
             <View style={styles.container}>
                 <Carousel
-                    //onSnapToItem={this.onSnapToItem}
                     data={this.props.album.album}
                     itemWidth={this.width}
                     sliderWidth={this.screenWidth}
@@ -129,6 +120,13 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({ updatePhoto }, dispatch)
-);
+)
 
-export default connect(album => ({ album: album.album }), mapDispatchToProps)(Album)
+const mapStateToProps = album => {
+    console.log("SDSDDSD CALLL mapStateToProps");
+    return {
+        album: album.album
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Album)
