@@ -38,7 +38,7 @@ export default class SignUp extends Component {
         } else {
             create(user).then(response => {
                 console.log(response)
-                Alert.alert("Cadastro", "Cadastro realiado com sucesso!!!!")
+                Alert.alert("Cadastro", "Cadastro efetuado com sucesso!!!!")
                 this.props.navigation.navigate('Login')
             }).catch( error => console.log(error) );
         }

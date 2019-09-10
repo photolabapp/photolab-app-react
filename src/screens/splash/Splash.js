@@ -5,8 +5,8 @@ import { createStackNavigator, createAppContainer, createSwitchNavigator } from 
 export default class Splash extends Component {
     constructor(props) {
         super(props)
-        //this.isLogged()
-        this.props.navigation.navigate('App');
+        this.isLogged()
+        //this.props.navigation.navigate('App');
     }
 
     render() {
@@ -22,11 +22,14 @@ export default class Splash extends Component {
 
     isLogged = () => {
         this.getItem('ACCESS_TOKEN').then(value => {
+            console.log("LOG SDSDDSDSD --------- get value token " + value)
             if (value == null) {
                 this.props.navigation.navigate('Auth');
             } else {
                 this.props.navigation.navigate('App');
             }
+        }).catch((err) => {
+            console.log("LOG SDSDDSDSD get token error " + err)
         });
     }
 }

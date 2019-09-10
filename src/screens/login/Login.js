@@ -34,12 +34,13 @@ export default class Login extends Component {
         if (error.size > 0) {
             this.setState({ error: error })
         } else {
-            console.log("LOG --------- call login")
+            console.log("LOG SDSDDSDSD --------- call login")
             login(user).then(response => {
-                this.setToken(response.accessToken)
-                this.props.navigation.navigate('Auth')
+                this.setToken(response.data.accessToken)
+                console.log("LOG SDSDDSDSD --------- call login " + response.data.accessToken)
+                this.props.navigation.navigate('App')
                 console.log(response)
-            }).catch(error => console.log(error) );
+            }).catch(error =>  console.log("LOG SDSDDSDSD --------- error " + error) );
         }
     }
 
@@ -47,7 +48,7 @@ export default class Login extends Component {
         _storeData = async () => {
             try {
                 await AsyncStorage.setItem('ACCESS_TOKEN', token);
-            } catch (error) { }
+            } catch (error) { console.log("LOG SDSDDSDSD --------- set token error " + error) }
         };
     }
 
