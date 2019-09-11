@@ -123,4 +123,4 @@ const switchNavigator = createSwitchNavigator({
   Auth: loginStackNavigator,
 }, { initialRouteName: 'Splash' })
 
-export default createAppContainer(switchNavigator)
+export default createAppContainer(bottomTab)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updatePhoto } from '../../store/AlbumAction'
-import { bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux'
 import {
     View,
     Text,
@@ -11,8 +11,17 @@ import {
     TouchableHighlight,
     TouchableOpacity
 } from 'react-native'
-import Carousel from 'react-native-snap-carousel';
+import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
+import { TabView, SceneMap } from 'react-native-tab-view';
+
+const FirstRoute = () => (
+    <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
+);
+
+const SecondRoute = () => (
+    <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
+);
 
 class Album extends Component {
     constructor(props) {
@@ -22,6 +31,11 @@ class Album extends Component {
             current: 1,
             total: 0,
             value: 20.0,
+            index: 0,
+            routes: [
+                { key: 'first', title: 'First' },
+                { key: 'second', title: 'Second' },
+            ],
         }
     }
 
@@ -43,7 +57,6 @@ class Album extends Component {
         });
     }
 
-    //TODO - Adicionar uma moldura cinza nas fotos
     renderItem = ({ item, index }) => {
         const { cropped } = item
         return (
@@ -66,6 +79,7 @@ class Album extends Component {
         )
     }
 
+    /*
     render() {
         return (
             <View style={styles.container}>
@@ -84,6 +98,21 @@ class Album extends Component {
             </View>
         )
     }
+    */
+    render() {
+        return (
+            <TabView
+                style={{ paddingTop: 55 }}
+                navigationState={this.state}
+                renderScene={SceneMap({
+                    first: FirstRoute,
+                    second: SecondRoute,
+                })}
+                onIndexChange={index => this.setState({ index })}
+                initialLayout={{ width: Dimensions.get('window').width }}
+            />
+        );
+    } F
 }
 
 const styles = StyleSheet.create({
@@ -115,6 +144,9 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: "#00b5ec",
+    },
+    scene: {
+        flex: 1,
     },
 })
 
