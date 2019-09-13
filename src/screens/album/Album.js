@@ -15,14 +15,6 @@ import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
 import { TabView, SceneMap } from 'react-native-tab-view';
 
-const FirstRoute = () => (
-    <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
-);
-
-const SecondRoute = () => (
-    <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
-);
-
 class Album extends Component {
     constructor(props) {
         super(props)
@@ -33,8 +25,8 @@ class Album extends Component {
             value: 20.0,
             index: 0,
             routes: [
-                { key: 'first', title: 'First' },
-                { key: 'second', title: 'Second' },
+                { key: 'first', title: 'Carousel' },
+                { key: 'second', title: 'Grid' },
             ],
         }
     }
@@ -79,40 +71,41 @@ class Album extends Component {
         )
     }
 
-    /*
-    render() {
-        return (
-            <View style={styles.container}>
-                <Carousel
-                    data={this.props.album.album}
-                    itemWidth={this.width}
-                    sliderWidth={this.screenWidth}
-                    itemHeight={this.height}
-                    renderItem={this.renderItem} />
+    firstRoute = () => (
+        <View style={styles.containerScene}>
+            <Carousel
+                data={this.props.album.album}
+                itemWidth={this.width}
+                sliderWidth={this.screenWidth}
+                itemHeight={this.height}
+                renderItem={this.renderItem} />
 
-                <Text style={styles.info}>Quantidade: {this.props.album.album.length} fotos</Text>
-                <Text style={styles.info}>Valor Total: R$ {this.props.album.album.length * this.state.value}</Text>
-                <TouchableHighlight style={[styles.buttonContainer, styles.button]} >
-                    <Text style={{ color: '#FFF' }}>FINALIZAR COMPRA</Text>
-                </TouchableHighlight>
-            </View>
-        )
-    }
-    */
+            <Text style={styles.info}>Quantidade: {this.props.album.album.length} fotos</Text>
+            <Text style={styles.info}>Valor Total: R$ {this.props.album.album.length * this.state.value}</Text>
+            <TouchableHighlight style={[styles.buttonContainer, styles.button]} >
+                <Text style={{ color: '#FFF' }}>FINALIZAR COMPRA</Text>
+            </TouchableHighlight>
+        </View>
+    )
+
+    secondRoute = () => (
+        <View style={[styles.scene, { backgroundColor: '#D2D2D2' }]} />
+    )
+
     render() {
         return (
             <TabView
-                style={{ paddingTop: 55 }}
+                style={{ paddingTop: 55, color: "#D2D2D2" }}
                 navigationState={this.state}
                 renderScene={SceneMap({
-                    first: FirstRoute,
-                    second: SecondRoute,
+                    first: this.firstRoute,
+                    second: this.secondRoute,
                 })}
                 onIndexChange={index => this.setState({ index })}
                 initialLayout={{ width: Dimensions.get('window').width }}
             />
-        );
-    } F
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -123,6 +116,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#D2D2D2',
+    },
+    containerScene: {
+        paddingTop: 10,
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     info: {
         color: '#000',
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     },
     scene: {
         flex: 1,
+        flexDirection: "column",
     },
 })
 
