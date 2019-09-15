@@ -9,7 +9,8 @@ import {
     Dimensions,
     ImageBackground,
     TouchableHighlight,
-    TouchableOpacity
+    TouchableOpacity,
+    FlatList
 } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
@@ -33,15 +34,15 @@ class Album extends Component {
 
     screenWidth = Math.round(Dimensions.get('window').width);
     screenHeight = Math.round(Dimensions.get('window').height);
-    width = this.screenWidth / 1.2
-    height = this.screenHeight / 1.8
+    width = 190
+    height = 285
 
     cropImage = (index) => {
         let photo = this.props.album.album[index]
         ImagePicker.openCropper({
             path: photo.raw,
-            width: 300,
-            height: 400
+            width: this.width,
+            height: this.height
         }).then(image => {
             this.props.updatePhoto({ uri: image.path }, index)
         }).catch((err) => {
@@ -89,7 +90,25 @@ class Album extends Component {
     )
 
     secondRoute = () => (
-        <View style={[styles.scene, { backgroundColor: '#D2D2D2' }]} />
+        <View style={styles.containerScene}>
+            <FlatList
+                data={this.props.album.album}
+                numColumns={3}
+                renderItem={({ item, index }) => {
+                    return (
+                        <View style={styles.imageFlatList}>
+                            <TouchableOpacity onPress={() => this.cropImage(index)}>
+                                <ImageBackground
+                                    style={{ width: 100, height: 150, }}
+                                    source={{ uri: item.cropped }}>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                      
+                        </View>
+                    );
+                }}
+            />
+        </View>
     )
 
     render() {
@@ -97,10 +116,16 @@ class Album extends Component {
             <TabView
                 style={{ paddingTop: 55, color: "#D2D2D2" }}
                 navigationState={this.state}
-                renderScene={SceneMap({
-                    first: this.firstRoute,
-                    second: this.secondRoute,
-                })}
+                renderScene={({ route }) => {
+                    switch (route.key) {
+                        case 'first':
+                            return this.firstRoute();
+                        case 'second':
+                            return this.secondRoute();
+                        default:
+                            return null;
+                    }
+                }}
                 onIndexChange={index => this.setState({ index })}
                 initialLayout={{ width: Dimensions.get('window').width }}
             />
@@ -123,6 +148,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    imageFlatList: {
+        alignItems: "center",
+        flexGrow: 1,
+        margin: 4,
+        padding: 1
     },
     info: {
         color: '#000',
@@ -156,10 +187,7 @@ const mapDispatchToProps = dispatch => (
 )
 
 const mapStateToProps = album => {
-    console.log("SDSDDSD CALLL mapStateToProps");
-    return {
-        album: album.album
-    }
+    return { album: album.album }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Album)
