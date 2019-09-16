@@ -14,8 +14,7 @@ import {
 } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
-import { TabView, SceneMap } from 'react-native-tab-view';
-import { thisTypeAnnotation } from '@babel/types';
+import { TabView } from 'react-native-tab-view';
 
 class Album extends Component {
     constructor(props) {
@@ -23,8 +22,6 @@ class Album extends Component {
 
         this.state = {
             current: 1,
-            total: 0,
-            value: 20.0,
             index: 0,
             routes: [
                 { key: 'first', title: 'Carousel' },
@@ -47,7 +44,7 @@ class Album extends Component {
         }).then(image => {
             this.props.updatePhoto({ uri: image.path }, index)
         }).catch((err) => {
-            console.log("SDSDSDSDSD crop error " + err)
+            console.log("crop error " + err)
         });
     }
 
@@ -147,14 +144,6 @@ class Album extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        paddingTop: 55,
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#D2D2D2',
-    },
     containerScene: {
         paddingTop: 15,
         flex: 1,
