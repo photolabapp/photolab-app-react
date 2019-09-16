@@ -15,6 +15,7 @@ import {
 import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
 import { TabView, SceneMap } from 'react-native-tab-view';
+import { thisTypeAnnotation } from '@babel/types';
 
 class Album extends Component {
     constructor(props) {
@@ -34,8 +35,8 @@ class Album extends Component {
 
     screenWidth = Math.round(Dimensions.get('window').width);
     screenHeight = Math.round(Dimensions.get('window').height);
-    width = 190
-    height = 285
+    width = 200
+    height = 300
 
     cropImage = (index) => {
         let photo = this.props.album.album[index]
@@ -48,6 +49,10 @@ class Album extends Component {
         }).catch((err) => {
             console.log("SDSDSDSDSD crop error " + err)
         });
+    }
+
+    checkout = () => {
+        this.props.navigation.navigate('Cart')
     }
 
     renderItem = ({ item, index }) => {
@@ -81,11 +86,13 @@ class Album extends Component {
                 itemHeight={this.height}
                 renderItem={this.renderItem} />
 
-            <Text style={styles.info}>Quantidade: {this.props.album.album.length} fotos</Text>
-            <Text style={styles.info}>Valor Total: R$ {this.props.album.album.length * this.state.value}</Text>
-            <TouchableHighlight style={[styles.buttonContainer, styles.button]} >
-                <Text style={{ color: '#FFF' }}>FINALIZAR COMPRA</Text>
-            </TouchableHighlight>
+            <View style={{ marginTop: 10 }}>
+                <TouchableHighlight
+                    style={[styles.buttonContainer, styles.button]}
+                    onPress={() => this.checkout()} >
+                    <Text style={{ color: '#FFF' }}>FINALIZAR COMPRA</Text>
+                </TouchableHighlight>
+            </View>
         </View>
     )
 
@@ -103,18 +110,24 @@ class Album extends Component {
                                     source={{ uri: item.cropped }}>
                                 </ImageBackground>
                             </TouchableOpacity>
-                      
                         </View>
-                    );
+                    )
                 }}
             />
+            <View style={{ marginTop: 10 }}>
+                <TouchableHighlight
+                    style={[styles.buttonContainer, styles.button]}
+                    onPress={() => this.checkout()} >
+                    <Text style={{ color: '#FFF' }}>FINALIZAR COMPRA</Text>
+                </TouchableHighlight>
+            </View>
         </View>
     )
 
     render() {
         return (
             <TabView
-                style={{ paddingTop: 55, color: "#D2D2D2" }}
+                style={{ color: "#D2D2D2" }}
                 navigationState={this.state}
                 renderScene={({ route }) => {
                     switch (route.key) {
@@ -143,7 +156,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#D2D2D2',
     },
     containerScene: {
-        paddingTop: 10,
+        paddingTop: 15,
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
@@ -167,10 +180,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 10,
         width: 250,
         borderRadius: 5,
-        marginBottom: 10,
+        marginBottom: 20,
         elevation: 4
     },
     button: {

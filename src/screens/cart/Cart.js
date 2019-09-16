@@ -8,23 +8,16 @@ import {
 import ImagePicker from 'react-native-image-picker'
 
 
-export default class Cart extends Component {
+class Cart extends Component {
 
     constructor(props) {
         super(props);
-    }
 
-    upload = () => {
-        ImagePicker.launchImageLibrary({
-            title: 'Select Avatar',
-            customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            }
-        }, (response) => {
-            // Same code as in above section!
-        });
+        this.state = {
+            current: 1,
+            total: 0,
+            value: 20.0,
+        }
     }
 
     render() {
@@ -56,3 +49,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#00b5ec",
     }
 })
+
+const mapStateToProps = album => {
+    return { album: album.album }
+}
+
+export default connect(mapStateToProps)(Cart)

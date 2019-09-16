@@ -33,10 +33,7 @@ const albumStackNavigator = createStackNavigator({
   Upload: {
     screen: Album,
     navigationOptions: {
-      headerTransparent: true,
-      headerTitle: 'Album',
-      headerTintColor: Colors.greySecundary,
-      headerStyle: { backgroundColor: Colors.greyBackground },
+      header: null
     }
   }
 }, {
@@ -47,9 +44,7 @@ const uploadStackNavigator = createStackNavigator({
   Upload: {
     screen: Add,
     navigationOptions: {
-      headerTitle: 'Adicionar Fotos',
-      headerTintColor: 'white',
-      headerStyle: { backgroundColor: Colors.greyPrimary },
+      header: null
     }
   }
 }, {
@@ -60,9 +55,7 @@ const configStackNavigator = createStackNavigator({
   Config: {
     screen: Config,
     navigationOptions: {
-      headerTitle: 'Configuração',
-      headerTintColor: 'white',
-      headerStyle: { backgroundColor: Colors.greyPrimary },
+      header: null
     }
   }
 }, {
@@ -73,9 +66,7 @@ const cartStackNavigator = createStackNavigator({
   Cart: {
     screen: Cart,
     navigationOptions: {
-      headerTitle: 'Carrinho',
-      headerTintColor: 'white',
-      headerStyle: { backgroundColor: Colors.greyPrimary }
+      header: null
     }
   }
 }, {
@@ -87,9 +78,12 @@ const bottomTab = createBottomTabNavigator({
   Cart: cartStackNavigator,
   Add: uploadStackNavigator,
   Credito: configStackNavigator,
-  Usuario: configStackNavigator
+  Usuario: configStackNavigator,
 }, {
     initialRouteName: 'Album',
+    navigationOptions: {
+      header: null
+    },
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => {
         const { routeName } = navigation.state
