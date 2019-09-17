@@ -38,11 +38,8 @@ class Add extends Component {
                 path: 'images',
             }
         }, (response) => {
-            console.log("Fotoooooo " + response)
-            this.handleBackPress()
-            //this.updateAlbum(response)
             this.props.addPhoto(response)
-            // Same code as in above section!
+            this.handleBackPress()
         });
     }
 
