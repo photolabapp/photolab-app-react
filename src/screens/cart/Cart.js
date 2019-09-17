@@ -3,10 +3,8 @@ import { connect } from 'react-redux'
 import {
     StyleSheet,
     Text,
-    View,
-    TouchableHighlight
+    View
 } from 'react-native';
-import ImagePicker from 'react-native-image-picker'
 
 
 class Cart extends Component {
@@ -27,14 +25,32 @@ class Cart extends Component {
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>Sacola de Compra</Text>
                 </View>
-                <View style={styles.buyDataContainer}>
+
+                <View style={styles.cardViewContainer}>
                     <Text style={styles.buyTitleText}>
                         Quantidade de fotos:
                         <Text style={styles.buyTitleText}>
                             {this.props.album.album.length}
                         </Text>
                     </Text>
+                    <Text style={styles.buyTitleText}>
+                        Valor da foto:
+                        <Text style={styles.buyTitleText}>
+                            R$ {this.state.value}
+                        </Text>
+                    </Text>
+                    <Text style={styles.buyTitleText}>
+                        Valor total das fotos:
+                        <Text style={styles.buyTitleText}>
+                            R$ {this.state.value * this.props.album.album.length}
+                        </Text>
+                    </Text>
                 </View>
+
+                <View style={styles.cardViewContainer}>
+                    
+                </View>
+
             </View>
         )
     }
@@ -61,7 +77,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: '#D2D2D2'
     },
-    buyDataContainer: {
+    cardViewContainer: {
         height: 400,
         flexDirection: "column",
         marginTop: 16,
