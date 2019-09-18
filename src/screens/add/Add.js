@@ -38,8 +38,8 @@ class Add extends Component {
                 path: 'images',
             }
         }, (response) => {
-            this.props.addPhoto(response)
             this.handleBackPress()
+            this.props.addPhoto(response)
         });
     }
 
