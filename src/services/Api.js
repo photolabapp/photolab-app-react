@@ -12,3 +12,7 @@ export const login = (user) => {
 export const create = (user) => {
     return axios.post("user/", user)
 }
+
+export const getShipping = (cep) => {
+    return axios.get("shipping/", cep)
+}

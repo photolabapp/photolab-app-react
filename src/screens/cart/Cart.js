@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import MovieDecoration from './components/MovieDecoration'
+import { shipping } from '../../services/Api'
 import { connect } from 'react-redux'
 import {
     StyleSheet,
     Text,
     View,
     Dimensions,
-    ImageBackground
+    ImageBackground,
+    TouchableHighlight
 } from 'react-native';
+import EditText from '../../components/EditText'
 import Carousel from 'react-native-snap-carousel'
 
 class Cart extends Component {
@@ -19,6 +22,8 @@ class Cart extends Component {
             current: 1,
             total: 0,
             value: 20.0,
+            cep: "",
+            shipping: null
         }
     }
 
@@ -26,6 +31,14 @@ class Cart extends Component {
     screenHeight = Math.round(Dimensions.get('window').height);
     width = 50
     height = 75
+
+    shipping = (cep) => {
+        if (cep.length == 8) {
+            shipping(cep)
+                .then(response => this.setState(response))
+                .catch(error => console.log("shipping error " + error));
+        }
+    }
 
     //transform: [{ rotate: '90deg'}]
     renderItem = ({ item, index }) => {
@@ -59,13 +72,14 @@ class Cart extends Component {
                 <Carousel
                     data={this.props.album.album}
                     layout="default"
+                    zoomScale={0}
                     itemWidth={this.width}
                     sliderWidth={this.screenWidth}
                     itemHeight={this.height}
                     renderItem={this.renderItem} />
 
                 <View style={styles.cardViewContainer}>
-
+                    <Text style={styles.shippingHeader}>Resumo do pedido</Text>
                     <View style={styles.buyInfo}>
                         <Text style={styles.buyTitleText}>Quantidade de fotos:</Text>
                         <Text style={styles.buyDescText}>{this.props.album.album.length}</Text>
@@ -85,7 +99,30 @@ class Cart extends Component {
 
                 <View style={styles.cardViewContainer}>
                     <Text style={styles.shippingHeader}>Estime seu frete</Text>
+                    <EditText
+                        placeholder="cep:"
+                        keyboardType="numeric"
+                        onChangeText={(password) => this.setState({ password })}
+                    />
+                    <View style={styles.buyInfo}>
+                        <Text style={styles.buyTitleText}>São Paulo</Text>
+                    </View>
+                    <View style={styles.buyInfo}>
+                        <Text style={styles.buyTitleText}>Normal (até 6 dias úteis)*</Text>
+                        <Text style={styles.buyDescText}>R$ --</Text>
+                    </View>
+                    <View style={styles.buyInfo}>
+                        <Text style={styles.buyTitleText}>Retirar na loja (1 dia útil)</Text>
+                        <Text style={styles.buyDescText}>Grátis</Text>
+                    </View>
                 </View>
+
+                <TouchableHighlight
+                    style={[styles.buttonContainer, styles.button]}
+                    onPress={() => this.checkout()} >
+                    <Text style={{ color: '#FFF' }}>FINALIZAR COMPRA</Text>
+                </TouchableHighlight>
+
             </View>
         )
     }
@@ -122,7 +159,7 @@ const styles = StyleSheet.create({
     buyInfo: {
         paddingStart: 24,
         paddingEnd: 24,
-        marginBottom: 2,
+        marginBottom: 3,
         marginTop: 2,
         flexDirection: "row",
     },
@@ -145,11 +182,25 @@ const styles = StyleSheet.create({
         textAlignVertical: "center",
         textAlign: "left",
         fontWeight: "bold"
-    }
+    },
+    buttonContainer: {
+        height: 45,
+        marginTop: 20,
+        marginStart: 48,
+        marginEnd: 48,
+        borderRadius: 5,        
+        elevation: 4
+    },
+    button: {
+        backgroundColor: "#00b5ec",
+        flex:1,
+        textAlign: "center",
+        textAlignVertical: "center"
+    },
 })
 
-const mapStateToProps = album => {
-    return { album: album.album }
+const mapStateToProps = state => {
+    return { album: state.album }
 }
 
 /*
