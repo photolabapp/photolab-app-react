@@ -30,7 +30,7 @@ class Cart extends Component {
     screenWidth = Math.round(Dimensions.get('window').width);
     screenHeight = Math.round(Dimensions.get('window').height);
     width = 50
-    height = 75
+    height = 65
 
     shipping = (cep) => {
         if (cep.length == 8) {
@@ -105,9 +105,6 @@ class Cart extends Component {
                         onChangeText={(password) => this.setState({ password })}
                     />
                     <View style={styles.buyInfo}>
-                        <Text style={styles.buyTitleText}>São Paulo</Text>
-                    </View>
-                    <View style={styles.buyInfo}>
                         <Text style={styles.buyTitleText}>Normal (até 6 dias úteis)*</Text>
                         <Text style={styles.buyDescText}>R$ --</Text>
                     </View>
@@ -117,9 +114,7 @@ class Cart extends Component {
                     </View>
                 </View>
 
-                <TouchableHighlight
-                    style={[styles.buttonContainer, styles.button]}
-                    onPress={() => this.checkout()} >
+                <TouchableHighlight style={[styles.buttonContainer, styles.button]}>
                     <Text style={{ color: '#FFF' }}>FINALIZAR COMPRA</Text>
                 </TouchableHighlight>
 
@@ -154,7 +149,7 @@ const styles = StyleSheet.create({
         marginStart: 16,
         marginEnd: 16,
         backgroundColor: "white",
-        elevation: 4
+        elevation: 2
     },
     buyInfo: {
         paddingStart: 24,
@@ -185,17 +180,16 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         height: 45,
-        marginTop: 20,
-        marginStart: 48,
-        marginEnd: 48,
-        borderRadius: 5,        
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10,
+        width: 250,
+        borderRadius: 5,
+        marginBottom: 20,
         elevation: 4
     },
     button: {
         backgroundColor: "#00b5ec",
-        flex:1,
-        textAlign: "center",
-        textAlignVertical: "center"
     },
 })
 
