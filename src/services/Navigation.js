@@ -12,6 +12,7 @@ import Add from '../screens/add/Add'
 import Splash from '../screens/splash/Splash'
 import Config from '../screens/config/Config'
 import Cart from '../screens/cart/Cart'
+import CartAddress from '../screens/cart/CartAddress'
 import Album from '../screens/album/Album'
 import HeaderLogo from '../components/HeaderLogo'
 
@@ -25,9 +26,8 @@ const loginStackNavigator = createStackNavigator({
     headerMode: 'screen'
   }
 }, {
-    initialRouteName: 'Login'
-  }
-)
+  initialRouteName: 'Login'
+})
 
 const albumStackNavigator = createStackNavigator({
   Upload: {
@@ -37,8 +37,8 @@ const albumStackNavigator = createStackNavigator({
     }
   }
 }, {
-    headerLayoutPreset: 'center'
-  })
+  headerLayoutPreset: 'center'
+})
 
 const uploadStackNavigator = createStackNavigator({
   Upload: {
@@ -48,8 +48,8 @@ const uploadStackNavigator = createStackNavigator({
     }
   }
 }, {
-    headerLayoutPreset: 'center'
-  })
+  headerLayoutPreset: 'center'
+})
 
 const configStackNavigator = createStackNavigator({
   Config: {
@@ -59,8 +59,8 @@ const configStackNavigator = createStackNavigator({
     }
   }
 }, {
-    headerLayoutPreset: 'center'
-  })
+  headerLayoutPreset: 'center'
+})
 
 const cartStackNavigator = createStackNavigator({
   Cart: {
@@ -68,10 +68,17 @@ const cartStackNavigator = createStackNavigator({
     navigationOptions: {
       header: null
     }
+  },
+  CartAddress: {
+    screen: CartAddress,
+    navigationOptions: {
+      headerMode: 'screen',
+      title: 'Meus endereços'
+    }
   }
 }, {
-    headerLayoutPreset: 'center'
-  })
+  headerLayoutPreset: 'center'
+})
 
 const bottomTab = createBottomTabNavigator({
   Album: albumStackNavigator,
@@ -80,35 +87,35 @@ const bottomTab = createBottomTabNavigator({
   Credito: configStackNavigator,
   Usuario: configStackNavigator,
 }, {
-    initialRouteName: 'Album',
-    navigationOptions: {
-      header: null
-    },
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ tintColor }) => {
-        const { routeName } = navigation.state
-        if (routeName === 'Add') {
-          return <Icon name="add-circle-outline" size={40} color="#fff" />
-        } else if (routeName === 'Album') {
-          return <Icon name="photo-album" size={22} color="#fff" />
-        } else if (routeName === 'Cart') {
-          return <Icon name="shopping-cart" size={22} color="#fff" />
-        } else if (routeName === 'Credito') {
-          return <Icon name="credit-card" size={25} color="#fff" />
-        } else if (routeName === 'Usuario') {
-          return <Icon name="perm-identity" size={25} color="#fff" />
-        }
+  initialRouteName: 'Album',
+  navigationOptions: {
+    header: null
+  },
+  defaultNavigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ tintColor }) => {
+      const { routeName } = navigation.state
+      if (routeName === 'Add') {
+        return <Icon name="add-circle-outline" size={40} color="#fff" />
+      } else if (routeName === 'Album') {
+        return <Icon name="photo-album" size={22} color="#fff" />
+      } else if (routeName === 'Cart') {
+        return <Icon name="shopping-cart" size={22} color="#fff" />
+      } else if (routeName === 'Credito') {
+        return <Icon name="credit-card" size={25} color="#fff" />
+      } else if (routeName === 'Usuario') {
+        return <Icon name="perm-identity" size={25} color="#fff" />
       }
-    }),
-    tabBarOptions: {
-      inactiveTintColor: 'white',
-      showIcon: true,
-      showLabel: false,
-      inactiveBackgroundColor: Colors.greyPrimary,
-      activeBackgroundColor: Colors.greySecundary,
-      activeTintColor: 'white'
     }
+  }),
+  tabBarOptions: {
+    inactiveTintColor: 'white',
+    showIcon: true,
+    showLabel: false,
+    inactiveBackgroundColor: Colors.greyPrimary,
+    activeBackgroundColor: Colors.greySecundary,
+    activeTintColor: 'white'
   }
+}
 )
 
 const switchNavigator = createSwitchNavigator({

@@ -4,15 +4,16 @@ import { View, TextInput, StyleSheet } from 'react-native'
 export default class EditText extends Component {
     constructor(props) {
         super(props)
-
-        props.placeholderTextColor="#787d82"
-        props.underlineColorAndroid='transparent'
     }
 
     render() {
         return (
             <View style={styles.inputContainer}>
-                <TextInput style={styles.inputs} {...this.props} />
+                <TextInput 
+                    style={styles.inputs} 
+                    placeholderTextColor="#787d82" 
+                    underlineColorAndroid="transparent" 
+                    {...this.props} />
             </View>
         )
     }
