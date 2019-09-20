@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import EditText from '../../components/EditText'
 import Carousel from 'react-native-snap-carousel'
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class Cart extends Component {
 
@@ -27,16 +28,33 @@ class Cart extends Component {
         }
     }
 
-    screenWidth = Math.round(Dimensions.get('window').width);
-    screenHeight = Math.round(Dimensions.get('window').height);
-    width = 50
-    height = 65
+    next = () => {
+        this.props.navigation.navigate('CartAddress')
+    }
 
     shipping = (cep) => {
         if (cep.length == 8) {
+            this.setState({
+                shipping: {
+                    city: "São Paulo",
+                    values: [{
+                        id: 1,
+                        desc: "Correios",
+                        time: "4 dias úteis",
+                        value: 23.50
+                    }, {
+                        id: 2,
+                        desc: "Retidar na loja",
+                        time: "1 dia útil",
+                        value: 0.0
+                    }]
+                }
+            })
+            /*
             shipping(cep)
                 .then(response => this.setState(response))
                 .catch(error => console.log("shipping error " + error));
+                */
         }
     }
 
@@ -48,8 +66,8 @@ class Cart extends Component {
                 <MovieDecoration />
                 <ImageBackground
                     style={{
-                        width: this.width,
-                        height: this.height,
+                        width: width,
+                        height: height,
                         backgroundColor: "black",
                         paddingStart: 2,
                         paddingEnd: 2
@@ -64,7 +82,6 @@ class Cart extends Component {
     render() {
         return (
             <View styles={styles.container}>
-
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>Sacola de Compra</Text>
                 </View>
@@ -73,9 +90,9 @@ class Cart extends Component {
                     data={this.props.album.album}
                     layout="default"
                     zoomScale={0}
-                    itemWidth={this.width}
-                    sliderWidth={this.screenWidth}
-                    itemHeight={this.height}
+                    itemWidth={width}
+                    sliderWidth={screenWidth}
+                    itemHeight={height}
                     renderItem={this.renderItem} />
 
                 <View style={styles.cardViewContainer}>
@@ -102,26 +119,31 @@ class Cart extends Component {
                     <EditText
                         placeholder="cep:"
                         keyboardType="numeric"
-                        onChangeText={(password) => this.setState({ password })}
+                        onChangeText={(cep) => this.shipping({ cep })}
                     />
-                    <View style={styles.buyInfo}>
-                        <Text style={styles.buyTitleText}>Normal (até 6 dias úteis)*</Text>
-                        <Text style={styles.buyDescText}>R$ --</Text>
-                    </View>
-                    <View style={styles.buyInfo}>
-                        <Text style={styles.buyTitleText}>Retirar na loja (1 dia útil)</Text>
-                        <Text style={styles.buyDescText}>Grátis</Text>
-                    </View>
+                    {this.state.shipping.values.map(value => (
+                        <View style={styles.buyInfo}>
+                            <Text style={styles.buyTitleText}>{value.desc} ({value.time})*</Text>
+                            <Text style={styles.buyDescText}>R$ {value.value}</Text>
+                        </View>
+                    ))}
                 </View>
 
-                <TouchableHighlight style={[styles.buttonContainer, styles.button]}>
-                    <Text style={{ color: '#FFF' }}>FINALIZAR COMPRA</Text>
+                <TouchableHighlight 
+                    style={[styles.buttonContainer, styles.button]} 
+                    onPress={this.next()}>
+                    <Text style={{ color: '#FFF' }}>CONTINUAR</Text>
                 </TouchableHighlight>
 
             </View>
         )
     }
 }
+
+const screenWidth = Math.round(Dimensions.get('window').width);
+const screenHeight = Math.round(Dimensions.get('window').height);
+const width = 50
+const height = 65
 
 const styles = StyleSheet.create({
     header: {
@@ -139,15 +161,15 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#D2D2D2'
     },
     cardViewContainer: {
         marginTop: 16,
         marginStart: 16,
         marginEnd: 16,
+        paddingBottom: 4,
         backgroundColor: "white",
         elevation: 2
     },
@@ -179,14 +201,12 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     buttonContainer: {
-        height: 45,
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10,
-        width: 250,
-        borderRadius: 5,
-        marginBottom: 20,
-        elevation: 4
+        width: '100%',
+        top: (screenHeight - 73) - 50,
+        position: "absolute"
     },
     button: {
         backgroundColor: "#00b5ec",
