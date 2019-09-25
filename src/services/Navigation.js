@@ -12,7 +12,7 @@ import Add from '../screens/add/Add'
 import Splash from '../screens/splash/Splash'
 import Config from '../screens/config/Config'
 import Cart from '../screens/cart/Cart'
-import CartAddress from '../screens/cart/CartAddresss'
+import CartAddress from '../screens/cart/CartAddress'
 import Album from '../screens/album/Album'
 import HeaderLogo from '../components/HeaderLogo'
 

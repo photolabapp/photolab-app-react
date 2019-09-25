@@ -24,7 +24,7 @@ class Cart extends Component {
             total: 0,
             value: 20.0,
             cep: "",
-            shipping: null
+            shipping: { values: [] }
         }
     }
 
@@ -80,6 +80,8 @@ class Cart extends Component {
     }
 
     render() {
+        const hasShipping = (this.state.shipping.values.length > 0)
+
         return (
             <View styles={styles.container}>
                 <View style={styles.header}>
@@ -114,6 +116,7 @@ class Cart extends Component {
 
                 </View>
 
+                {/*
                 <View style={styles.cardViewContainer}>
                     <Text style={styles.shippingHeader}>Estime seu frete</Text>
                     <EditText
@@ -128,9 +131,10 @@ class Cart extends Component {
                         </View>
                     ))}
                 </View>
-
-                <TouchableHighlight 
-                    style={[styles.buttonContainer, styles.button]} 
+                */}
+                
+                <TouchableHighlight
+                    style={[styles.buttonContainer, styles.button]}
                     onPress={this.next()}>
                     <Text style={{ color: '#FFF' }}>CONTINUAR</Text>
                 </TouchableHighlight>
