@@ -73,4 +73,4 @@ const mapStateToProps = state => {
     return { address: state.address }
 }
 
-export default connect(mapStateToProps)(CartAddress)ad
+export default connect(mapStateToProps)(CartAddress)

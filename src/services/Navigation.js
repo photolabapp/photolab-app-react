@@ -13,6 +13,7 @@ import Splash from '../screens/splash/Splash'
 import Config from '../screens/config/Config'
 import Cart from '../screens/cart/Cart'
 import CartAddress from '../screens/cart/CartAddress'
+import CartSuccess from '../screens/cart/CartSuccess'
 import Album from '../screens/album/Album'
 import HeaderLogo from '../components/HeaderLogo'
 
@@ -56,6 +57,18 @@ const configStackNavigator = createStackNavigator({
     screen: Config,
     navigationOptions: {
       header: null
+    }
+  }
+}, {
+  headerLayoutPreset: 'center'
+})
+
+const cartSuccess = createStackNavigator({
+  CartSuccess: {
+    screen: CartSuccess,
+    navigationOptions: {
+      headerMode: 'screen',
+      title: 'Sucesso'
     }
   }
 }, {
@@ -124,4 +137,4 @@ const switchNavigator = createSwitchNavigator({
   Auth: loginStackNavigator,
 }, { initialRouteName: 'Splash' })
 
-export default createAppContainer(bottomTab)
+export default createAppContainer(cartSuccess)
