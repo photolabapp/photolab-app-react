@@ -116,23 +116,23 @@ class Cart extends Component {
 
                 </View>
 
+                {/*
                 <View style={styles.cardViewContainer}>
                     <Text style={styles.shippingHeader}>Estime seu frete</Text>
                     <EditText
                         placeholder="cep:"
                         keyboardType="numeric"
-                        maxLength={8}
-                        underlineColorAndroid="#000"
-                        onChangeText={(cep) => this.shipping(cep)}
+                        onChangeText={(cep) => this.shipping({ cep })}
                     />
-                    {(hasShipping) ? this.state.shipping.values.map(value => (
+                    {this.state.shipping.values.map(value => (
                         <View style={styles.buyInfo}>
                             <Text style={styles.buyTitleText}>{value.desc} ({value.time})*</Text>
                             <Text style={styles.buyDescText}>R$ {value.value}</Text>
                         </View>
-                    )) : <View></View>}
+                    ))}
                 </View>
-
+                */}
+                
                 <TouchableHighlight
                     style={[styles.buttonContainer, styles.button]}
                     onPress={this.next()}>
