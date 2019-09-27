@@ -4,12 +4,10 @@ import {
     StyleSheet,
     Text,
     View,
-    TextInput,
-    Button,
     TouchableHighlight,
     Image,
-    Alert
 } from 'react-native';
+import TextInput from '../../components/TextInput'
 import validate from './Validate'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
@@ -34,13 +32,11 @@ export default class Login extends Component {
         if (error.size > 0) {
             this.setState({ error: error })
         } else {
-            console.log("LOG SDSDDSDSD --------- call login")
             login(user).then(response => {
                 this.setToken(response.data.accessToken)
-                console.log("LOG SDSDDSDSD --------- call login " + response.data.accessToken)
                 this.props.navigation.navigate('App')
                 console.log(response)
-            }).catch(error =>  console.log("LOG SDSDDSDSD --------- error " + error) );
+            }).catch(error => console.log("Login error " + error));
         }
     }
 
@@ -48,7 +44,7 @@ export default class Login extends Component {
         _storeData = async () => {
             try {
                 await AsyncStorage.setItem('ACCESS_TOKEN', token);
-            } catch (error) { console.log("LOG SDSDDSDSD --------- set token error " + error) }
+            } catch (error) { console.log("Periste token error " + error) }
         };
     }
 
@@ -58,35 +54,15 @@ export default class Login extends Component {
                 <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
                     style={{ width: 150, height: 30, marginBottom: 60 }} />
 
-                <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputs}
-                        placeholder="email:"
-                        placeholderTextColor="#787d82"
-                        keyboardType="email-address"
-                        underlineColorAndroid='transparent'
-                        onChangeText={(email) => this.setState({ email })} />
-                </View>
+                <TextInput
+                    placeholder="e-mail"
+                    keyboardType="email-address"
+                    onChangeText={(email) => this.setState({ email })} />
 
-                <View style={styles.containerError}>
-                    <Text style={styles.error}>
-                        {this.state.error.get('email')}
-                    </Text>
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputs}
-                        placeholder="senha:"
-                        placeholderTextColor="#787d82"
-                        secureTextEntry={true}
-                        underlineColorAndroid='transparent'
-                        onChangeText={(password) => this.setState({ password })} />
-                </View>
-
-                <View style={styles.containerError}>
-                    <Text style={styles.error}>
-                        {this.state.error.get('password')}
-                    </Text>
-                </View>
+                <TextInput
+                    placeholder="senha"
+                    secureTextEntry={true}
+                    onChangeText={(password) => this.setState({ password })} />
 
                 <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.login()}>
                     <Text style={styles.loginText}>Login</Text>

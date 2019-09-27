@@ -10,7 +10,7 @@ import {
     ImageBackground,
     TouchableHighlight
 } from 'react-native';
-import EditText from '../../components/EditText'
+import { CardView, Button, TextInput } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
@@ -97,7 +97,7 @@ class Cart extends Component {
                     itemHeight={height}
                     renderItem={this.renderItem} />
 
-                <View style={styles.cardViewContainer}>
+                <CardView>
                     <Text style={styles.shippingHeader}>Resumo do pedido</Text>
                     <View style={styles.buyInfo}>
                         <Text style={styles.buyTitleText}>Quantidade de fotos:</Text>
@@ -113,8 +113,7 @@ class Cart extends Component {
                         <Text style={styles.buyTitleText}>Valor total das fotos:</Text>
                         <Text style={styles.buyDescText}> R$ {this.state.value * this.props.album.album.length}</Text>
                     </View>
-
-                </View>
+                </CardView>
 
                 {/*
                 <View style={styles.cardViewContainer}>
@@ -132,13 +131,11 @@ class Cart extends Component {
                     ))}
                 </View>
                 */}
-                
-                <TouchableHighlight
-                    style={[styles.buttonContainer, styles.button]}
-                    onPress={this.next()}>
-                    <Text style={{ color: '#FFF' }}>CONTINUAR</Text>
-                </TouchableHighlight>
 
+                <Button
+                    text="CONTINUAR"
+                    top={(screenHeight - 73) - 50}
+                    onPress={this.next()} />
             </View>
         )
     }
@@ -168,14 +165,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#D2D2D2'
-    },
-    cardViewContainer: {
-        marginTop: 16,
-        marginStart: 16,
-        marginEnd: 16,
-        paddingBottom: 4,
-        backgroundColor: "white",
-        elevation: 2
     },
     buyInfo: {
         paddingStart: 24,

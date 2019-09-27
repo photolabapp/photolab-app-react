@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import CardView from '../../components/CardView'
 import { connect } from 'react-redux'
 
 class CartSuccess extends Component {
@@ -10,33 +11,24 @@ class CartSuccess extends Component {
     render() {
         return (
             <View styles={styles.container}>
-                <View style={styles.cardViewContainer}>
+                <CardView>
                     <Text>Mauricio,</Text>
                     <Text>Parabéns seu pedido foi realizado com sucesso!!</Text>
                     <Text>Número do pedido: 3233213</Text>
-                </View>
+                </CardView>
             </View>
         )
     }
 }
 
 const screenHeight = Math.round(Dimensions.get('window').height)
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#D2D2D2'
-    },
-    cardViewContainer: {
-        marginTop: 16,
-        marginStart: 16,
-        marginEnd: 16,
-        paddingBottom: 4,
-        backgroundColor: "white",
-        elevation: 2
-    },
+    }
 })
 
 const mapStateToProps = state => {

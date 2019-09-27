@@ -88,6 +88,13 @@ const cartStackNavigator = createStackNavigator({
       headerMode: 'screen',
       title: 'Meus endereços'
     }
+  },
+  CartSuccess: {
+    screen: CartSuccess,
+    navigationOptions: {
+      headerMode: 'screen',
+      title: 'Sucesso'
+    }
   }
 }, {
   headerLayoutPreset: 'center'
