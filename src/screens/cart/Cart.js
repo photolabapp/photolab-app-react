@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import MovieDecoration from './components/MovieDecoration'
 import { shipping } from '../../services/Api'
 import { connect } from 'react-redux'
-import {
-    StyleSheet,
+import { StyleSheet,
     Text,
     View,
     Dimensions,
-    ImageBackground,
-    TouchableHighlight
+    ImageBackground
 } from 'react-native';
 import { CardView, Button, TextInput } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
@@ -198,15 +196,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         album: state.album,
-        order: state.order
+        order: state.order,
+        user: state.user
     }
 }
-
-/*
-const mapStateToProps = state => {
-    const { album, user } = state
-    return { album, user }
-}
-*/
 
 export default connect(mapStateToProps)(Cart)

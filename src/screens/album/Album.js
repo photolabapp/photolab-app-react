@@ -55,8 +55,7 @@ class Album extends Component {
             this.props.navigation.navigate('Cart')
 
         }).catch(error => {
-            if (error.response && error.response.status == 402) {
-                
+            if (error.response && error.response.status == 412) {    
                 createOrder.then(response => {
                     this.props.updateOrder(response)
                     this.props.navigation.navigate('Cart')

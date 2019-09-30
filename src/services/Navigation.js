@@ -1,11 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Colors from '../utils/Colors'
-import { View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons';
-//'react-native-vector-icons/FontAwesome'
 import { createStackNavigator, createSwitchNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
-
-
 import Login from '../screens/login/Login'
 import SignUp from '../screens/signup/SignUp'
 import Add from '../screens/add/Add'
@@ -17,14 +13,24 @@ import CartSuccess from '../screens/cart/CartSuccess'
 import Album from '../screens/album/Album'
 import HeaderLogo from '../components/HeaderLogo'
 
+// LOGIN AND SIGNUP SCREEN
 const loginStackNavigator = createStackNavigator({
   Login: {
     screen: Login,
-    headerMode: 'none'
+    navigationOptions: { header: null }
   },
   SignUp: {
     screen: SignUp,
-    headerMode: 'screen'
+    headerMode: 'screen',
+    navigationOptions: {
+      headerTintColor: '#ffffff',
+      headerStyle: {
+        backgroundColor: '#31383E',
+        elevation: 0,
+        shadowOpacity: 0
+      },
+      title: 'Cadastro'
+    }
   }
 }, {
   initialRouteName: 'Login'
@@ -33,23 +39,15 @@ const loginStackNavigator = createStackNavigator({
 const albumStackNavigator = createStackNavigator({
   Upload: {
     screen: Album,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: { header: null }
   }
-}, {
-  headerLayoutPreset: 'center'
 })
 
 const uploadStackNavigator = createStackNavigator({
   Upload: {
     screen: Add,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: { header: null }
   }
-}, {
-  headerLayoutPreset: 'center'
 })
 
 const configStackNavigator = createStackNavigator({
@@ -66,13 +64,17 @@ const configStackNavigator = createStackNavigator({
 const cartSuccess = createStackNavigator({
   CartSuccess: {
     screen: CartSuccess,
+    headerMode: 'screen',
     navigationOptions: {
-      headerMode: 'screen',
-      title: 'Sucesso'
+      headerTintColor: '#ffffff',
+      headerStyle: {
+        backgroundColor: '#31383E',
+        elevation: 0,
+        shadowOpacity: 0
+      },
+      title: 'Cadastro'
     }
   }
-}, {
-  headerLayoutPreset: 'center'
 })
 
 const cartStackNavigator = createStackNavigator({

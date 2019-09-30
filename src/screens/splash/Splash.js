@@ -22,14 +22,11 @@ export default class Splash extends Component {
 
     isLogged = () => {
         this.getItem('ACCESS_TOKEN').then(value => {
-            console.log("LOG SDSDDSDSD --------- get value token " + value)
             if (value == null) {
                 this.props.navigation.navigate('Auth');
             } else {
                 this.props.navigation.navigate('App');
             }
-        }).catch((err) => {
-            console.log("LOG SDSDDSDSD get token error " + err)
-        });
+        }).catch((error) => console.log("Error " + err));
     }
 }

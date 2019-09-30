@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { TouchableHighlight, StyleSheet, View, Text } from 'react-native'
 import { Input } from 'react-native-elements';
-import { throwStatement } from '@babel/types';
 
 export class Button extends Component {
     constructor(props) {
@@ -13,7 +12,7 @@ export class Button extends Component {
             <TouchableHighlight
                 style={[styles.buttonContainer, styles.button, { top: this.props.top }]}
                 {...this.props}>
-                <Text style={{ color: '#FFF' }}>{this.props.text}</Text>
+                <Text style={{ color: '#FFF', fontSize: 20 }}>{this.props.text}</Text>
             </TouchableHighlight>
         )
     }
@@ -26,7 +25,9 @@ export class CardView extends Component {
 
     render() {
         return (
-            <View style={styles.cardViewContainer} />
+            <View style={[styles.cardViewContainer, { ...this.props.style }]}>
+                {this.props.children}
+            </View>
         )
     }
 }
@@ -58,11 +59,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#00b5ec",
     },
     cardViewContainer: {
-        height: 200,
-        marginTop: 16,
-        marginStart: 16,
-        marginEnd: 16,
-        paddingBottom: 4,
+        borderRadius: 2,
         backgroundColor: "white",
         elevation: 2
     },

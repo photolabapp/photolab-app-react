@@ -2,13 +2,9 @@ import React, { Component } from 'react'
 import { create } from '../../services/Api'
 import validate from './Validate'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { updateUser } from '../../store/UserAction'
-import {
-    StyleSheet,
-    View,
-    Image,
-    Alert
-} from 'react-native'
+import { StyleSheet, View, Image, Alert } from 'react-native'
 import { Button, TextInput } from '../../components/UIKit'
 
 class SignUp extends Component {
@@ -58,33 +54,43 @@ class SignUp extends Component {
         return (
             <View style={styles.container}>
                 <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
-                    style={{ width: 150, height: 30, marginBottom: 60 }} />
+                    style={{ width: 150, height: 30, marginBottom: 48 }} />
 
-                <TextInput
-                    placeholder="nome"
-                    errorMessage={this.state.error.get("name")}
-                    onChangeText={(name) => this.setState({ name })} />
+                <View style={{ marginBottom: 32, width: "100%" }} >
+                    <TextInput
+                        placeholder="nome"
+                        errorMessage={this.state.error.get("name")}
+                        onChangeText={(name) => this.setState({ name })} />
+                </View>
 
-                <TextInput
-                    placeholder="e-mail"
-                    keyboardType="email-address"
-                    errorMessage={this.state.error.get("email")}
-                    onChangeText={(email) => this.setState({ email })} />
+                <View style={{ marginBottom: 32, width: "100%" }} >
+                    <TextInput
+                        placeholder="e-mail"
+                        keyboardType="email-address"
+                        errorMessage={this.state.error.get("email")}
+                        onChangeText={(email) => this.setState({ email })} />
+                </View>
 
-                <TextInput
-                    placeholder="celular"
-                    keyboardType="phone-pad"
-                    size="11"
-                    errorMessage={this.state.error.get("cellPhone")}
-                    onChangeText={(cellPhone) => this.setState({ cellPhone })} />
-
-                <TextInput
-                    placeholder="senha"
-                    secureTextEntry={true}
-                    errorMessage={this.state.error.get("password")}
-                    onChangeText={(password) => this.setState({ password })} />
-
-                <Button Text="Cadastrar" onPress={() => this.save()} />
+                <View style={{ marginBottom: 32, width: "100%" }} >
+                    <TextInput
+                        placeholder="celular"
+                        keyboardType="phone-pad"
+                        size="11"
+                        errorMessage={this.state.error.get("cellPhone")}
+                        onChangeText={(cellPhone) => this.setState({ cellPhone })} />
+                </View>
+            
+                <View style={{ marginBottom: 40, width: "100%" }} >
+                    <TextInput
+                        placeholder="senha"
+                        secureTextEntry={true}
+                        errorMessage={this.state.error.get("password")}
+                        onChangeText={(password) => this.setState({ password })} />
+                </View>
+            
+                <View style={{ marginBottom: 32, width: "100%" }} >
+                    <Button text="Salvar" onPress={() => this.save()} />
+                </View>
             </View>
         )
     }
@@ -94,6 +100,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
+        paddingStart: 24,
+        paddingEnd: 24,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#31383E',

@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import { login } from '../../services/Api'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { updateUser } from '../../store/UserAction'
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableHighlight,
-    Image,
-} from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import { TextInput, Button } from '../../components/UIKit'
 import validate from './Validate'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -55,23 +50,32 @@ class Login extends Component {
         return (
             <View style={styles.container}>
                 <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
-                    style={{ width: 150, height: 30, marginBottom: 60 }} />
+                    style={{ width: 150, height: 30, marginBottom: 48 }} />
 
-                <TextInput
-                    placeholder="e-mail"
-                    keyboardType="email-address"
-                    errorMessage={this.state.error.get("email")}
-                    onChangeText={(email) => this.setState({ email })} />
+                <View style={{ marginBottom: 32, width: "100%" }} >
+                    <TextInput
+                        placeholder="e-mail"
+                        keyboardType="email-address"
+                        errorMessage={this.state.error.get("email")}
+                        onChangeText={(email) => this.setState({ email })} />
+                </View>
 
-                <TextInput
-                    placeholder="senha"
-                    secureTextEntry={true}
-                    errorMessage={this.state.error.get("password")}
-                    onChangeText={(password) => this.setState({ password })} />
+                <View style={{ marginBottom: 40, width: "100%" }} >
+                    <TextInput
+                        placeholder="senha"
+                        secureTextEntry={true}
+                        errorMessage={this.state.error.get("password")}
+                        onChangeText={(password) => this.setState({ password })} />
+                </View>
 
-                <Button Text="Login" onPress={() => this.login()} />
-                <Button Text="Cadastrar" onPress={() => this.props.navigation.navigate('SignUp')} />
-            </View>
+                <View style={{ marginBottom: 32, width: "100%" }} >
+                    <Button text="Login" onPress={() => this.login()} />
+                </View>
+
+                <View style={{ width: "100%" }} >
+                    <Button text="Não tenho login" onPress={() => this.props.navigation.navigate('SignUp')} />
+                </View>
+            </View >
         )
     }
 }
@@ -79,46 +83,11 @@ class Login extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingStart: 24,
+        paddingEnd: 24,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#31383E',
-    },
-    inputContainer: {
-        borderBottomColor: '#F5FCFF',
-        backgroundColor: '#FFFFFF',
-        width: 250,
-        height: 45,
-        marginBottom: 1,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    inputs: {
-        height: 45,
-        marginLeft: 16,
-        borderBottomColor: '#000000',
-        color: '#31383E',
-        flex: 1,
-    },
-    inputIcon: {
-        width: 30,
-        height: 30,
-        marginLeft: 15,
-        justifyContent: 'center'
-    },
-    loginText: {
-        color: 'white',
-    },
-    registerText: {
-        color: 'white',
-    },
-    containerError: {
-        width: 250,
-        marginBottom: 4,
-        flexDirection: "column",
-        justifyContent: "flex-start"
-    },
-    error: {
-        color: "red"
     }
 });
 
