@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { TouchableHighlight, StyleSheet, View } from 'react-native'
+import { TouchableHighlight, StyleSheet, View, Text } from 'react-native'
 import { Input } from 'react-native-elements';
+import { throwStatement } from '@babel/types';
 
 export class Button extends Component {
     constructor(props) {
@@ -40,6 +41,7 @@ export class TextInput extends Component {
             < Input
                 style={styles.input}
                 placeholderTextColor="#787d82"
+                errorStyle={{ color: 'red' }}
                 {...this.props} />
         )
     }
@@ -51,12 +53,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
-        position: "absolute"
     },
     button: {
         backgroundColor: "#00b5ec",
     },
     cardViewContainer: {
+        height: 200,
         marginTop: 16,
         marginStart: 16,
         marginEnd: 16,

@@ -1,11 +1,11 @@
 const initialState = {
-    user: {}
+    order: {}
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case "UPDATE_USER":
-            return { ...state.user, user: action.payload }
+        case "UPDATE_ORDER":
+            return { ...state.order, order: action.payload }
         default:
             return state
 

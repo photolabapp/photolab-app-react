@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { login } from '../../services/Api'
+import { connect } from 'react-redux'
+import { updateUser } from '../../store/UserAction'
 import {
     StyleSheet,
     Text,
@@ -7,11 +9,11 @@ import {
     TouchableHighlight,
     Image,
 } from 'react-native';
-import TextInput from '../../components/TextInput'
+import { TextInput, Button } from '../../components/UIKit'
 import validate from './Validate'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-export default class Login extends Component {
+class Login extends Component {
 
     constructor(props) {
         super(props);
@@ -33,6 +35,7 @@ export default class Login extends Component {
             this.setState({ error: error })
         } else {
             login(user).then(response => {
+                this.props.updateUser(response)
                 this.setToken(response.data.accessToken)
                 this.props.navigation.navigate('App')
                 console.log(response)
@@ -57,20 +60,17 @@ export default class Login extends Component {
                 <TextInput
                     placeholder="e-mail"
                     keyboardType="email-address"
+                    errorMessage={this.state.error.get("email")}
                     onChangeText={(email) => this.setState({ email })} />
 
                 <TextInput
                     placeholder="senha"
                     secureTextEntry={true}
+                    errorMessage={this.state.error.get("password")}
                     onChangeText={(password) => this.setState({ password })} />
 
-                <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.login()}>
-                    <Text style={styles.loginText}>Login</Text>
-                </TouchableHighlight>
-
-                <TouchableHighlight style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('SignUp')}>
-                    <Text style={styles.registerText}>Cadastrar</Text>
-                </TouchableHighlight>
+                <Button Text="Login" onPress={() => this.login()} />
+                <Button Text="Cadastrar" onPress={() => this.props.navigation.navigate('SignUp')} />
             </View>
         )
     }
@@ -105,17 +105,6 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         justifyContent: 'center'
     },
-    buttonContainer: {
-        height: 45,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-        width: 250,
-    },
-    loginButton: {
-        backgroundColor: "#00b5ec",
-    },
     loginText: {
         color: 'white',
     },
@@ -132,3 +121,13 @@ const styles = StyleSheet.create({
         color: "red"
     }
 });
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({ updateUser }, dispatch)
+)
+
+const mapStateToProps = state => {
+    return { user: state.user }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

@@ -16,3 +16,11 @@ export const create = (user) => {
 export const getShipping = (cep) => {
     return axios.get("shipping/", cep)
 }
+
+export const createOrder = (user_id) => {
+    return axios.get("order/", cep)
+}
+
+export const getLastOrderCreated = user_id => {
+    return axios.get("order/last/created", user_id)
+}

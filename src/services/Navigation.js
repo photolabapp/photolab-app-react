@@ -135,8 +135,7 @@ const bottomTab = createBottomTabNavigator({
     activeBackgroundColor: Colors.greySecundary,
     activeTintColor: 'white'
   }
-}
-)
+})
 
 const switchNavigator = createSwitchNavigator({
   Splash: { screen: Splash, headerMode: 'none' },

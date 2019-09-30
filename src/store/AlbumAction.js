@@ -9,7 +9,6 @@ export const addPhoto = photo => {
 }
 
 export const updatePhoto = (photo, index) => {
-    console.log("SDSDDSD CALLL updatePhoto " + photo.uri + " index " + index);
     return {
         type: "UPDATE_PHOTO",
         index: index,

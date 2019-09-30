@@ -22,9 +22,9 @@ class Cart extends Component {
         this.state = {
             current: 1,
             total: 0,
-            value: 20.0,
-            cep: "",
-            shipping: { values: [] }
+            value: 10.0,
+        //    cep: "",
+        //    shipping: { values: [] }
         }
     }
 
@@ -192,22 +192,14 @@ const styles = StyleSheet.create({
         textAlignVertical: "center",
         textAlign: "left",
         fontWeight: "bold"
-    },
-    buttonContainer: {
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        top: (screenHeight - 73) - 50,
-        position: "absolute"
-    },
-    button: {
-        backgroundColor: "#00b5ec",
-    },
+    }
 })
 
 const mapStateToProps = state => {
-    return { album: state.album }
+    return {
+        album: state.album,
+        order: state.order
+    }
 }
 
 /*

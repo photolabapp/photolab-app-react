@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import { create } from '../../services/Api'
 import validate from './Validate'
+import { connect } from 'react-redux'
+import { updateUser } from '../../store/UserAction'
 import {
     StyleSheet,
-    Text,
     View,
-    TextInput,
-    TouchableHighlight,
     Image,
     Alert
 } from 'react-native'
+import { Button, TextInput } from '../../components/UIKit'
 
-export default class SignUp extends Component {
+class SignUp extends Component {
 
     constructor(props) {
         super(props)
@@ -37,15 +37,21 @@ export default class SignUp extends Component {
             this.setState({ error: error })
         } else {
             create(user).then(response => {
-                console.log(response)
+                this.props.updateUser(response)
+                this.setToken(response.data.accessToken)
+                this.props.navigation.navigate('App')
+
                 Alert.alert("Cadastro", "Cadastro efetuado com sucesso!!!!")
-                this.props.navigation.navigate('Login')
-            }).catch( error => console.log(error) );
+            }).catch(error => console.log(error));
         }
     }
 
-    onClickListener = (viewId) => {
-        Alert.alert("Alert", "Button pressed " + viewId);
+    setToken = (token) => {
+        _storeData = async () => {
+            try {
+                await AsyncStorage.setItem('ACCESS_TOKEN', token);
+            } catch (error) { console.log("Periste token error " + error) }
+        };
     }
 
     render() {
@@ -54,71 +60,31 @@ export default class SignUp extends Component {
                 <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
                     style={{ width: 150, height: 30, marginBottom: 60 }} />
 
-                <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputs}
-                        placeholder="nome:"
-                        placeholderTextColor="#787d82"
-                        underlineColorAndroid='transparent'
-                        onChangeText={(name) => this.setState({ name })} />
-                </View>
+                <TextInput
+                    placeholder="nome"
+                    errorMessage={this.state.error.get("name")}
+                    onChangeText={(name) => this.setState({ name })} />
 
-                <View style={styles.containerError}>
-                    <Text style={styles.error}>
-                        {this.state.error.get('name')}
-                    </Text>
-                </View>
+                <TextInput
+                    placeholder="e-mail"
+                    keyboardType="email-address"
+                    errorMessage={this.state.error.get("email")}
+                    onChangeText={(email) => this.setState({ email })} />
 
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.inputs}
-                        placeholder="email:"
-                        placeholderTextColor="#787d82"
-                        keyboardType="email-address"
-                        underlineColorAndroid='transparent'
-                        onChangeText={(email) => this.setState({ email })} />
-                </View>
+                <TextInput
+                    placeholder="celular"
+                    keyboardType="phone-pad"
+                    size="11"
+                    errorMessage={this.state.error.get("cellPhone")}
+                    onChangeText={(cellPhone) => this.setState({ cellPhone })} />
 
-                <View style={styles.containerError}>
-                    <Text style={styles.error}>
-                        {this.state.error.get('email')}
-                    </Text>
-                </View>
+                <TextInput
+                    placeholder="senha"
+                    secureTextEntry={true}
+                    errorMessage={this.state.error.get("password")}
+                    onChangeText={(password) => this.setState({ password })} />
 
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.inputs}
-                        placeholder="celular:"
-                        keyboardType="phone-pad"
-                        size="11" s
-                        placeholderTextColor="#787d82"
-                        underlineColorAndroid='transparent'
-                        onChangeText={(cellPhone) => this.setState({ cellPhone })} />
-                </View>
-
-                <View style={styles.containerError}>
-                    <Text style={styles.error}>
-                        {this.state.error.get('cellPhone')}
-                    </Text>
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputs}
-                        placeholder="senha:"
-                        placeholderTextColor="#787d82"
-                        secureTextEntry={true}
-                        underlineColorAndroid='transparent'
-                        onChangeText={(password) => this.setState({ password })} />
-                </View>
-
-                <View style={styles.containerError}>
-                    <Text style={styles.error}>
-                        {this.state.error.get('password')}
-                    </Text>
-                </View>
-
-                <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.save()}>
-                    <Text style={styles.loginText}>Cadastrar</Text>
-                </TouchableHighlight>
+                <Button Text="Cadastrar" onPress={() => this.save()} />
             </View>
         )
     }
@@ -131,53 +97,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#31383E',
-    },
-    inputContainer: {
-        borderBottomColor: '#F5FCFF',
-        backgroundColor: '#FFFFFF',
-        width: 250,
-        height: 45,
-        marginBottom: 1,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    inputs: {
-        height: 45,
-        marginLeft: 16,
-        borderBottomColor: '#000000',
-        color: '#31383E',
-        flex: 1,
-    },
-    inputIcon: {
-        width: 30,
-        height: 30,
-        marginLeft: 15,
-        justifyContent: 'center'
-    },
-    buttonContainer: {
-        height: 45,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 20,
-        width: 250,
-    },
-    loginButton: {
-        backgroundColor: "#00b5ec",
-    },
-    loginText: {
-        color: "white"
-    },
-    registerText: {
-        color: "white"
-    },
-    containerError: {
-        width: 250,
-        marginBottom: 4,
-        flexDirection: "column",
-        justifyContent: "flex-start"
-    },
-    error: {
-        color: "red"
     }
-});
+})
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({ updateUser }, dispatch)
+)
+
+const mapStateToProps = state => {
+    return { user: state.user }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

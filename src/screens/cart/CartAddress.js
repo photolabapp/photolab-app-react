@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, Dimensions, Text, TouchableHighlight, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
 class CartAddress extends Component {

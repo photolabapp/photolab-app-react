@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updatePhoto } from '../../store/AlbumAction'
+import { updateOrder } from '../../store/OrderAction'
 import { bindActionCreators } from 'redux'
 import {
     View,
-    Text,
     StyleSheet,
     Dimensions,
     ImageBackground,
-    TouchableHighlight,
     TouchableOpacity,
     FlatList
 } from 'react-native'
+import { createOrder, getOrder, getLastOrderCreated } from '../../services/Api'
+import { Button } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
 import { TabView } from 'react-native-tab-view';
@@ -49,7 +50,21 @@ class Album extends Component {
     }
 
     checkout = () => {
-        this.props.navigation.navigate('Cart')
+        getLastOrderCreated(1).then(response => {
+            this.props.updateOrder(response)
+            this.props.navigation.navigate('Cart')
+
+        }).catch(error => {
+            if (error.response && error.response.status == 402) {
+                
+                createOrder.then(response => {
+                    this.props.updateOrder(response)
+                    this.props.navigation.navigate('Cart')
+                
+                }).catch(error => console.log("Create order error " + error))
+            }
+            console.log("Get order error " + error)
+        });
     }
 
     renderItem = ({ item, index }) => {
@@ -84,11 +99,7 @@ class Album extends Component {
                 renderItem={this.renderItem} />
 
             <View style={{ marginTop: 10 }}>
-                <TouchableHighlight
-                    style={[styles.buttonContainer, styles.button]}
-                    onPress={() => this.checkout()} >
-                    <Text style={{ color: '#FFF' }}>FINALIZAR COMPRA</Text>
-                </TouchableHighlight>
+                <Button text="FINALIZAR COMPRA" onPress={() => this.checkout()} />
             </View>
         </View>
     )
@@ -112,11 +123,7 @@ class Album extends Component {
                 }}
             />
             <View style={{ marginTop: 10 }}>
-                <TouchableHighlight
-                    style={[styles.buttonContainer, styles.button]}
-                    onPress={() => this.checkout()} >
-                    <Text style={{ color: '#FFF' }}>FINALIZAR COMPRA</Text>
-                </TouchableHighlight>
+                <Button text="FINALIZAR COMPRA" onPress={() => this.checkout()} />
             </View>
         </View>
     )
@@ -164,20 +171,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start'
     },
-    buttonContainer: {
-        height: 45,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 10,
-        width: 250,
-        borderRadius: 5,
-        marginBottom: 20,
-        elevation: 4
-    },
-    button: {
-        backgroundColor: "#00b5ec",
-    },
     scene: {
         flex: 1,
         flexDirection: "column",
@@ -185,7 +178,7 @@ const styles = StyleSheet.create({
 })
 
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({ updatePhoto }, dispatch)
+    bindActionCreators({ updatePhoto, updateOrder }, dispatch)
 )
 
 const mapStateToProps = album => {
