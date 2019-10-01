@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
 import MovieDecoration from './components/MovieDecoration'
-import { shipping } from '../../services/Api'
+import { shipping, saveOrder } from '../../services/Api'
 import { connect } from 'react-redux'
-import { StyleSheet,
-    Text,
-    View,
-    Dimensions,
-    ImageBackground
-} from 'react-native';
+import { StyleSheet, Text, View, Dimensions, ImageBackground } from 'react-native';
 import { CardView, Button, TextInput } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -24,6 +19,15 @@ class Cart extends Component {
         //    cep: "",
         //    shipping: { values: [] }
         }
+    }
+
+    save = () => {
+        saveOrder({order_id: this.props.order.id}).then(response => {
+            this.props.navigation.navigate('CartSuccess')
+        }).catch(error => {
+            console.log("Save order error " + error)
+            Alert.alert("Pedido", "Erro ao salvar pedido, tente novamamente!!!!")
+        });
     }
 
     next = () => {
@@ -131,9 +135,9 @@ class Cart extends Component {
                 */}
 
                 <Button
+                    style={{ top: (screenHeight - 73) - 50 }}
                     text="CONTINUAR"
-                    top={(screenHeight - 73) - 50}
-                    onPress={this.next()} />
+                    onPress={this.save()} />
             </View>
         )
     }

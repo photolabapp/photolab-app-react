@@ -38,7 +38,14 @@ class SignUp extends Component {
                 this.props.navigation.navigate('App')
 
                 Alert.alert("Cadastro", "Cadastro efetuado com sucesso!!!!")
-            }).catch(error => console.log(error));
+            }).catch(error => {
+                if (error.response && error.response.status == 412) {
+                    Alert.alert("Cadastro", error.response.data.message)
+                } else {
+                    Alert.alert("Cadastro", "Erro no cadastro, tente novamamente!!!!")
+                }
+                console.log(error)
+            });
         }
     }
 
@@ -56,41 +63,38 @@ class SignUp extends Component {
                 <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
                     style={{ width: 150, height: 30, marginBottom: 48 }} />
 
-                <View style={{ marginBottom: 32, width: "100%" }} >
-                    <TextInput
-                        placeholder="nome"
-                        errorMessage={this.state.error.get("name")}
-                        onChangeText={(name) => this.setState({ name })} />
-                </View>
+                <TextInput
+                    style={{ marginBottom: 32, width: "100%" }}
+                    placeholder="nome"
+                    errorMessage={this.state.error.get("name")}
+                    onChangeText={(name) => this.setState({ name })} />
 
-                <View style={{ marginBottom: 32, width: "100%" }} >
-                    <TextInput
-                        placeholder="e-mail"
-                        keyboardType="email-address"
-                        errorMessage={this.state.error.get("email")}
-                        onChangeText={(email) => this.setState({ email })} />
-                </View>
+                <TextInput
+                    style={{ marginBottom: 32, width: "100%" }}
+                    placeholder="e-mail"
+                    keyboardType="email-address"
+                    errorMessage={this.state.error.get("email")}
+                    onChangeText={(email) => this.setState({ email })} />
 
-                <View style={{ marginBottom: 32, width: "100%" }} >
-                    <TextInput
-                        placeholder="celular"
-                        keyboardType="phone-pad"
-                        size="11"
-                        errorMessage={this.state.error.get("cellPhone")}
-                        onChangeText={(cellPhone) => this.setState({ cellPhone })} />
-                </View>
-            
-                <View style={{ marginBottom: 40, width: "100%" }} >
-                    <TextInput
-                        placeholder="senha"
-                        secureTextEntry={true}
-                        errorMessage={this.state.error.get("password")}
-                        onChangeText={(password) => this.setState({ password })} />
-                </View>
-            
-                <View style={{ marginBottom: 32, width: "100%" }} >
-                    <Button text="Salvar" onPress={() => this.save()} />
-                </View>
+                <TextInput
+                    style={{ marginBottom: 32, width: "100%" }}
+                    placeholder="celular"
+                    keyboardType="phone-pad"
+                    size="11"
+                    errorMessage={this.state.error.get("cellPhone")}
+                    onChangeText={(cellPhone) => this.setState({ cellPhone })} />
+
+                <TextInput
+                    style={{ marginBottom: 40, width: "100%" }}
+                    placeholder="senha"
+                    secureTextEntry={true}
+                    errorMessage={this.state.error.get("password")}
+                    onChangeText={(password) => this.setState({ password })} />
+
+                <Button
+                    style={{ marginBottom: 32, width: "100%" }}
+                    text="Salvar"
+                    onPress={() => this.save()} />
             </View>
         )
     }

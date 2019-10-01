@@ -10,7 +10,7 @@ export class Button extends Component {
     render() {
         return (
             <TouchableHighlight
-                style={[styles.buttonContainer, styles.button, { top: this.props.top }]}
+                style={[styles.buttonContainer, styles.button, { ...this.props.style }]}
                 {...this.props}>
                 <Text style={{ color: '#FFF', fontSize: 20 }}>{this.props.text}</Text>
             </TouchableHighlight>
@@ -40,7 +40,7 @@ export class TextInput extends Component {
     render() {
         return (
             < Input
-                style={styles.input}
+                style={[styles.input, { ...this.props.style }]}
                 placeholderTextColor="#787d82"
                 errorStyle={{ color: 'red' }}
                 {...this.props} />
