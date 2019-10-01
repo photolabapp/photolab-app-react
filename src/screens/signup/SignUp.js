@@ -33,7 +33,7 @@ class SignUp extends Component {
             this.setState({ error: error })
         } else {
             create(user).then(response => {
-                this.props.updateUser(response)
+                this.props.updateUser(response.user.user)
                 this.setToken(response.data.accessToken)
                 this.props.navigation.navigate('App')
 
