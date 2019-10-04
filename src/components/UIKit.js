@@ -43,8 +43,8 @@ export class TextInput extends Component {
     render() {
         return (
             <Input
-                inputStyle={[styles.input, {...this.props.style}]}
-                containerStyle={{marginBottom: 8}}
+                inputStyle={[styles.input, { ...this.props.style }]}
+                containerStyle={{ marginBottom: 8, height: 70 }}
                 placeholderTextColor="#787d82"
                 errorStyle={{ color: 'red' }}
                 secureTextEntry={this.props.secureTextEntry}
