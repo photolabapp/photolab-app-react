@@ -145,4 +145,4 @@ const switchNavigator = createSwitchNavigator({
   Auth: loginStackNavigator,
 }, { initialRouteName: 'Splash' })
 
-export default createAppContainer(cartSuccess)
+export default createAppContainer(switchNavigator)

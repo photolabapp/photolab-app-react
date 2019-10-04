@@ -52,29 +52,28 @@ class Login extends Component {
                 <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
                     style={{ width: 150, height: 30, marginBottom: 48 }} />
 
-                <View style={{ marginBottom: 32, width: "100%" }} >
-                    <TextInput
-                        placeholder="e-mail"
-                        keyboardType="email-address"
-                        errorMessage={this.state.error.get("email")}
-                        onChangeText={(email) => this.setState({ email })} />
-                </View>
+                <TextInput
+                    style={{ width: "100%" }}
+                    placeholder="e-mail"
+                    keyboardType="email-address"
+                    errorMessage={this.state.error.get("email")}
+                    onChangeText={(email) => this.setState({ email })} />
 
-                <View style={{ marginBottom: 40, width: "100%" }} >
-                    <TextInput
-                        placeholder="senha"
-                        secureTextEntry={true}
-                        errorMessage={this.state.error.get("password")}
-                        onChangeText={(password) => this.setState({ password })} />
-                </View>
+                <TextInput
+                    style={{ width: "100%" }}
+                    placeholder="senha"
+                    secureTextEntry={true}
+                    errorMessage={this.state.error.get("password")}
+                    onChangeText={(password) => this.setState({ password })} />
 
-                <View style={{ marginBottom: 32, width: "100%" }} >
-                    <Button text="Login" onPress={() => this.login()} />
-                </View>
+                <Button
+                    style={{ marginBottom: 32, marginTop: 16, width: "100%" }}
+                    text="Login" onPress={() => this.login()} />
 
-                <View style={{ width: "100%" }} >
-                    <Button text="Não tenho login" onPress={() => this.props.navigation.navigate('SignUp')} />
-                </View>
+                <Button
+                    style={{ width: "100%" }}
+                    text="Não tenho login"
+                    onPress={() => this.props.navigation.navigate('SignUp')} />
             </View >
         )
     }

@@ -32,15 +32,16 @@ class SignUp extends Component {
         if (error.size > 0) {
             this.setState({ error: error })
         } else {
+            Alert.alert("SDSDS", "CREATE")
             create(user).then(response => {
-                this.props.updateUser(response.user.user)
+                this.props.updateUser(response.data.user)
                 this.setToken(response.data.accessToken)
                 this.props.navigation.navigate('App')
 
                 Alert.alert("Cadastro", "Cadastro efetuado com sucesso!!!!")
             }).catch(error => {
                 if (error.response && error.response.status == 412) {
-                    Alert.alert("Cadastro", error.response.data.message)
+                    Alert.alert("Cadastro", "O e-mail " + user.email + " já esta cadastrado!!!'")
                 } else {
                     Alert.alert("Cadastro", "Erro no cadastro, tente novamamente!!!!")
                 }
@@ -64,20 +65,20 @@ class SignUp extends Component {
                     style={{ width: 150, height: 30, marginBottom: 48 }} />
 
                 <TextInput
-                    style={{ marginBottom: 32, width: "100%" }}
+                    style={{ width: "100%" }}
                     placeholder="nome"
                     errorMessage={this.state.error.get("name")}
                     onChangeText={(name) => this.setState({ name })} />
 
                 <TextInput
-                    style={{ marginBottom: 32, width: "100%" }}
+                    style={{ width: "100%" }}
                     placeholder="e-mail"
                     keyboardType="email-address"
                     errorMessage={this.state.error.get("email")}
                     onChangeText={(email) => this.setState({ email })} />
 
                 <TextInput
-                    style={{ marginBottom: 32, width: "100%" }}
+                    style={{ width: "100%" }}
                     placeholder="celular"
                     keyboardType="phone-pad"
                     size="11"
@@ -85,14 +86,14 @@ class SignUp extends Component {
                     onChangeText={(cellPhone) => this.setState({ cellPhone })} />
 
                 <TextInput
-                    style={{ marginBottom: 40, width: "100%" }}
+                    style={{ width: "100%" }}
                     placeholder="senha"
                     secureTextEntry={true}
                     errorMessage={this.state.error.get("password")}
                     onChangeText={(password) => this.setState({ password })} />
 
                 <Button
-                    style={{ marginBottom: 32, width: "100%" }}
+                    style={{ marginTop: 16 }}
                     text="Salvar"
                     onPress={() => this.save()} />
             </View>

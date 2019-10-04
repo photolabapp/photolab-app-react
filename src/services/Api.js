@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 const axios = Axios.create({
-    baseURL: "http://192.168.43.50:8080",
+    baseURL: "http://192.168.1.106:8080",
     responseType: "json"
 });
 
