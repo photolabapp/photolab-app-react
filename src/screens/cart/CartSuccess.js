@@ -9,26 +9,52 @@ class CartSuccess extends Component {
         super(props)
     }
 
+    uploadPhoto = path => {
+        Upload.startUpload({
+            url: 'http://192.168.1.106:8080',
+            path: path,
+            method: 'POST',
+            field: 'uploaded_media',
+            type: 'multipart',
+            notification: { enabled: true }
+        }).then(uploadId => {
+            console.log('Upload started')
+            Upload.addListener('progress', uploadId, data => {
+                console.log(`Progress: ${data.progress}%`)
+            })
+            Upload.addListener('error', uploadId, data => {
+                console.log(`Error: ${data.error}%`)
+            })
+            Upload.addListener('cancelled', uploadId, data => {
+                console.log(`Cancelled!`)
+            })
+            Upload.addListener('completed', uploadId, data => {
+                // data includes responseCode: number and responseBody: Object
+                console.log('Completed!')
+            })
+        }).catch(err => console.log('Upload error!', err))
+    }
+
     render() {
         return (
             <View styles={styles.container}>
                 <CardView style={{ marginStart: 16, marginEnd: 16, marginTop: 16 }}>
-                    <Text style={[styles.textNormal, { marginBottom: 24, marginTop: 8, fontSize: 20 }]}>{this.props.user.name},</Text>
-                    <Text style={[styles.textNormal, { marginBottom: 24 }]}>Parabéns seu pedido foi realizado com sucesso!!</Text>
-                    <Text style={[styles.textBold, { marginBottom: 8 }]}>Número do pedido é:</Text>
-                    <Text style={[styles.textOrange, { marginBottom: 8 }]}>{this.props.order.id}</Text>
+                    <Text style={[styles.textNormal, styles.text, { marginBottom: 24, marginTop: 8, fontSize: 20 }]}>{this.props.user.name},</Text>
+                    <Text style={[styles.textNormal, styles.text, { marginBottom: 24 }]}>Parabéns seu pedido foi realizado com sucesso!!</Text>
+                    <Text style={[styles.textBold, styles.text, { marginBottom: 8 }]}>Número do pedido é:</Text>
+                    <Text style={[styles.textOrange, styles.text, { marginBottom: 8 }]}>{this.props.order.id}</Text>
                 </CardView>
 
                 <CardView style={{ marginStart: 16, marginEnd: 16, marginTop: 32 }}>
-                    <Text style={styles.cardViewHeader}>Acompanhe o seu pedido</Text>
-                    <Text style={[styles.textNormal, { marginBottom: 24 }]}>Você pode acompanhar o processamento do seu pedido a qualquer momento na página Meus Pedidos</Text>
+                    <Text style={[styles.cardViewHeader, styles.text]}>Acompanhe o seu pedido</Text>
+                    <Text style={[styles.textNormal, { marginBottom: 24 }, styles.text]}>Você pode acompanhar o processamento do seu pedido a qualquer momento na página Meus Pedidos</Text>
                     <View style={{ paddingStart: 16, paddingEnd: 16, paddingBottom: 16 }}>
                         <Button text="ACOMPANHE MEU PEDIDO" />
                     </View>
                 </CardView>
             </View>
         )
-    }
+    } F
 }
 
 const styles = StyleSheet.create({
@@ -38,41 +64,33 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#D2D2D2'
     },
-    textBold: {
+    text: {
         marginStart: 16,
         marginEnd: 16,
-        color: "black",
         textAlignVertical: "center",
-        textAlign: "center",
+        textAlign: "center"
+    },
+    textBold: {
+        color: "black",
         fontWeight: "bold"
     },
     textNormal: {
-        marginStart: 16,
-        marginEnd: 16,
         color: "black",
-        textAlignVertical: "center",
-        textAlign: "center",
     },
     textOrange: {
-        marginStart: 16,
-        marginEnd: 16,
         color: Colors.orange,
         fontSize: 24,
-        textAlignVertical: "center",
-        textAlign: "center",
         fontWeight: "bold"
     },
     cardViewHeader: {
-        paddingStart: 16,
-        marginBottom: 16,
         height: 40,
         backgroundColor: "#D2D2D2",
         color: "black",
-        textAlignVertical: "center",
-        textAlign: "center",
         fontWeight: "bold"
     },
 })
+
+//https://github.com/Vydia/react-native-background-upload
 
 const mapStateToProps = state => {
     return {

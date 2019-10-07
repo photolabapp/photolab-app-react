@@ -95,11 +95,13 @@ const cartStackNavigator = createStackNavigator({
     screen: CartSuccess,
     navigationOptions: {
       headerMode: 'screen',
-      title: 'Sucesso'
+      title: 'Sucesso',
+      //tabBarVisible: false
+      tabBarOptions: { 
+        tabBarVisible: false 
+      }
     }
   }
-}, {
-  headerLayoutPreset: 'center'
 })
 
 const bottomTab = createBottomTabNavigator({

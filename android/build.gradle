@@ -11,9 +11,9 @@ buildscript {
     repositories {
         google()
         jcenter()
-        //jcenter {
-        //    url("http://nexus-cloud.riachuelo.net/nexus/repository/maven-public/")
-        //}
+        jcenter {
+            url("http://nexus-cloud.riachuelo.net/nexus/repository/maven-public/")
+        }
 
     }
     dependencies {
@@ -38,11 +38,11 @@ allprojects {
         maven { url "https://jitpack.io" }
 
         google()
-        jcenter()
+        //jcenter()
 
-        //jcenter {
-        //    url("http://nexus-cloud.riachuelo.net/nexus/repository/maven-public/")
-        //}
+        jcenter {
+            url("http://nexus-cloud.riachuelo.net/nexus/repository/maven-public/")
+        }
 
     }
 }
