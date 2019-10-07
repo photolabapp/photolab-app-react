@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updatePhoto } from '../../store/AlbumAction'
-import { updateOrder } from '../../store/OrderAction'
 import { bindActionCreators } from 'redux'
 import {
     View,
@@ -9,13 +8,14 @@ import {
     Dimensions,
     ImageBackground,
     TouchableOpacity,
-    FlatList
+    FlatList,
+    Text
 } from 'react-native'
-import { createOrder, getOrder, getLastOrderCreated } from '../../services/Api'
 import { Button } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
 import { TabView } from 'react-native-tab-view';
+import Login from '../login/Login';
 
 class Album extends Component {
     constructor(props) {
@@ -50,20 +50,7 @@ class Album extends Component {
     }
 
     checkout = () => {
-        getLastOrderCreated(1).then(response => {
-            this.props.updateOrder(response)
-            this.props.navigation.navigate('Cart')
-
-        }).catch(error => {
-            if (error.response && error.response.status == 412) {    
-                createOrder.then(response => {
-                    this.props.updateOrder(response)
-                    this.props.navigation.navigate('Cart')
-                
-                }).catch(error => console.log("Create order error " + error))
-            }
-            console.log("Get order error " + error)
-        });
+        this.props.navigation.navigate('Cart')
     }
 
     renderItem = ({ item, index }) => {
@@ -97,9 +84,10 @@ class Album extends Component {
                 itemHeight={this.height}
                 renderItem={this.renderItem} />
 
-            <View style={{ marginTop: 10 }}>
-                <Button text="FINALIZAR COMPRA" onPress={() => this.checkout()} />
-            </View>
+            <Button
+                style={{ width: "100%" }}
+                text="FINALIZAR COMPRA"
+                onPress={() => this.checkout()} />
         </View>
     )
 
@@ -121,9 +109,12 @@ class Album extends Component {
                     )
                 }}
             />
-            <View style={{ marginTop: 10 }}>
-                <Button text="FINALIZAR COMPRA" onPress={() => this.checkout()} />
-            </View>
+
+            <Button
+                style={{ width: "100%" }}
+                text="FINALIZAR COMPRA"
+                onPress={() => this.checkout()} />
+
         </View>
     )
 
@@ -177,11 +168,14 @@ const styles = StyleSheet.create({
 })
 
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({ updatePhoto, updateOrder }, dispatch)
+    bindActionCreators({ updatePhoto }, dispatch)
 )
 
-const mapStateToProps = album => {
-    return { album: album.album }
+const mapStateToProps = state => {
+    return {
+        album: state.album,
+        user: state.user.user
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Album)

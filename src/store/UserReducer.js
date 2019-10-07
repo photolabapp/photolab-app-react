@@ -1,3 +1,4 @@
+import React from 'react'
 const initialState = {
     user: {}
 }
@@ -5,7 +6,8 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case "UPDATE_USER":
-            return { ...state.user, user: action.payload }
+            console.log("LOG -------- action.payload " + action.payload.name)
+            return { ...state, user: action.payload }
         default:
             return state
 

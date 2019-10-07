@@ -30,8 +30,8 @@ class Login extends Component {
             this.setState({ error: error })
         } else {
             login(user).then(response => {
-                this.props.updateUser(response.user)
-                this.setToken(response.accessToken)
+                this.props.updateUser(response.data.user)
+                this.setToken(response.data.accessToken)
                 this.props.navigation.navigate('App')
                 console.log(response)
             }).catch(error => console.log("Login error " + error));

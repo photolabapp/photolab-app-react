@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import MovieDecoration from './components/MovieDecoration'
-import { shipping, saveOrder } from '../../services/Api'
+import { updateOrderToSaved } from '../../services/Api'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, Dimensions, ImageBackground } from 'react-native';
+import { bindActionCreators } from 'redux'
+import { updateOrder } from '../../store/OrderAction'
+import { getLastOrderCreated, createOrder } from '../../services/Api'
+import { StyleSheet, Text, View, Dimensions, ImageBackground, Alert } from 'react-native';
 import { CardView, Button, TextInput } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -16,13 +19,33 @@ class Cart extends Component {
             current: 1,
             total: 0,
             value: 10.0,
-        //    cep: "",
-        //    shipping: { values: [] }
+            order: null
         }
     }
 
+    componentDidMount() {
+        this.order()
+    }
+
+    order = () => {
+        getLastOrderCreated(this.props.user, this.state.order).then(response => {
+            this.props.updateOrder(response.data)
+            this.setState({ order: response.data })
+
+        }).catch(error => {
+            if (error.response && error.response.status == 412) {
+                createOrder(this.props.user).then(response => {
+                    this.props.updateOrder(response.data)
+                    this.setState({ order: response.data })
+
+                }).catch(error => console.log("Create order error " + error))
+            }
+            console.log("Get order error " + error)
+        });
+    }
+
     save = () => {
-        saveOrder({order_id: this.props.order.id}).then(response => {
+        updateOrderToSaved(this.props.user, this.state.order).then(response => {
             this.props.navigation.navigate('CartSuccess')
         }).catch(error => {
             console.log("Save order error " + error)
@@ -34,33 +57,6 @@ class Cart extends Component {
         this.props.navigation.navigate('CartAddress')
     }
 
-    shipping = (cep) => {
-        if (cep.length == 8) {
-            this.setState({
-                shipping: {
-                    city: "São Paulo",
-                    values: [{
-                        id: 1,
-                        desc: "Correios",
-                        time: "4 dias úteis",
-                        value: 23.50
-                    }, {
-                        id: 2,
-                        desc: "Retidar na loja",
-                        time: "1 dia útil",
-                        value: 0.0
-                    }]
-                }
-            })
-            /*
-            shipping(cep)
-                .then(response => this.setState(response))
-                .catch(error => console.log("shipping error " + error));
-                */
-        }
-    }
-
-    //transform: [{ rotate: '90deg'}]
     renderItem = ({ item, index }) => {
         const { cropped } = item
         return (
@@ -71,8 +67,6 @@ class Cart extends Component {
                         width: width,
                         height: height,
                         backgroundColor: "black",
-                        paddingStart: 2,
-                        paddingEnd: 2
                     }}
                     source={{ uri: cropped }}>
                 </ImageBackground>
@@ -82,16 +76,15 @@ class Cart extends Component {
     }
 
     render() {
-        const hasShipping = (this.state.shipping.values.length > 0)
-
-        return (
+        return this.state.order != null ?
             <View styles={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>Sacola de Compra</Text>
                 </View>
 
                 <Carousel
-                    data={this.props.album.album}
+                    style={{ marginTop: 32 }}
+                    data={this.props.album}
                     layout="default"
                     zoomScale={0}
                     itemWidth={width}
@@ -99,11 +92,11 @@ class Cart extends Component {
                     itemHeight={height}
                     renderItem={this.renderItem} />
 
-                <CardView>
+                <CardView style={{ marginStart: 16, marginEnd: 16, marginTop: 24 }}>
                     <Text style={styles.shippingHeader}>Resumo do pedido</Text>
                     <View style={styles.buyInfo}>
                         <Text style={styles.buyTitleText}>Quantidade de fotos:</Text>
-                        <Text style={styles.buyDescText}>{this.props.album.album.length}</Text>
+                        <Text style={styles.buyDescText}>{this.props.album.length}</Text>
                     </View>
 
                     <View style={styles.buyInfo}>
@@ -113,33 +106,16 @@ class Cart extends Component {
 
                     <View style={styles.buyInfo}>
                         <Text style={styles.buyTitleText}>Valor total das fotos:</Text>
-                        <Text style={styles.buyDescText}> R$ {this.state.value * this.props.album.album.length}</Text>
+                        <Text style={styles.buyDescText}> R$ {this.state.value * this.props.album.length}</Text>
                     </View>
                 </CardView>
 
-                {/*
-                <View style={styles.cardViewContainer}>
-                    <Text style={styles.shippingHeader}>Estime seu frete</Text>
-                    <EditText
-                        placeholder="cep:"
-                        keyboardType="numeric"
-                        onChangeText={(cep) => this.shipping({ cep })}
-                    />
-                    {this.state.shipping.values.map(value => (
-                        <View style={styles.buyInfo}>
-                            <Text style={styles.buyTitleText}>{value.desc} ({value.time})*</Text>
-                            <Text style={styles.buyDescText}>R$ {value.value}</Text>
-                        </View>
-                    ))}
-                </View>
-                */}
-
                 <Button
-                    style={{ top: (screenHeight - 73) - 50 }}
+                    style={{ width: "100%", top: 40 }}
                     text="CONTINUAR"
-                    onPress={this.save()} />
+                    onPress={() => this.save()} />
             </View>
-        )
+            : null
     }
 }
 
@@ -197,12 +173,15 @@ const styles = StyleSheet.create({
     }
 })
 
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({ updateOrder }, dispatch)
+)
+
 const mapStateToProps = state => {
     return {
-        album: state.album,
-        order: state.order,
-        user: state.user
+        album: state.album.album,
+        user: state.user.user
     }
 }
 
-export default connect(mapStateToProps)(Cart)
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

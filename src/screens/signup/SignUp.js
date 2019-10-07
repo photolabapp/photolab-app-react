@@ -32,7 +32,6 @@ class SignUp extends Component {
         if (error.size > 0) {
             this.setState({ error: error })
         } else {
-            Alert.alert("SDSDS", "CREATE")
             create(user).then(response => {
                 this.props.updateUser(response.data.user)
                 this.setToken(response.data.accessToken)
@@ -41,7 +40,7 @@ class SignUp extends Component {
                 Alert.alert("Cadastro", "Cadastro efetuado com sucesso!!!!")
             }).catch(error => {
                 if (error.response && error.response.status == 412) {
-                    Alert.alert("Cadastro", "O e-mail " + user.email + " já esta cadastrado!!!'")
+                    Alert.alert("Cadastro", error.response.data.message)
                 } else {
                     Alert.alert("Cadastro", "Erro no cadastro, tente novamamente!!!!")
                 }

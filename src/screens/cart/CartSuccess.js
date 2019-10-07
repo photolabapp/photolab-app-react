@@ -13,10 +13,10 @@ class CartSuccess extends Component {
         return (
             <View styles={styles.container}>
                 <CardView style={{ marginStart: 16, marginEnd: 16, marginTop: 16 }}>
-                    <Text style={[styles.textNormal, { marginBottom: 24, marginTop: 8, fontSize: 20 }]}>Mauricio,</Text>
+                    <Text style={[styles.textNormal, { marginBottom: 24, marginTop: 8, fontSize: 20 }]}>{this.props.user.name},</Text>
                     <Text style={[styles.textNormal, { marginBottom: 24 }]}>Parabéns seu pedido foi realizado com sucesso!!</Text>
                     <Text style={[styles.textBold, { marginBottom: 8 }]}>Número do pedido é:</Text>
-                    <Text style={[styles.textOrange, { marginBottom: 8 }]}>3233213</Text>
+                    <Text style={[styles.textOrange, { marginBottom: 8 }]}>{this.props.order.id}</Text>
                 </CardView>
 
                 <CardView style={{ marginStart: 16, marginEnd: 16, marginTop: 32 }}>
@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        order: state.order,
-        user: state.user
+        order: state.order.order,
+        user: state.user.user
     }
 }
 

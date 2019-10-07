@@ -18,13 +18,17 @@ export const getShipping = cep => {
 }
 
 export const createOrder = user => {
-    return axios.get("order/", { user_id: user.id })
+    return axios.post("order/", { user: user.id })
 }
 
-export const saveOrder = order => {
-    return axios.get("order/save", { order_id: order.id })
+export const upload = (order, user, photo) => {
+    return axios.post("order/photo/upload", { user: user.id, order: order.id, photo: photo })
+}
+
+export const updateOrderToSaved = (user, order) => {
+    return axios.put("order/saved", { order: order.id, user: user.id })
 }
 
 export const getLastOrderCreated = user => {
-    return axios.get("order/last/created", { user_id: user.id })
+    return axios.get("order/last/created", { user: user.id })
 }
