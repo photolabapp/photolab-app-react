@@ -8,6 +8,7 @@ import { getLastOrderCreated, createOrder } from '../../services/Api'
 import { StyleSheet, Text, View, Dimensions, ImageBackground, Alert } from 'react-native';
 import { CardView, Button, TextInput } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
+import Upload from 'react-native-background-upload'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class Cart extends Component {
@@ -44,8 +45,38 @@ class Cart extends Component {
         });
     }
 
+    uploadPhoto = photo => {
+        Upload.startUpload({
+            url: 'http://192.168.1.106:8080/order/photo',
+            path: photo,
+            method: 'POST',
+            field: 'photo',
+            type: 'multipart',
+            notification: { enabled: true }
+        }).then(uploadId => {
+            console.log('Upload started')
+            Upload.addListener('progress', uploadId, data => {
+                console.log(`Progress: ${data.progress}%`)
+            })
+            Upload.addListener('error', uploadId, data => {
+                console.log(`upload album Error: ${data.error}%`)
+            })
+            Upload.addListener('cancelled', uploadId, data => {
+                console.log(`Cancelled!`)
+            })
+            Upload.addListener('completed', uploadId, data => {
+                // data includes responseCode: number and responseBody: Object
+                console.log('Completed!')
+            })
+        }).catch(err => console.log('Upload error!', err))
+    }
+
     save = () => {
         updateOrderToSaved(this.props.user, this.state.order).then(response => {
+            this.props.album.map(photo => {
+                console.log("LOG ------ photo " + photo.cropped)
+                this.uploadPhoto(photo.cropped)
+            })
             this.props.navigation.navigate('CartSuccess')
         }).catch(error => {
             console.log("Save order error " + error)

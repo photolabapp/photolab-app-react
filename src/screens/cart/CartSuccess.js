@@ -9,32 +9,6 @@ class CartSuccess extends Component {
         super(props)
     }
 
-    uploadPhoto = path => {
-        Upload.startUpload({
-            url: 'http://192.168.1.106:8080',
-            path: path,
-            method: 'POST',
-            field: 'uploaded_media',
-            type: 'multipart',
-            notification: { enabled: true }
-        }).then(uploadId => {
-            console.log('Upload started')
-            Upload.addListener('progress', uploadId, data => {
-                console.log(`Progress: ${data.progress}%`)
-            })
-            Upload.addListener('error', uploadId, data => {
-                console.log(`Error: ${data.error}%`)
-            })
-            Upload.addListener('cancelled', uploadId, data => {
-                console.log(`Cancelled!`)
-            })
-            Upload.addListener('completed', uploadId, data => {
-                // data includes responseCode: number and responseBody: Object
-                console.log('Completed!')
-            })
-        }).catch(err => console.log('Upload error!', err))
-    }
-
     render() {
         return (
             <View styles={styles.container}>
@@ -84,6 +58,8 @@ const styles = StyleSheet.create({
     },
     cardViewHeader: {
         height: 40,
+        marginStart: 0,
+        marginEnd: 0,
         backgroundColor: "#D2D2D2",
         color: "black",
         fontWeight: "bold"

@@ -1,10 +1,5 @@
 const initialState = {
-    album: [
-        {
-            raw: 'https://a-static.mlcdn.com.br/618x463/quadro-decorativo-canvas-p-escritorios-casas-de-praia-paisagem-praia-ii-incasa-design/incasadesign/cv0133pri/f45e60739214167a99eea02c17016b91.jpg',
-            cropped: 'https://a-static.mlcdn.com.br/618x463/quadro-decorativo-canvas-p-escritorios-casas-de-praia-paisagem-praia-ii-incasa-design/incasadesign/cv0133pri/f45e60739214167a99eea02c17016b91.jpg'
-        }
-    ]
+    album: []
 }
 
 export default (state = initialState, action) => {

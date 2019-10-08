@@ -120,9 +120,9 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
-configurations.all {
-    resolutionStrategy.force 'com.squareup.okhttp3:okhttp:3.4.1'
-} // required by react-native-background-upload until React Native supports okhttp >= okhttp 3.5
+//configurations.all {
+//    resolutionStrategy.force 'com.squareup.okhttp3:okhttp:3.4.1'
+//}  required by react-native-background-upload until React Native supports okhttp >= okhttp 3.5
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -196,7 +196,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation project(':react-native-background-upload')
+    //implementation project(':react-native-background-upload')
 
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";
