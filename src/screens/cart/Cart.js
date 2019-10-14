@@ -52,29 +52,37 @@ class Cart extends Component {
             method: 'POST',
             field: 'photo',
             type: 'multipart',
-            notification: { enabled: true }
+            parameters: { user: "" + this.props.user.id, order: "" + this.state.order.id },
+            notification: { 
+                enabled: true, 
+                autoclear: true, 
+                onProgressTitle: "Carregando....",
+                onProgressMessage: "Enviando foto",
+                onCompleteTitle: "Envio finalizado",
+                onCompleteMessage: "Foto enviada com sucesso!!"
+            }
         }).then(uploadId => {
+            /*
             console.log('Upload started')
             Upload.addListener('progress', uploadId, data => {
-                console.log(`Progress: ${data.progress}%`)
+                console.log(`LSKDLS -- Progress: ${data.progress}%`)
             })
             Upload.addListener('error', uploadId, data => {
-                console.log(`upload album Error: ${data.error}%`)
+                console.log(`LSKDLS -- upload album Error: ${data.error}%`)
             })
             Upload.addListener('cancelled', uploadId, data => {
-                console.log(`Cancelled!`)
+                console.log(`LSKDLS -- Cancelled!`)
             })
             Upload.addListener('completed', uploadId, data => {
-                // data includes responseCode: number and responseBody: Object
-                console.log('Completed!')
+                console.log('LSKDLS -- Completed!')
             })
-        }).catch(err => console.log('Upload error!', err))
+            */
+        }).catch(err => console.log('LSKDLS -- Upload error!', err))
     }
 
     save = () => {
         updateOrderToSaved(this.props.user, this.state.order).then(response => {
             this.props.album.map(photo => {
-                console.log("LOG ------ photo " + photo.cropped)
                 this.uploadPhoto(photo.cropped)
             })
             this.props.navigation.navigate('CartSuccess')
