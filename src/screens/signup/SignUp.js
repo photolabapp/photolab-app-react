@@ -4,7 +4,7 @@ import validate from './Validate'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { updateUser } from '../../store/UserAction'
-import { StyleSheet, View, Image, Alert } from 'react-native'
+import { StyleSheet, View, Image, Alert, ActivityIndicator } from 'react-native'
 import { Button, TextInput } from '../../components/UIKit'
 
 class SignUp extends Component {
@@ -12,6 +12,7 @@ class SignUp extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            indicator: false,
             name: '',
             email: '',
             password: '',
@@ -21,6 +22,7 @@ class SignUp extends Component {
     }
 
     save = () => {
+        this.setState({ indicator: true })
         user = {
             name: this.state.name,
             email: this.state.email,
@@ -31,14 +33,17 @@ class SignUp extends Component {
         let error = validate(user)
         if (error.size > 0) {
             this.setState({ error: error })
+            this.setState({ indicator: false })
         } else {
             create(user).then(response => {
                 this.props.updateUser(response.data.user)
                 this.setToken(response.data.accessToken)
                 this.props.navigation.navigate('App')
+                this.setState({ indicator: false })
 
                 Alert.alert("Cadastro", "Cadastro efetuado com sucesso!!!!")
             }).catch(error => {
+                this.setState({ indicator: false })
                 if (error.response && error.response.status == 412) {
                     Alert.alert("Cadastro", error.response.data.message)
                 } else {
@@ -60,6 +65,8 @@ class SignUp extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <ActivityIndicator size="large" animating={this.state.indicator} />
+
                 <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
                     style={{ width: 150, height: 30, marginBottom: 48 }} />
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { updateOrder } from '../../store/OrderAction'
 import { getLastOrderCreated, createOrder } from '../../services/Api'
-import { StyleSheet, Text, View, Dimensions, ImageBackground, Alert } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, ImageBackground, Alert, ActivityIndicator } from 'react-native';
 import { CardView, Button, TextInput } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
 import Upload from 'react-native-background-upload'
@@ -17,6 +17,7 @@ class Cart extends Component {
         super(props);
 
         this.state = {
+            indicator: false,
             current: 1,
             total: 0,
             value: 10.0,
@@ -29,17 +30,23 @@ class Cart extends Component {
     }
 
     order = () => {
+        this.setState({ indicator: true })
         getLastOrderCreated(this.props.user, this.state.order).then(response => {
             this.props.updateOrder(response.data)
             this.setState({ order: response.data })
+            this.setState({ indicator: false })
 
         }).catch(error => {
             if (error.response && error.response.status == 412) {
                 createOrder(this.props.user).then(response => {
                     this.props.updateOrder(response.data)
                     this.setState({ order: response.data })
+                    this.setState({ indicator: false })
 
-                }).catch(error => console.log("Create order error " + error))
+                }).catch(error => {
+                    this.setState({ indicator: false })
+                    console.log("Create order error " + error)
+                })
             }
             console.log("Get order error " + error)
         });
@@ -47,15 +54,15 @@ class Cart extends Component {
 
     uploadPhoto = photo => {
         Upload.startUpload({
-            url: 'http://192.168.1.106:8080/order/photo',
+            url: 'http://ec2-18-234-166-48.compute-1.amazonaws.com:8080/order/photo',
             path: photo,
             method: 'POST',
             field: 'photo',
             type: 'multipart',
             parameters: { user: "" + this.props.user.id, order: "" + this.state.order.id },
-            notification: { 
-                enabled: true, 
-                autoclear: true, 
+            notification: {
+                enabled: true,
+                autoclear: true,
                 onProgressTitle: "Carregando....",
                 onProgressMessage: "Enviando foto",
                 onCompleteTitle: "Envio finalizado",
@@ -63,32 +70,45 @@ class Cart extends Component {
             }
         }).then(uploadId => {
             /*
-            console.log('Upload started')
             Upload.addListener('progress', uploadId, data => {
                 console.log(`LSKDLS -- Progress: ${data.progress}%`)
             })
+            /*
+            */
             Upload.addListener('error', uploadId, data => {
                 console.log(`LSKDLS -- upload album Error: ${data.error}%`)
             })
+            /*
             Upload.addListener('cancelled', uploadId, data => {
                 console.log(`LSKDLS -- Cancelled!`)
             })
+            */
             Upload.addListener('completed', uploadId, data => {
                 console.log('LSKDLS -- Completed!')
             })
-            */
-        }).catch(err => console.log('LSKDLS -- Upload error!', err))
+        }).catch(err => {
+            this.setState({ indicator: false })
+            console.log('LSKDLS -- Upload error!', err)
+        })
     }
 
     save = () => {
+        this.setState({ indicator: true })
         updateOrderToSaved(this.props.user, this.state.order).then(response => {
-            this.props.album.map(photo => {
-                this.uploadPhoto(photo.cropped)
-            })
+            let photos = []
+            //this.props.album.map(photos => {
+            for (const [photo] of photos.entries()) {
+                //this.uploadPhoto(photo.cropped)
+                photos.push(photo.cropped)
+            }
+            //})
+            this.uploadPhoto(photos)
             this.props.navigation.navigate('CartSuccess')
+            this.setState({ indicator: false })
         }).catch(error => {
             console.log("Save order error " + error)
             Alert.alert("Pedido", "Erro ao salvar pedido, tente novamamente!!!!")
+            this.setState({ indicator: false })
         });
     }
 
@@ -117,6 +137,8 @@ class Cart extends Component {
     render() {
         return this.state.order != null ?
             <View styles={styles.container}>
+                <ActivityIndicator size="large" animating={this.state.indicator} />
+
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>Sacola de Compra</Text>
                 </View>

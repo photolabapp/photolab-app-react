@@ -5,30 +5,10 @@ const axios = Axios.create({
     responseType: "json"
 });
 
-export const login = user => {
-    return axios.post("login/", user)
-}
-
-export const create = user => {
-    return axios.post("user/", user)
-}
-
-export const getShipping = cep => {
-    return axios.get("shipping/", { cep: cep })
-}
-
-export const createOrder = user => {
-    return axios.post("order/", { user: user.id })
-}
-
-export const upload = (order, user, photo) => {
-    return axios.post("order/photo/upload", { user: user.id, order: order.id, photo: photo })
-}
-
-export const updateOrderToSaved = (user, order) => {
-    return axios.put("order/saved", { order: order.id, user: user.id })
-}
-
-export const getLastOrderCreated = user => {
-    return axios.get("order/last/created", { user: user.id })
-}
+export const login = user => axios.post("login/", user);
+export const create = user => axios.post("user/", user);
+export const getShipping = cep => axios.get("shipping/", { cep: cep });
+export const createOrder = user => axios.post("order/", { user: user.id });
+export const upload = (order, user, photo) => axios.post("order/photo/upload", { user: user.id, order: order.id, photo: photo });
+export const updateOrderToSaved = (user, order) => axios.put("order/saved", { order: order.id, user: user.id });
+export const getLastOrderCreated = user => axios.get("order/last/created", { user: user.id });

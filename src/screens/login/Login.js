@@ -3,7 +3,7 @@ import { login } from '../../services/Api'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { updateUser } from '../../store/UserAction'
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, ActivityIndicator } from 'react-native';
 import { TextInput, Button } from '../../components/UIKit'
 import validate from './Validate'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -20,6 +20,7 @@ class Login extends Component {
     }
 
     login = () => {
+        this.setState({ indicator: true })
         user = {
             email: this.state.email,
             password: this.state.password
@@ -28,13 +29,18 @@ class Login extends Component {
         let error = validate(user)
         if (error.size > 0) {
             this.setState({ error: error })
+            this.setState({ indicator: false })
         } else {
             login(user).then(response => {
                 this.props.updateUser(response.data.user)
                 this.setToken(response.data.accessToken)
                 this.props.navigation.navigate('App')
+                this.setState({ indicator: false })
                 console.log(response)
-            }).catch(error => console.log("Login error " + error));
+            }).catch(error => { 
+                console.log("Login error " + error)
+                this.setState({ indicator: false })
+            })
         }
     }
 
@@ -49,6 +55,8 @@ class Login extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <ActivityIndicator size="large" animating={this.state.indicator} />
+
                 <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
                     style={{ width: 150, height: 30, marginBottom: 48 }} />
 
