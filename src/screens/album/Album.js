@@ -2,15 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updatePhoto } from '../../store/AlbumAction'
 import { bindActionCreators } from 'redux'
-import {
-    View,
-    StyleSheet,
-    Dimensions,
-    ImageBackground,
-    TouchableOpacity,
-    FlatList,
-    Text
-} from 'react-native'
+import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, FlatList } from 'react-native'
 import { Button } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
