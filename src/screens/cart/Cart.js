@@ -95,14 +95,9 @@ class Cart extends Component {
     save = () => {
         this.setState({ indicator: true })
         updateOrderToSaved(this.props.user, this.state.order).then(response => {
-            let photos = []
-            //this.props.album.map(photos => {
-            for (const [photo] of photos.entries()) {
-                //this.uploadPhoto(photo.cropped)
-                photos.push(photo.cropped)
-            }
-            //})
-            this.uploadPhoto(photos)
+            this.props.album.map(photo => {
+                this.uploadPhoto(photo.cropped)
+            })
             this.props.navigation.navigate('CartSuccess')
             this.setState({ indicator: false })
         }).catch(error => {

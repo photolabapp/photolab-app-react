@@ -3,7 +3,7 @@ import { login } from '../../services/Api'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { updateUser } from '../../store/UserAction'
-import { StyleSheet, View, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Image, ActivityIndicator, Alert } from 'react-native';
 import { TextInput, Button } from '../../components/UIKit'
 import validate from './Validate'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -15,6 +15,7 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
+            indicator: false,
             error: new Map()
         }
     }
@@ -32,18 +33,21 @@ class Login extends Component {
             this.setState({ indicator: false })
         } else {
             login(user).then(response => {
+                console.log("LSKLKDLSKDSLDKS user " + response.data.user)
                 this.props.updateUser(response.data.user)
-                this.setToken(response.data.accessToken)
+                //this.setToken(response.data.accessToken)
                 this.props.navigation.navigate('App')
                 this.setState({ indicator: false })
                 console.log(response)
             }).catch(error => { 
                 console.log("Login error " + error)
                 this.setState({ indicator: false })
+                Alert.alert("Cadastro", "Erro no cadastro, tente novamamente!!!!")
             })
         }
     }
 
+    /*
     setToken = (token) => {
         _storeData = async () => {
             try {
@@ -51,6 +55,7 @@ class Login extends Component {
             } catch (error) { console.log("Periste token error " + error) }
         };
     }
+    */
 
     render() {
         return (
@@ -103,7 +108,7 @@ const mapDispatchToProps = dispatch => (
 )
 
 const mapStateToProps = state => {
-    return { user: state.user }
+    return { user: state.user.user }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

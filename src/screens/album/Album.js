@@ -21,6 +21,8 @@ class Album extends Component {
                 { key: 'second', title: 'Grid' },
             ],
         }
+
+        console.log("SLDKLSDKSLDSD " + this.props.user.name)
     }
 
     screenWidth = Math.round(Dimensions.get('window').width);

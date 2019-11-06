@@ -34,7 +34,7 @@ class Add extends Component {
     upload = () => {
         ImagePicker.launchImageLibrary({
             storageOptions: {
-                skipBackup: true,
+                skipBackup: false,
                 path: 'images',
             }
         }, (response) => {
@@ -52,6 +52,6 @@ class Add extends Component {
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({ addPhoto }, dispatch)
-);
+)
 
 export default connect(album => ({ album: album.album }), mapDispatchToProps)(withNavigationFocus(Add))

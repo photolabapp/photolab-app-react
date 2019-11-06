@@ -124,7 +124,7 @@ const mapDispatchToProps = dispatch => (
 )
 
 const mapStateToProps = state => {
-    return { user: state.user }
+    return { user: state.user.user }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
