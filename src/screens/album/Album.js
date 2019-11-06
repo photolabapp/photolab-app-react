@@ -31,7 +31,7 @@ class Album extends Component {
     height = 300
 
     cropImage = (index) => {
-        let photo = this.props.album.album[index]
+        let photo = this.props.order.order.album[index]
         ImagePicker.openCropper({
             path: photo.raw,
             width: this.width,
@@ -59,7 +59,7 @@ class Album extends Component {
                             borderRadius: 20,
                             borderWidth: 1,
                             borderColor: '#D2D2D2',
-                            elevation: this.props.album.album.length - index
+                            elevation: this.props.order.order.album.length - index
                         }}
                         imageStyle={{ borderRadius: 20 }}
                         source={{ uri: cropped }}>
@@ -72,7 +72,7 @@ class Album extends Component {
     firstRoute = () => (
         <View style={styles.containerScene}>
             <Carousel
-                data={this.props.album.album}
+                data={this.props.order.order.album}
                 itemWidth={this.width}
                 sliderWidth={this.screenWidth}
                 itemHeight={this.height}
@@ -88,7 +88,7 @@ class Album extends Component {
     secondRoute = () => (
         <View style={styles.containerScene}>
             <FlatList
-                data={this.props.album.album}
+                data={this.props.order.order.album}
                 numColumns={3}
                 renderItem={({ item, index }) => {
                     return (
@@ -167,7 +167,7 @@ const mapDispatchToProps = dispatch => (
 
 const mapStateToProps = state => {
     return {
-        album: state.album,
+        order: state.order,
         user: state.user.user
     }
 }

@@ -6,7 +6,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage';
 
 const reducer = combineReducers({
-    album: albumReducer,
+    //album: albumReducer,
     order: orderReducer,
     user: userReducer
 })

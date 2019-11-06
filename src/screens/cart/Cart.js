@@ -95,7 +95,7 @@ class Cart extends Component {
     save = () => {
         this.setState({ indicator: true })
         updateOrderToSaved(this.props.user, this.state.order).then(response => {
-            this.props.album.map(photo => {
+            this.props.order.album.map(photo => {
                 this.uploadPhoto(photo.cropped)
             })
             this.props.navigation.navigate('CartSuccess')
@@ -140,7 +140,7 @@ class Cart extends Component {
 
                 <Carousel
                     style={{ marginTop: 32 }}
-                    data={this.props.album}
+                    data={this.props.order.album}
                     layout="default"
                     zoomScale={0}
                     itemWidth={width}
@@ -152,7 +152,7 @@ class Cart extends Component {
                     <Text style={styles.shippingHeader}>Resumo do pedido</Text>
                     <View style={styles.buyInfo}>
                         <Text style={styles.buyTitleText}>Quantidade de fotos:</Text>
-                        <Text style={styles.buyDescText}>{this.props.album.length}</Text>
+                        <Text style={styles.buyDescText}>{this.props.order.album.length}</Text>
                     </View>
 
                     <View style={styles.buyInfo}>
@@ -162,7 +162,7 @@ class Cart extends Component {
 
                     <View style={styles.buyInfo}>
                         <Text style={styles.buyTitleText}>Valor total das fotos:</Text>
-                        <Text style={styles.buyDescText}> R$ {this.state.value * this.props.album.length}</Text>
+                        <Text style={styles.buyDescText}> R$ {this.state.value * this.props.order.album.length}</Text>
                     </View>
                 </CardView>
 
@@ -235,7 +235,7 @@ const mapDispatchToProps = dispatch => (
 
 const mapStateToProps = state => {
     return {
-        album: state.album.album,
+        order: state.order.order,
         user: state.user.user
     }
 }

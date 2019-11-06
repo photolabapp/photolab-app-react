@@ -54,4 +54,4 @@ const mapDispatchToProps = dispatch => (
     bindActionCreators({ addPhoto }, dispatch)
 )
 
-export default connect(album => ({ album: album.album }), mapDispatchToProps)(withNavigationFocus(Add))
+export default connect(state => ({ order: state.order }), mapDispatchToProps)(withNavigationFocus(Add))
