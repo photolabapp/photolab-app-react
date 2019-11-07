@@ -15,136 +15,141 @@ import HeaderLogo from '../components/HeaderLogo'
 
 // LOGIN AND SIGNUP SCREEN
 const loginStackNavigator = createStackNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: { header: null }
-  },
-  SignUp: {
-    screen: SignUp,
-    headerMode: 'screen',
-    navigationOptions: {
-      headerTintColor: '#ffffff',
-      headerStyle: {
-        backgroundColor: '#31383E',
-        elevation: 0,
-        shadowOpacity: 0
-      },
-      title: 'Cadastro'
+    Login: {
+        screen: Login,
+        navigationOptions: { header: null }
+    },
+    SignUp: {
+        screen: SignUp,
+        headerMode: 'screen',
+        navigationOptions: {
+            headerTintColor: '#ffffff',
+            headerStyle: {
+                backgroundColor: '#31383E',
+                elevation: 0,
+                shadowOpacity: 0
+            },
+            title: 'Cadastro'
+        }
     }
-  }
 }, {
-  initialRouteName: 'Login'
+    initialRouteName: 'Login'
 })
 
 const albumStackNavigator = createStackNavigator({
-  Upload: {
-    screen: Album,
-    navigationOptions: { header: null }
-  }
+    Upload: {
+        screen: Album,
+        navigationOptions: { header: null }
+    }
 })
 
 const uploadStackNavigator = createStackNavigator({
-  Upload: {
-    screen: Add,
-    navigationOptions: { header: null }
-  }
+    Upload: {
+        screen: Add,
+        navigationOptions: { header: null }
+    }
 })
 
 const configStackNavigator = createStackNavigator({
-  Config: {
-    screen: Config,
-    navigationOptions: {
-      header: null
+    Config: {
+        screen: Config,
+        navigationOptions: {
+            header: null
+        }
     }
-  }
 }, {
-  headerLayoutPreset: 'center'
+    headerLayoutPreset: 'center'
 })
 
 const cartSuccess = createStackNavigator({
-  CartSuccess: {
-    screen: CartSuccess,
-    headerMode: 'screen',
-    navigationOptions: {
-      headerTintColor: '#ffffff',
-      headerStyle: {
-        backgroundColor: '#31383E',
-        elevation: 0,
-        shadowOpacity: 0
-      },
-      title: 'Cadastro'
+    CartSuccess: {
+        screen: CartSuccess,
+        headerMode: 'screen',
+        navigationOptions: {
+            headerTintColor: '#ffffff',
+            headerStyle: {
+                backgroundColor: '#31383E',
+                elevation: 0,
+                shadowOpacity: 0
+            },
+            title: 'Cadastro'
+        }
     }
-  }
 })
 
 const cartStackNavigator = createStackNavigator({
-  Cart: {
-    screen: Cart,
-    navigationOptions: {
-      header: null
+    Cart: {
+        screen: Cart,
+        navigationOptions: {
+            header: null
+        }
+    },
+    CartAddress: {
+        screen: CartAddress,
+        navigationOptions: {
+            headerMode: 'screen',
+            title: 'Meus endereços'
+        }
+    },
+    CartSuccess: {
+        screen: CartSuccess,
+        navigationOptions: ({ navigation }) => {
+            return {
+                headerLeft: (<HeaderBackButton onPress={_ => navigation.navigate("Album")} />)
+            }
+        },
+        navigationOptions: {
+            headerMode: 'screen',
+            title: 'Sucesso',
+            //tabBarVisible: false
+            tabBarOptions: {
+                tabBarVisible: false
+            }
+        }
     }
-  },
-  CartAddress: {
-    screen: CartAddress,
-    navigationOptions: {
-      headerMode: 'screen',
-      title: 'Meus endereços'
-    }
-  },
-  CartSuccess: {
-    screen: CartSuccess,
-    navigationOptions: {
-      headerMode: 'screen',
-      title: 'Sucesso',
-      //tabBarVisible: false
-      tabBarOptions: { 
-        tabBarVisible: false 
-      }
-    }
-  }
 })
 
 const bottomTab = createBottomTabNavigator({
-  Album: albumStackNavigator,
-  Cart: cartStackNavigator,
-  Add: uploadStackNavigator,
-  Credito: configStackNavigator,
-  Usuario: configStackNavigator,
+    Album: albumStackNavigator,
+    Cart: cartStackNavigator,
+    Add: uploadStackNavigator,
+    Credito: configStackNavigator,
+    Usuario: configStackNavigator,
 }, {
-  initialRouteName: 'Album',
-  navigationOptions: {
-    header: null
-  },
-  defaultNavigationOptions: ({ navigation }) => ({
-    tabBarIcon: ({ tintColor }) => {
-      const { routeName } = navigation.state
-      if (routeName === 'Add') {
-        return <Icon name="add-circle-outline" size={40} color="#fff" />
-      } else if (routeName === 'Album') {
-        return <Icon name="photo-album" size={22} color="#fff" />
-      } else if (routeName === 'Cart') {
-        return <Icon name="shopping-cart" size={22} color="#fff" />
-      } else if (routeName === 'Credito') {
-        return <Icon name="credit-card" size={25} color="#fff" />
-      } else if (routeName === 'Usuario') {
-        return <Icon name="perm-identity" size={25} color="#fff" />
-      }
+    initialRouteName: 'Album',
+    navigationOptions: {
+        header: null
+    },
+    defaultNavigationOptions: ({ navigation }) => ({
+        tabBarIcon: ({ tintColor }) => {
+            const { routeName } = navigation.state
+            if (routeName === 'Add') {
+                return <Icon name="add-circle-outline" size={40} color="#fff" />
+            } else if (routeName === 'Album') {
+                return <Icon name="photo-album" size={22} color="#fff" />
+            } else if (routeName === 'Cart') {
+                return <Icon name="shopping-cart" size={22} color="#fff" />
+            } else if (routeName === 'Credito') {
+                return <Icon name="credit-card" size={25} color="#fff" />
+            } else if (routeName === 'Usuario') {
+                return <Icon name="perm-identity" size={25} color="#fff" />
+            }
+        }
+    }),
+    tabBarOptions: {
+        inactiveTintColor: 'white',
+        showIcon: true,
+        showLabel: false,
+        inactiveBackgroundColor: Colors.greyPrimary,
+        activeBackgroundColor: Colors.greySecundary,
+        activeTintColor: 'white'
     }
-  }),
-  tabBarOptions: {
-    inactiveTintColor: 'white',
-    showIcon: true,
-    showLabel: false,
-    inactiveBackgroundColor: Colors.greyPrimary,
-    activeBackgroundColor: Colors.greySecundary,
-    activeTintColor: 'white'
-  }
 })
 
 const switchNavigator = createSwitchNavigator({
-  Splash: { screen: Splash, headerMode: 'none' },
-  App: bottomTab,
-  Auth: loginStackNavigator,
+    Splash: { screen: Splash, headerMode: 'none' },
+    App: bottomTab,
+    Auth: loginStackNavigator,
 }, { initialRouteName: 'Splash' })
 
 export default createAppContainer(switchNavigator)

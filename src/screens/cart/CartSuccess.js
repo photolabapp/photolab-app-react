@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import Colors from '../../utils/Colors'
+import { updateOrder } from '../../store/OrderAction'
 import { Button, CardView } from '../../components/UIKit'
 import { connect } from 'react-redux'
 
@@ -28,7 +29,7 @@ class CartSuccess extends Component {
                 </CardView>
             </View>
         )
-    } F
+    }
 }
 
 const styles = StyleSheet.create({
@@ -66,7 +67,9 @@ const styles = StyleSheet.create({
     },
 })
 
-//https://github.com/Vydia/react-native-background-upload
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({ updateOrder }, dispatch)
+)
 
 const mapStateToProps = state => {
     return {
@@ -75,4 +78,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(CartSuccess)
+export default connect(mapStateToProps, mapDispatchToProps)(CartSuccess)
