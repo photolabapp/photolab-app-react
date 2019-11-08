@@ -18,6 +18,7 @@ class Album extends Component {
             format: "10x15",
             quantity: 1,
             current: 1,
+            format: "10x15",
             index: 0,
             routes: [
                 { key: 'first', title: 'Carousel' },
