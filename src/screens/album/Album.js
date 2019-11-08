@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updatePhoto } from '../../store/AlbumAction'
 import { bindActionCreators } from 'redux'
-import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, FlatList } from 'react-native'
+import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, FlatList, Picker } from 'react-native'
 import { Button } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
@@ -15,14 +15,13 @@ class Album extends Component {
 
         this.state = {
             current: 1,
+            format: "10x15",
             index: 0,
             routes: [
                 { key: 'first', title: 'Carousel' },
                 { key: 'second', title: 'Grid' },
             ],
         }
-
-        console.log("SLDKLSDKSLDSD " + this.props.user.name)
     }
 
     screenWidth = Math.round(Dimensions.get('window').width);
@@ -77,6 +76,19 @@ class Album extends Component {
                 sliderWidth={this.screenWidth}
                 itemHeight={this.height}
                 renderItem={this.renderItem} />
+
+            <View>
+                <Picker
+                    title="Formato"
+                    selectedValue={this.state.format}
+                    style={{ height: 50, width: 100 }}
+                    onValueChange={(itemValue, itemIndex) =>
+                        this.setState({ format: itemValue })
+                    }>
+                    <Picker.Item label="10 x 15" value="10x15" />
+                    <Picker.Item label="20 x 30" value="20x30" />
+                </Picker>
+            </View>
 
             <Button
                 style={{ width: "100%" }}
