@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { updatePhoto } from '../../store/AlbumAction'
 import { bindActionCreators } from 'redux'
 import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, FlatList } from 'react-native'
+import { Picker } from '@react-native-community/picker'
 import { Button } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
@@ -14,6 +15,8 @@ class Album extends Component {
         super(props)
 
         this.state = {
+            format: "10x15",
+            quantity: 1,
             current: 1,
             index: 0,
             routes: [
@@ -21,8 +24,6 @@ class Album extends Component {
                 { key: 'second', title: 'Grid' },
             ],
         }
-
-        console.log("SLDKLSDKSLDSD " + this.props.user.name)
     }
 
     screenWidth = Math.round(Dimensions.get('window').width);
@@ -48,7 +49,9 @@ class Album extends Component {
     }
 
     renderItem = ({ item, index }) => {
-        const { cropped } = item
+        const { cropped, quantity, format } = item
+        this.setState({ format: format })
+        this.setState({ quantity: quantity })
         return (
             <View>
                 <TouchableOpacity onPress={() => this.cropImage(index)}>
@@ -77,6 +80,33 @@ class Album extends Component {
                 sliderWidth={this.screenWidth}
                 itemHeight={this.height}
                 renderItem={this.renderItem} />
+
+            <Picker
+                selectedValue={this.state.format}
+                style={{ height: 50, width: 100 }}
+                onValueChange={(itemValue, itemIndex) =>
+                    this.setState({ format: itemValue })
+                }>
+                <Picker.Item label="10 x 15" value="10x15" />
+                <Picker.Item label="20 x 30" value="20x30" />
+            </Picker>
+
+            <Picker
+                selectedValue={this.state.quantity}
+                style={{ height: 50, width: 100 }}
+                onValueChange={(itemValue, itemIndex) =>
+                    this.setState({ quantity: itemValue })
+                }>
+                <Picker.Item label="1" value="1" />
+                <Picker.Item label="2" value="2" />
+                <Picker.Item label="3" value="3" />
+                <Picker.Item label="4" value="4" />
+                <Picker.Item label="5" value="5" />
+                <Picker.Item label="6" value="6" />
+                <Picker.Item label="7" value="7" />
+                <Picker.Item label="8" value="8" />
+                <Picker.Item label="9" value="9" />
+            </Picker>
 
             <Button
                 style={{ width: "100%" }}
