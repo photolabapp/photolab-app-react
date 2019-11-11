@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updatePhoto } from '../../store/AlbumAction'
 import { bindActionCreators } from 'redux'
-import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, FlatList } from 'react-native'
+import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, FlatList, Text } from 'react-native'
 import { Picker } from '@react-native-community/picker'
 import { Button } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
@@ -25,15 +25,17 @@ class Album extends Component {
                 { key: 'second', title: 'Grid' },
             ],
         }
+
+        console.log("LSKDLSKDLSD " + this.props.order.album)
     }
 
     screenWidth = Math.round(Dimensions.get('window').width);
     screenHeight = Math.round(Dimensions.get('window').height);
-    width = 200
-    height = 300
+    width = 180
+    height = 270
 
     cropImage = (index) => {
-        let photo = this.props.order.order.album[index]
+        let photo = this.props.order.album[index]
         ImagePicker.openCropper({
             path: photo.raw,
             width: this.width,
@@ -63,7 +65,7 @@ class Album extends Component {
                             borderRadius: 20,
                             borderWidth: 1,
                             borderColor: '#D2D2D2',
-                            elevation: this.props.order.order.album.length - index
+                            elevation: this.props.order.album.length - index
                         }}
                         imageStyle={{ borderRadius: 20 }}
                         source={{ uri: cropped }}>
@@ -76,38 +78,44 @@ class Album extends Component {
     firstRoute = () => (
         <View style={styles.containerScene}>
             <Carousel
-                data={this.props.order.order.album}
+                data={this.props.order.album}
                 itemWidth={this.width}
                 sliderWidth={this.screenWidth}
                 itemHeight={this.height}
                 renderItem={this.renderItem} />
 
-            <Picker
-                selectedValue={this.state.format}
-                style={{ height: 50, width: 100 }}
-                onValueChange={(itemValue, itemIndex) =>
-                    this.setState({ format: itemValue })
-                }>
-                <Picker.Item label="10 x 15" value="10x15" />
-                <Picker.Item label="20 x 30" value="20x30" />
-            </Picker>
+            <View style={styles.pickerContainer}>
+                <Text style={{ color: "#000" }}>Formato:</Text>
+                <Picker
+                    selectedValue={this.state.format}
+                    style={styles.picker}
+                    onValueChange={(itemValue, itemIndex) =>
+                        this.setState({ format: itemValue })
+                    }>
+                    <Picker.Item label="10 x 15" value="10x15" />
+                    <Picker.Item label="20 x 30" value="20x30" />
+                </Picker>
+            </View>
 
-            <Picker
-                selectedValue={this.state.quantity}
-                style={{ height: 50, width: 100 }}
-                onValueChange={(itemValue, itemIndex) =>
-                    this.setState({ quantity: itemValue })
-                }>
-                <Picker.Item label="1" value="1" />
-                <Picker.Item label="2" value="2" />
-                <Picker.Item label="3" value="3" />
-                <Picker.Item label="4" value="4" />
-                <Picker.Item label="5" value="5" />
-                <Picker.Item label="6" value="6" />
-                <Picker.Item label="7" value="7" />
-                <Picker.Item label="8" value="8" />
-                <Picker.Item label="9" value="9" />
-            </Picker>
+            <View style={styles.pickerContainer}>
+                <Text style={{ color: "#000" }}>Quantidade:</Text>
+                <Picker
+                    selectedValue={this.state.quantity}
+                    style={styles.picker}
+                    onValueChange={(itemValue, itemIndex) =>
+                        this.setState({ quantity: itemValue })
+                    }>
+                    <Picker.Item label="1" value="1" />
+                    <Picker.Item label="2" value="2" />
+                    <Picker.Item label="3" value="3" />
+                    <Picker.Item label="4" value="4" />
+                    <Picker.Item label="5" value="5" />
+                    <Picker.Item label="6" value="6" />
+                    <Picker.Item label="7" value="7" />
+                    <Picker.Item label="8" value="8" />
+                    <Picker.Item label="9" value="9" />
+                </Picker>
+            </View>
 
             <Button
                 style={{ width: "100%" }}
@@ -119,7 +127,7 @@ class Album extends Component {
     secondRoute = () => (
         <View style={styles.containerScene}>
             <FlatList
-                data={this.props.order.order.album}
+                data={this.props.order.album}
                 numColumns={3}
                 renderItem={({ item, index }) => {
                     return (
@@ -189,6 +197,22 @@ const styles = StyleSheet.create({
     scene: {
         flex: 1,
         flexDirection: "column",
+    },
+    picker: {
+        height: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        width: "70%",
+        color: "#000000",
+    },
+    pickerContainer: {
+        flex: 1,
+        flexDirection: "row",
+        height: 20,
+        marginStart: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%"
     },
 })
 
