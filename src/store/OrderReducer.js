@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 
 const initialState = {
-    order: { status: "DRAWN", album: [] }
+    status: "DRAWN",
+    format: "10x15",
+    quantity: 1,
+    album: [] 
 }
 
 export default (state = initialState, action) => {
@@ -21,11 +24,12 @@ export default (state = initialState, action) => {
 
         case "UPDATE_PHOTO_QUANTITY":
             var newState = [...state.album]
-            newState[action.index].quantity = action.payload.quantityÎ
+            newState[action.index].quantity = action.payload.quantity
 
             return { ...state, album: newState }
 
-        case "UPDATE_PHOTO_FORMART":
+        case "UPDATE_PHOTO_FORMAT":
+            console.log("LSKDLKDL format " + action.payload.format + " index " + action.index)
             var newState = [...state.album]
             newState[action.index].format = action.payload.format
 

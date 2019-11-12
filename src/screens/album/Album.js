@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updatePhoto } from '../../store/AlbumAction'
+import { updatePhoto, updateQuantity, updateFormat } from '../../store/AlbumAction'
 import { bindActionCreators } from 'redux'
 import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, FlatList, Text } from 'react-native'
 import { Picker } from '@react-native-community/picker'
@@ -51,10 +51,17 @@ class Album extends Component {
         this.props.navigation.navigate('Cart')
     }
 
+    currentIndex = 0;
+    onSnapItem = (index) => {
+        this.currentIndex = index
+        this.setState({ format: this.props.order.album[index].format })
+        this.setState({ quantity: this.props.order.album[index].quantity })
+    }
+
+
     renderItem = ({ item, index }) => {
-        const { cropped, quantity, format } = item
-        this.setState({ format: format })
-        this.setState({ quantity: quantity })
+        const { cropped } = item
+
         return (
             <View>
                 <TouchableOpacity onPress={() => this.cropImage(index)}>
@@ -82,40 +89,54 @@ class Album extends Component {
                 itemWidth={this.width}
                 sliderWidth={this.screenWidth}
                 itemHeight={this.height}
+                onSnapToItem={index => this.onSnapItem(index)}
                 renderItem={this.renderItem} />
 
-            <View style={styles.pickerContainer}>
-                <Text style={{ color: "#000" }}>Formato:</Text>
-                <Picker
-                    selectedValue={this.state.format}
-                    style={styles.picker}
-                    onValueChange={(itemValue, itemIndex) =>
-                        this.setState({ format: itemValue })
-                    }>
-                    <Picker.Item label="10 x 15" value="10x15" />
-                    <Picker.Item label="20 x 30" value="20x30" />
-                </Picker>
-            </View>
+            {this.props.order.album.length == 0 ? null : (
+                <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.pickerTitle}>Formato: </Text>
+                    <View style={styles.pickerContainer}>
+                        <Picker
+                            selectedValue={this.state.format}
+                            mode="dropdown"
+                            style={styles.picker}
+                            onValueChange={(itemValue, itemIndex) => {
+                                console.log("LSKDLKDL --- itemValue " + itemValue + " itemIndex " + itemIndex)
+                                this.setState({ format: itemValue })
+                                this.props.updateFormat(itemValue, this.currentIndex)
+                            }}>
+                            <Picker.Item label="10 x 15" value="10x15" />
+                            <Picker.Item label="20 x 30" value="20x30" />
+                        </Picker>
+                    </View>
+                </View>
+            )}
 
-            <View style={styles.pickerContainer}>
-                <Text style={{ color: "#000" }}>Quantidade:</Text>
-                <Picker
-                    selectedValue={this.state.quantity}
-                    style={styles.picker}
-                    onValueChange={(itemValue, itemIndex) =>
-                        this.setState({ quantity: itemValue })
-                    }>
-                    <Picker.Item label="1" value="1" />
-                    <Picker.Item label="2" value="2" />
-                    <Picker.Item label="3" value="3" />
-                    <Picker.Item label="4" value="4" />
-                    <Picker.Item label="5" value="5" />
-                    <Picker.Item label="6" value="6" />
-                    <Picker.Item label="7" value="7" />
-                    <Picker.Item label="8" value="8" />
-                    <Picker.Item label="9" value="9" />
-                </Picker>
-            </View>
+            {this.props.order.album.length == 0 ? null : (
+                <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                    <Text style={styles.pickerTitle}>Quantidade: </Text>
+                    <View style={styles.pickerContainer}>
+                        <Picker
+                            selectedValue={this.state.quantity}
+                            mode="dropdown"
+                            style={styles.picker}
+                            onValueChange={(itemValue, itemIndex) => {
+                                this.setState({ quantity: itemValue })
+                                this.props.updateQuantity(itemValue, this.currentIndex)
+                            }}>
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                            <Picker.Item label="7" value="7" />
+                            <Picker.Item label="8" value="8" />
+                            <Picker.Item label="9" value="9" />
+                        </Picker>
+                    </View>
+                </View>
+            )}
 
             <Button
                 style={{ width: "100%" }}
@@ -198,26 +219,35 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
     },
+    pickerTitle: {
+        height: 40,
+        width: 90,
+        marginEnd: 5,
+        textAlign: "right",
+        textAlignVertical: 'center',
+        color: "#000"
+    },
     picker: {
         height: 20,
-        justifyContent: "center",
-        alignItems: "center",
-        width: "70%",
-        color: "#000000",
+        width: "95%",
+        color: "#000",
     },
     pickerContainer: {
-        flex: 1,
+        marginBottom: 10,
+        height: 40,
+        borderWidth: 2,
+        borderColor: '#c2c2c1',
+        borderRadius: 5,
         flexDirection: "row",
-        height: 20,
-        marginStart: 50,
+        backgroundColor: "#d2d2d2",
         justifyContent: "center",
         alignItems: "center",
-        width: "100%"
+        width: "50%"
     },
 })
 
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({ updatePhoto }, dispatch)
+    bindActionCreators({ updatePhoto, updateFormat, updateQuantity }, dispatch)
 )
 
 const mapStateToProps = state => {
