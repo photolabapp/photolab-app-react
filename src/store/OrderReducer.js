@@ -4,13 +4,16 @@ const initialState = {
     status: "DRAWN",
     format: "10x15",
     quantity: 1,
-    album: [] 
+    album: []
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case "UPDATE_ORDER":
             return { ...state.order, order: action.payload }
+
+        case "CLEAR_ORDER":
+            return initialStatee
 
         case "ADD_PHOTO":
             console.log("SLSKDLSDKLSD" + state.status)

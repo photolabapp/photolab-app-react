@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import Colors from '../../utils/Colors'
-import { updateOrder } from '../../store/OrderAction'
+import { clearOrder } from '../../store/OrderAction'
 import { Button, CardView } from '../../components/UIKit'
 import { connect } from 'react-redux'
 
 class CartSuccess extends Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            order: this.props.order
+        }
+
+        this.props.clearOrder()
     }
 
     render() {
@@ -17,7 +23,7 @@ class CartSuccess extends Component {
                     <Text style={[styles.textNormal, styles.text, { marginBottom: 24, marginTop: 8, fontSize: 20 }]}>{this.props.user.name},</Text>
                     <Text style={[styles.textNormal, styles.text, { marginBottom: 24 }]}>Parabéns seu pedido foi realizado com sucesso!!</Text>
                     <Text style={[styles.textBold, styles.text, { marginBottom: 8 }]}>Número do pedido é:</Text>
-                    <Text style={[styles.textOrange, styles.text, { marginBottom: 8 }]}>{this.props.order.id}</Text>
+                    <Text style={[styles.textOrange, styles.text, { marginBottom: 8 }]}>{this.state.order.id}</Text>
                 </CardView>
 
                 <CardView style={{ marginStart: 16, marginEnd: 16, marginTop: 32 }}>
