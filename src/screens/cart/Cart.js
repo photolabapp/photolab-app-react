@@ -16,6 +16,8 @@ class Cart extends Component {
     constructor(props) {
         super(props);
 
+        console.log("SLDKLSDKSLDKSL ------- order " + this.props.order.album)
+
         this.state = {
             indicator: false,
             current: 1,
@@ -32,6 +34,8 @@ class Cart extends Component {
     order = () => {
         this.setState({ indicator: true })
         getLastOrderCreated(this.props.user, this.state.order).then(response => {
+            
+
             this.props.updateOrder(response.data)
             this.setState({ order: response.data })
             this.setState({ indicator: false })
@@ -55,11 +59,16 @@ class Cart extends Component {
     uploadPhoto = photo => {
         Upload.startUpload({
             url: 'http://ec2-18-234-166-48.compute-1.amazonaws.com:8080/order/photo',
-            path: photo,
+            path: photo.cropped,
             method: 'POST',
             field: 'photo',
             type: 'multipart',
-            parameters: { user: "" + this.props.user.id, order: "" + this.state.order.id },
+            parameters: { 
+                user: "" + this.props.user.id, 
+                order: "" + this.state.order.id,
+                format: photo.format,
+                quantity: photo.quantity
+            },
             notification: {
                 enabled: true,
                 autoclear: true,
@@ -96,7 +105,7 @@ class Cart extends Component {
         this.setState({ indicator: true })
         updateOrderToSaved(this.props.user, this.state.order).then(response => {
             this.props.order.album.map(photo => {
-                this.uploadPhoto(photo.cropped)
+                this.uploadPhoto(photo)
             })
             this.props.navigation.navigate('CartSuccess')
             this.setState({ indicator: false })
@@ -235,7 +244,7 @@ const mapDispatchToProps = dispatch => (
 
 const mapStateToProps = state => {
     return {
-        order: state.order.order,
+        order: state.order,
         user: state.user.user
     }
 }

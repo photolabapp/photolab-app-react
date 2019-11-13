@@ -58,7 +58,6 @@ class Album extends Component {
         this.setState({ quantity: this.props.order.album[index].quantity })
     }
 
-
     renderItem = ({ item, index }) => {
         const { cropped } = item
 
@@ -92,7 +91,7 @@ class Album extends Component {
                 onSnapToItem={index => this.onSnapItem(index)}
                 renderItem={this.renderItem} />
 
-            {this.props.order.album.length == 0 ? null : (
+            {!this.props.order.album || this.props.order.album.length == 0 ? null : (
                 <View style={{ flexDirection: "row" }}>
                     <Text style={styles.pickerTitle}>Formato: </Text>
                     <View style={styles.pickerContainer}>
@@ -112,7 +111,7 @@ class Album extends Component {
                 </View>
             )}
 
-            {this.props.order.album.length == 0 ? null : (
+            {!this.props.order.album || this.props.order.album.length == 0 ? null : (
                 <View style={{ flexDirection: "row", marginBottom: 10 }}>
                     <Text style={styles.pickerTitle}>Quantidade: </Text>
                     <View style={styles.pickerContainer}>

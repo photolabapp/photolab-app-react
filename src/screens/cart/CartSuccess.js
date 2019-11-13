@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import Colors from '../../utils/Colors'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { clearOrder } from '../../store/OrderAction'
 import { Button, CardView } from '../../components/UIKit'
-import { connect } from 'react-redux'
 
 class CartSuccess extends Component {
     constructor(props) {

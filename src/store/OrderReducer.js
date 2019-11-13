@@ -10,7 +10,7 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case "UPDATE_ORDER":
-            return { ...state.order, order: action.payload }
+            return { ...state.order, order: action.payload, album: [...state.album] }
 
         case "CLEAR_ORDER":
             return initialStatee
