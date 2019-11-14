@@ -15,20 +15,21 @@ class Add extends Component {
 
     /*
     componentDidMount(prevProps) {
-        
+        console.log("SKSLDKLDKSLDKSLD CALL " + this.props.isFocused + " prevProps " + prevProps)
+        if (this.props.isFocused) {
+            this.uploadPicker()
+        }
     }
     */
 
     componentDidMount() {
         this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-        console.log("SKSLDKLDKSLDKSLD CALL" + this.props.isFocused)
-        if (this.props.isFocused) {
-            this.uploadPicker()
-        }
+        this.focusHandler = this.props.navigation.addListener('didFocus', () => this.uploadPicker())
     }
 
     componentWillUnmount() {
         this.backHandler.remove()
+        this.focusHandler.remove()
     }
 
     handleBackPress = () => {
