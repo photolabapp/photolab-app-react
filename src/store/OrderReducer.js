@@ -13,11 +13,16 @@ export default (state = initialState, action) => {
             return { ...state.order, order: action.payload, album: [...state.album] }
 
         case "CLEAR_ORDER":
-            return initialStatee
+            return initialState
 
         case "ADD_PHOTO":
             console.log("SLSKDLSDKLSD" + state.status)
             return { ...state, album: [...state.album, action.payload] }
+
+        case "ADD_PHOTOS":
+            var albums = [...state.album]
+            album.push(action.payload)
+            return { ...state, album: albums }
 
         case "UPDATE_PHOTO":
             var newState = [...state.album]

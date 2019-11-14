@@ -2,59 +2,41 @@ import React, { Component } from 'react'
 import { TouchableHighlight, StyleSheet, View, Text } from 'react-native'
 import { Input } from 'react-native-elements';
 
-export class Button extends Component {
-    constructor(props) {
-        super(props)
-    }
-
-    render() {
-        return (
-            <TouchableHighlight
-                style={[styles.buttonContainer, styles.button, { ...this.props.style }]}
-                onPress={this.props.onPress}>
-                <Text style={{ color: '#FFF', fontSize: 16 }}>{this.props.text}</Text>
-            </TouchableHighlight>
-        )
-    }
+export const Button = (props) => {
+    return (
+        <TouchableHighlight
+            style={[styles.buttonContainer, styles.button, { ...props.style }]}
+            onPress={props.onPress}>
+            <Text style={{ color: '#FFF', fontSize: 16 }}>{props.text}</Text>
+        </TouchableHighlight>
+    )
 }
 
-export class CardView extends Component {
-    constructor(props) {
-        super(props)
-    }
-
-    render() {
-        return (
-            <View style={[styles.cardViewContainer, { ...this.props.style }]}>
-                {this.props.children}
-            </View>
-        )
-    }
+export const CardView = (props) => {
+    return (
+        <View style={[styles.cardViewContainer, { ...props.style }]}>
+            {props.children}
+        </View>
+    )
 }
 
-export class TextInput extends Component {
-    constructor(props) {
-        super(props)
+export const TextInput = (props) => {
+    props.size = 200
+    props.secureTextEntry = false
 
-        this.props.size = 200
-        this.props.secureTextEntry = false
-    }
-
-    render() {
-        return (
-            <Input
-                inputStyle={[styles.input, { ...this.props.style }]}
+    return (
+        <Input
+                inputStyle={[styles.input, { ...props.style }]}
                 containerStyle={{ marginBottom: 8, height: 70 }}
                 placeholderTextColor="#787d82"
                 errorStyle={{ color: 'red' }}
-                secureTextEntry={this.props.secureTextEntry}
-                placeholder={this.props.placeholder}
-                keyboardType={this.props.keyboardType}
-                size={this.props.size}
-                errorMessage={this.props.errorMessage}
-                onChangeText={this.props.onChangeText} />
-        )
-    }
+                secureTextEntry={props.secureTextEntry}
+                placeholder={props.placeholder}
+                keyboardType={props.keyboardType}
+                size={props.size}
+                errorMessage={props.errorMessage}
+                onChangeText={props.onChangeText} />
+    )
 }
 
 const styles = StyleSheet.create({

@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 })
 
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({ updateOrder }, dispatch)
+    bindActionCreators({ clearOrder }, dispatch)
 )
 
 const mapStateToProps = state => {

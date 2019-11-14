@@ -34,7 +34,7 @@ class Cart extends Component {
     order = () => {
         this.setState({ indicator: true })
         getLastOrderCreated(this.props.user, this.state.order).then(response => {
-            
+
 
             this.props.updateOrder(response.data)
             this.setState({ order: response.data })
@@ -57,17 +57,20 @@ class Cart extends Component {
     }
 
     uploadPhoto = photo => {
+
+        console.log("SLSKDLSDKLSD url" + photo.cropped)
+
         Upload.startUpload({
             url: 'http://ec2-18-234-166-48.compute-1.amazonaws.com:8080/order/photo',
             path: photo.cropped,
             method: 'POST',
             field: 'photo',
             type: 'multipart',
-            parameters: { 
-                user: "" + this.props.user.id, 
+            parameters: {
+                user: "" + this.props.user.id,
                 order: "" + this.state.order.id,
                 format: photo.format,
-                quantity: photo.quantity
+                quantity: "" + photo.quantity
             },
             notification: {
                 enabled: true,

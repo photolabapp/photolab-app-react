@@ -39,7 +39,8 @@ class Album extends Component {
         ImagePicker.openCropper({
             path: photo.raw,
             width: this.width,
-            height: this.height
+            height: this.height,
+            mediaType: 'photo'
         }).then(image => {
             this.props.updatePhoto({ uri: image.path }, index)
         }).catch((err) => {
@@ -60,6 +61,7 @@ class Album extends Component {
 
     renderItem = ({ item, index }) => {
         const { cropped } = item
+        console.log("SLDLSDKSLD ---- cropped " + cropped)
 
         return (
             <View>

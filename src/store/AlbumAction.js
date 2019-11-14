@@ -2,11 +2,29 @@ export const addPhoto = photo => {
     return {
         type: "ADD_PHOTO",
         payload: {
-            raw: photo.uri,
-            cropped: photo.uri,
+            raw: photo,
+            cropped: photo,
             quantity: 1,
             format: "10x15"
         }
+    }
+}
+
+export const addPhotos = photos => {
+    
+    var albums = []
+    photos.forEach(photo => {
+        albums.push({
+            raw: photo.path,
+            cropped: photo.path,
+            quantity: 1,
+            format: "10x15"
+        })
+    })
+
+    return {
+        type: "ADD_PHOTOS",
+        payload: albums
     }
 }
 
