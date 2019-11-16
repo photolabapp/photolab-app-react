@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, BackHandler } from 'react-native';
+import { View, BackHandler, ActivityIndicator, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addPhoto } from '../../store/AlbumAction'
@@ -11,16 +11,11 @@ class Add extends Component {
 
     constructor(props) {
         super(props);
-    }
 
-    /*
-    componentDidMount(prevProps) {
-        console.log("SKSLDKLDKSLDKSLD CALL " + this.props.isFocused + " prevProps " + prevProps)
-        if (this.props.isFocused) {
-            this.uploadPicker()
+        this.state = {
+            animating: false
         }
     }
-    */
 
     componentDidMount() {
         this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
@@ -37,52 +32,41 @@ class Add extends Component {
         return true;
     }
 
-    /*
-    upload = () => {
-        ImagePicker.launchImageLibrary({
-            storageOptions: {
-                skipBackup: false,
-                path: 'photolab',
-                cameraRoll: true
-            }
-        }, (response) => {
-            this.handleBackPress()
-            this.props.addPhoto(response)
-        });
-    }
-    */
-
     uploadPicker = () => {
+        this.setState({ animating: true })
+
         ImagePicker.openPicker({
             multiple: true
         }).then(images => {
-            /*
-            for (let image in images) {
-                console.log("SKSLDKLDKSLDKSLD CALL IMAGES")
-                this.props.addPhoto(image.path)
-            }
-            */
-
-            for (i = 0; i < images.length; i++){
+            for (i = 0; i < images.length; i++) {
                 this.props.addPhoto(images[i].path)
-                if (i == (images.length -1)){
+                if (i == (images.length - 1)) {
                     this.handleBackPress()
                 }
             }
-            //}
-            //this.props.addPhotos(images)
+            this.setState({ animating: false })
             console.log(images)
             console.log("SKSLDKLDKSLDKSLD BACK")
-           
         });
     }
 
     render() {
         return (
-            <View />
+            <View style={styles.container} >
+                <ActivityIndicator style={{ position: "absolute" }} size="large" animating={this.state.animating} />
+            </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+});
+
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({ addPhoto }, dispatch)

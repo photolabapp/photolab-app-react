@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { clearOrder } from '../../store/OrderAction'
 import { Button, CardView } from '../../components/UIKit'
+import Login from '../login/Login';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class CartSuccess extends Component {
     constructor(props) {
@@ -15,6 +17,21 @@ class CartSuccess extends Component {
         }
 
         this.props.clearOrder()
+    }
+
+    componentDidMount() {
+        console.log("LSKDLSKDLSD ----- LOG --- CALL didBlur")
+        this.blurHandler = this.props.navigation.addListener('didBlur', () => this.blurNavigation())
+    }
+
+    componentWillUnmount() {
+        this.blurHandler.remove()
+    }
+
+    blurNavigation = () => {
+        console.log("LSKDLSKDLSD ----- LOG --- CALL")
+        this.props.navigation.popToTop()
+        this.props.navigation.navigate("Album")
     }
 
     render() {
@@ -29,7 +46,7 @@ class CartSuccess extends Component {
 
                 <CardView style={{ marginStart: 16, marginEnd: 16, marginTop: 32 }}>
                     <Text style={[styles.cardViewHeader, styles.text]}>Acompanhe o seu pedido</Text>
-                    <Text style={[styles.textNormal, { marginBottom: 24 }, styles.text]}>Você pode acompanhar o processamento do seu pedido a qualquer momento na página Meus Pedidos</Text>
+                    <Text style={[styles.textNormal, { marginBottom: 24, marginTop: 16 }, styles.text]}>Você pode acompanhar o processamento do seu pedido a qualquer momento na página Meus Pedidos</Text>
                     <View style={{ paddingStart: 16, paddingEnd: 16, paddingBottom: 16 }}>
                         <Button text="ACOMPANHE MEU PEDIDO" />
                     </View>
@@ -65,11 +82,12 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     cardViewHeader: {
+        paddingStart: 16,
         height: 40,
-        marginStart: 0,
-        marginEnd: 0,
         backgroundColor: "#D2D2D2",
         color: "black",
+        textAlignVertical: "center",
+        textAlign: "left",
         fontWeight: "bold"
     },
 })

@@ -16,9 +16,9 @@ class Cart extends Component {
     constructor(props) {
         super(props);
 
-        console.log("SLDKLSDKSLDKSL ------- order " + this.props.order.album)
-
         this.state = {
+            quantity: 1,
+            formart: "",
             indicator: false,
             current: 1,
             total: 0,
@@ -28,14 +28,21 @@ class Cart extends Component {
     }
 
     componentDidMount() {
-        this.order()
+        this.focusHandler = this.props.navigation.addListener('didFocus', () => this.order())
+        
+        if (this.props.order != null && this.props.order.album.length > 0) {
+            this.setState({ format: this.props.order.album[0].format })
+            this.setState({ quantity: this.props.order.album[0].quantity })
+        }
+    }
+
+    componentWillUnmount() {
+        this.focusHandler.remove()
     }
 
     order = () => {
         this.setState({ indicator: true })
         getLastOrderCreated(this.props.user, this.state.order).then(response => {
-
-
             this.props.updateOrder(response.data)
             this.setState({ order: response.data })
             this.setState({ indicator: false })
@@ -57,12 +64,14 @@ class Cart extends Component {
     }
 
     uploadPhoto = photo => {
-
-        console.log("SLSKDLSDKLSD url" + photo.cropped)
+        file = photo.cropped
+        if (Platform.OS == "android") {
+            file = photo.cropped.replace("file://", "");
+        }
 
         Upload.startUpload({
             url: 'http://ec2-18-234-166-48.compute-1.amazonaws.com:8080/order/photo',
-            path: photo.cropped,
+            path: file,
             method: 'POST',
             field: 'photo',
             type: 'multipart',
@@ -141,10 +150,14 @@ class Cart extends Component {
         )
     }
 
+    onSnapItem = (index) => {
+        this.setState({ format: this.props.order.album[index].format })
+        this.setState({ quantity: this.props.order.album[index].quantity })
+    }
+
     render() {
-        return this.state.order != null ?
+        return this.props.order != null && this.props.order.album.length ?
             <View styles={styles.container}>
-                <ActivityIndicator size="large" animating={this.state.indicator} />
 
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>Sacola de Compra</Text>
@@ -158,18 +171,30 @@ class Cart extends Component {
                     itemWidth={width}
                     sliderWidth={screenWidth}
                     itemHeight={height}
+                    onSnapToItem={index => this.onSnapItem(index)}
                     renderItem={this.renderItem} />
 
                 <CardView style={{ marginStart: 16, marginEnd: 16, marginTop: 24 }}>
                     <Text style={styles.shippingHeader}>Resumo do pedido</Text>
+
                     <View style={styles.buyInfo}>
-                        <Text style={styles.buyTitleText}>Quantidade de fotos:</Text>
-                        <Text style={styles.buyDescText}>{this.props.order.album.length}</Text>
+                        <Text style={styles.buyTitleText}>Quantidade da foto:</Text>
+                        <Text style={styles.buyDescText}>{this.state.quantity}</Text>
+                    </View>
+
+                    <View style={styles.buyInfo}>
+                        <Text style={styles.buyTitleText}>Formato da foto:</Text>
+                        <Text style={styles.buyDescText}>{this.state.format}</Text>
                     </View>
 
                     <View style={styles.buyInfo}>
                         <Text style={styles.buyTitleText}>Valor da foto:</Text>
                         <Text style={styles.buyDescText}>R$ {this.state.value}</Text>
+                    </View>
+
+                    <View style={styles.buyInfo}>
+                        <Text style={styles.buyTitleText}>Quantidade de fotos:</Text>
+                        <Text style={styles.buyDescText}>{this.props.order.album.length}</Text>
                     </View>
 
                     <View style={styles.buyInfo}>
@@ -183,7 +208,7 @@ class Cart extends Component {
                     text="CONTINUAR"
                     onPress={() => this.save()} />
             </View>
-            : null
+            : <ActivityIndicator style={{ position: "absolute" }} size="large" animating={this.state.indicator} />
     }
 }
 

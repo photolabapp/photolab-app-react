@@ -107,7 +107,7 @@ class Album extends Component {
                                 this.props.updateFormat(itemValue, this.currentIndex)
                             }}>
                             <Picker.Item label="10 x 15" value="10x15" />
-                            <Picker.Item label="20 x 30" value="20x30" />
+                            <Picker.Item label="15 x 20" value="15x20" />
                         </Picker>
                     </View>
                 </View>
