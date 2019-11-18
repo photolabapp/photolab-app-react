@@ -17,6 +17,8 @@ import Cart from '../screens/cart/Cart'
 import CartAddress from '../screens/cart/CartAddress'
 import CartSuccess from '../screens/cart/CartSuccess'
 import Album from '../screens/album/Album'
+import User from '../screens/user/User'
+
 import HeaderLogo from '../components/HeaderLogo'
 
 // LOGIN AND SIGNUP SCREEN
@@ -39,11 +41,11 @@ const loginStackNavigator = createStackNavigator({
         }
     }
 }, {
-        initialRouteName: 'Login'
-    })
+    initialRouteName: 'Login'
+})
 
 const albumStackNavigator = createStackNavigator({
-    Upload: {
+    Album: {
         screen: Album,
         navigationOptions: { header: null }
     }
@@ -64,8 +66,18 @@ const configStackNavigator = createStackNavigator({
         }
     }
 }, {
-        headerLayoutPreset: 'center'
-    })
+    headerLayoutPreset: 'center'
+})
+
+const userStackNavigator = createStackNavigator({
+    User: {
+        screen: User,
+        navigationOptions: {
+            headerMode: 'screen',
+            title: 'Usuário'
+        }
+    }
+})
 
 const cartStackNavigator = createStackNavigator({
     Cart: {
@@ -91,7 +103,6 @@ const cartStackNavigator = createStackNavigator({
                 }} />),
                 headerMode: 'screen',
                 title: 'Sucesso',
-                tabBarOnPress: this.handleTabPress(navigation),
                 tabBarOptions: {
                     tabBarVisible: false
                 }
@@ -100,48 +111,42 @@ const cartStackNavigator = createStackNavigator({
     }
 })
 
-handleTabPress = navigation => {
-    console.log("SKDJKSJDKDJ ---- CALL ---- " + navigation)
-    //navigation.popToTop();
-    //defaultHandler();
-};
-
 const bottomTab = createBottomTabNavigator({
     Album: albumStackNavigator,
     Cart: cartStackNavigator,
     Add: uploadStackNavigator,
     Credito: configStackNavigator,
-    Usuario: configStackNavigator,
+    User: userStackNavigator,
 }, {
-        initialRouteName: 'Album',
-        navigationOptions: {
-            header: null
-        },
-        defaultNavigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ tintColor }) => {
-                const { routeName } = navigation.state
-                if (routeName === 'Add') {
-                    return <Icon name="add-circle-outline" size={40} color="#fff" />
-                } else if (routeName === 'Album') {
-                    return <Icon name="photo-album" size={22} color="#fff" />
-                } else if (routeName === 'Cart') {
-                    return <Icon name="shopping-cart" size={22} color="#fff" />
-                } else if (routeName === 'Credito') {
-                    return <Icon name="credit-card" size={25} color="#fff" />
-                } else if (routeName === 'Usuario') {
-                    return <Icon name="perm-identity" size={25} color="#fff" />
-                }
+    initialRouteName: 'Album',
+    navigationOptions: {
+        header: null
+    },
+    defaultNavigationOptions: ({ navigation }) => ({
+        tabBarIcon: ({ tintColor }) => {
+            const { routeName } = navigation.state
+            if (routeName === 'Add') {
+                return <Icon name="add-circle-outline" size={40} color="#fff" />
+            } else if (routeName === 'Album') {
+                return <Icon name="photo-album" size={22} color="#fff" />
+            } else if (routeName === 'Cart') {
+                return <Icon name="shopping-cart" size={22} color="#fff" />
+            } else if (routeName === 'Credito') {
+                return <Icon name="credit-card" size={25} color="#fff" />
+            } else if (routeName === 'User') {
+                return <Icon name="perm-identity" size={25} color="#fff" />
             }
-        }),
-        tabBarOptions: {
-            inactiveTintColor: 'white',
-            showIcon: true,
-            showLabel: false,
-            inactiveBackgroundColor: Colors.greyPrimary,
-            activeBackgroundColor: Colors.greySecundary,
-            activeTintColor: 'white'
         }
-    })
+    }),
+    tabBarOptions: {
+        inactiveTintColor: 'white',
+        showIcon: true,
+        showLabel: false,
+        inactiveBackgroundColor: Colors.greyPrimary,
+        activeBackgroundColor: Colors.greySecundary,
+        activeTintColor: 'white'
+    }
+})
 
 const switchNavigator = createSwitchNavigator({
     Splash: { screen: Splash, headerMode: 'none' },
