@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { clearOrder } from '../../store/OrderAction'
 import { Button, CardView } from '../../components/UIKit'
-import Login from '../login/Login';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class CartSuccess extends Component {
@@ -20,7 +19,6 @@ class CartSuccess extends Component {
     }
 
     componentDidMount() {
-        console.log("LSKDLSKDLSD ----- LOG --- CALL didBlur")
         this.blurHandler = this.props.navigation.addListener('didBlur', () => this.blurNavigation())
     }
 
@@ -29,7 +27,6 @@ class CartSuccess extends Component {
     }
 
     blurNavigation = () => {
-        console.log("LSKDLSKDLSD ----- LOG --- CALL")
         this.props.navigation.popToTop()
         this.props.navigation.navigate("Album")
     }

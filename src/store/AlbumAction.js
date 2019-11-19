@@ -28,13 +28,20 @@ export const addPhotos = photos => {
     }
 }
 
-export const updatePhoto = (photo, index) => {
+export const updatePhoto = (index) => {
     return {
         type: "UPDATE_PHOTO",
         index: index,
         payload: {
             cropped: photo.uri
         }
+    }
+}
+
+export const removePhoto = (photo, index) => {
+    return {
+        type: "REMOVE_PHOTO",
+        index: index
     }
 }
 

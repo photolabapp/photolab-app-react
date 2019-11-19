@@ -9,40 +9,45 @@ class User extends Component {
         super(props);
     }
 
+    resetPassword = () => {
+
+    }
+
     render() {
-        <View styles={styles.container}>
+        return (
+            <View styles={styles.container}>
 
-            <CardView style={{ marginStart: 16, marginEnd: 16, marginTop: 24 }}>
-                <Text style={styles.cardHeader}>Dados do usuário</Text>
+                <CardView style={styles.cardViewContainer}>
+                    <Text style={styles.cardHeader}>Dados do usuário</Text>
 
-                <View style={styles.containerInfo}>
-                    <Text style={styles.buyTitleText}>Nome:</Text>
-                    <Text style={styles.buyDescText}>{this.props.user.name}</Text>
-                </View>
+                    <View style={styles.containerInfo}>
+                        <Text style={styles.textTitle}>Nome:</Text>
+                        <Text style={styles.textDesc}>{this.props.user.name}</Text>
+                    </View>
 
-                <View style={styles.containerInfo}>
-                    <Text style={styles.buyTitleText}>E-mail:</Text>
-                    <Text style={styles.buyDescText}>{this.props.user.email}</Text>
-                </View>
+                    <View style={styles.containerInfo}>
+                        <Text style={styles.textTitle}>E-mail:</Text>
+                        <Text style={styles.textDesc}>{this.props.user.email}</Text>
+                    </View>
 
-                <View style={styles.containerInfo}>
-                    <Text style={styles.buyTitleText}>Telefone:</Text>
-                    <Text style={styles.buyDescText}>R$ {this.props.user.cellPhone}</Text>
-                </View>
+                    <View style={styles.containerInfo}>
+                        <Text style={styles.textTitle}>Telefone:</Text>
+                        <Text style={styles.textDesc}>{this.props.user.cellPhone}</Text>
+                    </View>
 
-                <View style={styles.containerInfo}>
-                    <Text style={styles.buyTitleText}>Data do cadastro:</Text>
-                    <Text style={styles.buyDescText}>{this.props.user.dtCreated}</Text>
-                </View>
+                    <View style={styles.containerInfo}>
+                        <Text style={styles.textTitle}>Data do cadastro:</Text>
+                        <Text style={styles.textDesc}>{this.props.user.dtCreated}</Text>
+                    </View>
 
-                <Button
-                    style={{ width: "100%", top: 40 }}
-                    text="Alterar senha"
-                    onPress={() => this.save()} />
-            </CardView>
+                    <Button
+                        style={{ marginTop: 16, marginBottom: 8, width: "90%" }}
+                        text="Alterar senha"
+                        onPress={() => this.resetPassword()} />
 
-
-        </View>
+                </CardView>
+            </View>
+        )
     }
 }
 
@@ -69,11 +74,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#D2D2D2'
     },
+    cardViewContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginStart: 16,
+        marginEnd: 16,
+        marginTop: 24
+    },
     containerInfo: {
         paddingStart: 24,
         paddingEnd: 24,
-        marginBottom: 3,
-        marginTop: 2,
+        marginBottom: 0,
+        marginTop: 8,
         flexDirection: "row",
     },
     textTitle: {
@@ -88,6 +100,7 @@ const styles = StyleSheet.create({
         color: "black"
     },
     cardHeader: {
+        width: "100%",
         paddingStart: 16,
         height: 40,
         backgroundColor: "#D2D2D2",

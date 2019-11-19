@@ -12,7 +12,7 @@ import Login from '../screens/login/Login'
 import SignUp from '../screens/signup/SignUp'
 import Add from '../screens/add/Add'
 import Splash from '../screens/splash/Splash'
-import Config from '../screens/config/Config'
+import Credit from '../screens/credit/Credit'
 import Cart from '../screens/cart/Cart'
 import CartAddress from '../screens/cart/CartAddress'
 import CartSuccess from '../screens/cart/CartSuccess'
@@ -58,11 +58,18 @@ const uploadStackNavigator = createStackNavigator({
     }
 })
 
-const configStackNavigator = createStackNavigator({
-    Config: {
-        screen: Config,
+const creditStackNavigator = createStackNavigator({
+    Credit: {
+        screen: Credit,
         navigationOptions: {
-            header: null
+            headerTintColor: '#ffffff',
+            headerMode: 'screen',
+            headerStyle: {
+                backgroundColor: '#31383E',
+                elevation: 0,
+                shadowOpacity: 0
+            },
+            title: 'Crédito'
         }
     }
 }, {
@@ -73,7 +80,13 @@ const userStackNavigator = createStackNavigator({
     User: {
         screen: User,
         navigationOptions: {
+            headerTintColor: '#ffffff',
             headerMode: 'screen',
+            headerStyle: {
+                backgroundColor: '#31383E',
+                elevation: 0,
+                shadowOpacity: 0
+            },
             title: 'Usuário'
         }
     }
@@ -83,7 +96,14 @@ const cartStackNavigator = createStackNavigator({
     Cart: {
         screen: Cart,
         navigationOptions: {
-            header: null
+            headerTintColor: '#ffffff',
+            headerMode: 'screen',
+            headerStyle: {
+                backgroundColor: '#31383E',
+                elevation: 0,
+                shadowOpacity: 0
+            },
+            title: 'Sacola de compras'
         }
     },
     CartAddress: {
@@ -115,7 +135,7 @@ const bottomTab = createBottomTabNavigator({
     Album: albumStackNavigator,
     Cart: cartStackNavigator,
     Add: uploadStackNavigator,
-    Credito: configStackNavigator,
+    Credito: creditStackNavigator,
     User: userStackNavigator,
 }, {
     initialRouteName: 'Album',

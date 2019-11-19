@@ -19,6 +19,12 @@ export default (state = initialState, action) => {
             console.log("SLSKDLSDKLSD" + state.status)
             return { ...state, album: [...state.album, action.payload] }
 
+        case "REMOVE_PHOTO":
+            var newState = [...state.album]
+            var itemToRemove = newState[action.index]
+
+            return { ...state, album: newState.filter(item => item !== itemToRemove) }
+
         case "ADD_PHOTOS":
             var albums = [...state.album]
             album.push(action.payload)

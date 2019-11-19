@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updatePhoto, updateQuantity, updateFormat } from '../../store/AlbumAction'
+import { updatePhoto, updateQuantity, updateFormat, removePhoto } from '../../store/AlbumAction'
 import { bindActionCreators } from 'redux'
 import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, FlatList, Text } from 'react-native'
 import { Picker } from '@react-native-community/picker'
@@ -18,7 +18,6 @@ class Album extends Component {
             format: "10x15",
             quantity: 1,
             current: 1,
-            format: "10x15",
             index: 0,
             routes: [
                 { key: 'first', title: 'Carousel' },
@@ -34,7 +33,7 @@ class Album extends Component {
     width = 180
     height = 270
 
-    cropImage = (index) => {
+    cropPhoto = (index) => {
         let photo = this.props.order.album[index]
         ImagePicker.openCropper({
             path: photo.raw,
@@ -46,6 +45,22 @@ class Album extends Component {
         }).catch((err) => {
             console.log("crop error " + err)
         });
+    }
+
+    dialogRemovePhoto = (index) => {
+        Alert.alert(
+            'Remover Foto',
+            'Tem certeza que deseja remover foto?',
+            [
+                { text: 'Cancelar', style: 'cancel', },
+                { text: 'Sim', onPress: () => this.removeImage(index) },
+            ],
+            { cancelable: true },
+        );
+    }
+
+    removePhoto = (index) => {
+        this.props.removePhoto(index)
     }
 
     checkout = () => {
@@ -61,11 +76,12 @@ class Album extends Component {
 
     renderItem = ({ item, index }) => {
         const { cropped } = item
-        console.log("SLDLSDKSLD ---- cropped " + cropped)
 
         return (
             <View>
-                <TouchableOpacity onPress={() => this.cropImage(index)}>
+                <TouchableOpacity
+                    onPress={() => this.cropPhoto(index)}
+                    onLongPress={() => this.dialogRemovePhoto(index)}>
                     <ImageBackground
                         style={{
                             width: this.width,
@@ -248,7 +264,7 @@ const styles = StyleSheet.create({
 })
 
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({ updatePhoto, updateFormat, updateQuantity }, dispatch)
+    bindActionCreators({ updatePhoto, updateFormat, updateQuantity, removePhoto }, dispatch)
 )
 
 const mapStateToProps = state => {

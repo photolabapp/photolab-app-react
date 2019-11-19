@@ -159,10 +159,6 @@ class Cart extends Component {
         return this.props.order != null && this.props.order.album.length ?
             <View styles={styles.container}>
 
-                <View style={styles.header}>
-                    <Text style={styles.headerTitle}>Sacola de Compra</Text>
-                </View>
-
                 <Carousel
                     style={{ marginTop: 32 }}
                     data={this.props.order.album}
