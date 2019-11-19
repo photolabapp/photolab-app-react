@@ -72,8 +72,6 @@ const creditStackNavigator = createStackNavigator({
             title: 'Crédito'
         }
     }
-}, {
-    headerLayoutPreset: 'center'
 })
 
 const userStackNavigator = createStackNavigator({

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updatePhoto, updateQuantity, updateFormat, removePhoto } from '../../store/AlbumAction'
 import { bindActionCreators } from 'redux'
-import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, FlatList, Text } from 'react-native'
+import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, FlatList, Text, Alert } from 'react-native'
 import { Picker } from '@react-native-community/picker'
 import { Button } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
@@ -53,7 +53,7 @@ class Album extends Component {
             'Tem certeza que deseja remover foto?',
             [
                 { text: 'Cancelar', style: 'cancel', },
-                { text: 'Sim', onPress: () => this.removeImage(index) },
+                { text: 'Sim', onPress: () => this.removePhoto(index) },
             ],
             { cancelable: true },
         );

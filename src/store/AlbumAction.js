@@ -38,7 +38,7 @@ export const updatePhoto = (index) => {
     }
 }
 
-export const removePhoto = (photo, index) => {
+export const removePhoto = index => {
     return {
         type: "REMOVE_PHOTO",
         index: index
