@@ -33,9 +33,7 @@ class Login extends Component {
             this.setState({ indicator: false })
         } else {
             login(user).then(response => {
-                console.log("LSKLKDLSKDSLDKS user " + response.data.user)
                 this.props.updateUser(response.data.user)
-                //this.setToken(response.data.accessToken)
                 this.props.navigation.navigate('App')
                 this.setState({ indicator: false })
                 console.log(response)
@@ -46,16 +44,6 @@ class Login extends Component {
             })
         }
     }
-
-    /*
-    setToken = (token) => {
-        _storeData = async () => {
-            try {
-                await AsyncStorage.setItem('ACCESS_TOKEN', token);
-            } catch (error) { console.log("Periste token error " + error) }
-        };
-    }
-    */
 
     render() {
         return (
@@ -83,10 +71,14 @@ class Login extends Component {
                     style={{ marginBottom: 32, marginTop: 16, width: "100%" }}
                     text="Login" onPress={() => this.login()} />
 
+                {
+                /*
                 <Button
                     style={{ width: "100%" }}
                     text="Não tenho login"
                     onPress={() => this.props.navigation.navigate('SignUp')} />
+                */
+                }
             </View >
         )
     }

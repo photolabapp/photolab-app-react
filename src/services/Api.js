@@ -1,9 +1,11 @@
 import Axios from 'axios'
 
 const axios = Axios.create({
-    baseURL: "http://ec2-18-234-166-48.compute-1.amazonaws.com:8080",
+    baseURL: url,
     responseType: "json"
 });
+
+export const url = "http://ec2-18-234-166-48.compute-1.amazonaws.com:8080"
 
 export const login = user => axios.post("login/", user);
 export const create = user => axios.post("user/", user);

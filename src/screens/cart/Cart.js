@@ -4,7 +4,7 @@ import { updateOrderToSaved } from '../../services/Api'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { updateOrder } from '../../store/OrderAction'
-import { getLastOrderCreated, createOrder } from '../../services/Api'
+import { getLastOrderCreated, createOrder, url } from '../../services/Api'
 import { StyleSheet, Text, View, Dimensions, ImageBackground, Alert, ActivityIndicator } from 'react-native';
 import { CardView, Button, TextInput } from '../../components/UIKit'
 import Carousel from 'react-native-snap-carousel'
@@ -70,7 +70,7 @@ class Cart extends Component {
         }
 
         Upload.startUpload({
-            url: 'http://ec2-18-234-166-48.compute-1.amazonaws.com:8080/order/photo',
+            url: url,
             path: file,
             method: 'POST',
             field: 'photo',
@@ -109,7 +109,7 @@ class Cart extends Component {
             })
         }).catch(err => {
             this.setState({ indicator: false })
-            console.log('LSKDLS -- Upload error!', err)
+            console.log('Upload error ', err)
         })
     }
 
@@ -200,7 +200,7 @@ class Cart extends Component {
                 </CardView>
 
                 <Button
-                    style={{ width: "100%", top: 40 }}
+                    style={{ width: "100%", flex: 1, justifyContent: 'flex-end' }}
                     text="CONTINUAR"
                     onPress={() => this.save()} />
             </View>
@@ -229,6 +229,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
+        height: {screenHeight},
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#D2D2D2'

@@ -3,7 +3,6 @@ import { View, BackHandler, ActivityIndicator, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addPhoto } from '../../store/AlbumAction'
-//import ImagePicker from 'react-native-image-picker'
 import ImagePicker from 'react-native-image-crop-picker'
 import { withNavigationFocus } from 'react-navigation'
 
@@ -45,8 +44,6 @@ class Add extends Component {
                 }
             }
             this.setState({ animating: false })
-            console.log(images)
-            console.log("SKSLDKLDKSLDKSLD BACK")
         });
     }
 
@@ -66,7 +63,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
-
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({ addPhoto }, dispatch)

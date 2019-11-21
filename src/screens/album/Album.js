@@ -24,8 +24,6 @@ class Album extends Component {
                 { key: 'second', title: 'Grid' },
             ],
         }
-
-        console.log("LSKDLSKDLSD " + this.props.order.album)
     }
 
     screenWidth = Math.round(Dimensions.get('window').width);
@@ -118,7 +116,6 @@ class Album extends Component {
                             mode="dropdown"
                             style={styles.picker}
                             onValueChange={(itemValue, itemIndex) => {
-                                console.log("LSKDLKDL --- itemValue " + itemValue + " itemIndex " + itemIndex)
                                 this.setState({ format: itemValue })
                                 this.props.updateFormat(itemValue, this.currentIndex)
                             }}>
