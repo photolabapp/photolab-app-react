@@ -28,8 +28,8 @@ class Album extends Component {
 
     screenWidth = Math.round(Dimensions.get('window').width);
     screenHeight = Math.round(Dimensions.get('window').height);
-    width = 180
-    height = 270
+    width = 220
+    height = 320
 
     cropPhoto = (index) => {
         let photo = this.props.order.album[index]
@@ -105,7 +105,7 @@ class Album extends Component {
                 renderItem={this.renderItem} />
 
             {!this.props.order.album || this.props.order.album.length == 0 ? null : (
-                <View style={{ flexDirection: "column" }}>
+                <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                     <Text style={styles.pickerTitle}>Formato: </Text>
                     <View style={styles.pickerContainer}>
                         <Picker
@@ -116,17 +116,18 @@ class Album extends Component {
                                 this.setState({ format: itemValue })
                                 this.props.updateFormat(itemValue, this.currentIndex)
                             }}>
-                            <Picker.Item label="10 x 15" value="10x15" />
-                            <Picker.Item label="15 x 20" value="15x20" />
+                            <Picker.Item label="10x15" value="10x15" />
+                            <Picker.Item label="15x20" value="15x20" />
                         </Picker>
                     </View>
 
-                    <Text style={styles.pickerTitle}>Quantidade: </Text>
-                    <View style={styles.pickerContainer}>
+                    <Text style={[styles.pickerTitle, { marginStart: 4 }]}>Quantidade: </Text>
+                    <View style={[styles.pickerContainer, { width: 80 }]}>
                         <Picker
                             selectedValue={this.state.quantity}
                             mode="dropdown"
                             style={styles.picker}
+                            textStyle={{ fontSize: 12 }}
                             onValueChange={(itemValue, itemIndex) => {
                                 this.setState({ quantity: itemValue })
                                 this.props.updateQuantity(itemValue, this.currentIndex)
@@ -203,7 +204,7 @@ class Album extends Component {
 
 const styles = StyleSheet.create({
     containerScene: {
-        paddingTop: 15,
+        paddingTop: 8,
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
@@ -228,20 +229,23 @@ const styles = StyleSheet.create({
     },
     pickerTitle: {
         height: 40,
-        width: 90,
-        marginEnd: 5,
-        textAlign: "right",
+        fontSize: 12,
+        marginEnd: 2,
+        textAlign: "center",
         textAlignVertical: 'center',
         color: "#000"
     },
     picker: {
         height: 20,
-        width: "95%",
+        fontSize: 12,
+        paddingEnd: 0,
+        width: "100%",
         color: "#000",
     },
     pickerContainer: {
         marginBottom: 10,
         height: 40,
+        width: 112,
         borderWidth: 2,
         borderColor: '#c2c2c1',
         borderRadius: 5,
@@ -249,7 +253,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#d2d2d2",
         justifyContent: "center",
         alignItems: "center",
-        width: "50%"
     },
 })
 
