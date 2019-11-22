@@ -84,12 +84,9 @@ class Album extends Component {
                         style={{
                             width: this.width,
                             height: this.height,
-                            borderRadius: 20,
-                            borderWidth: 1,
                             borderColor: '#D2D2D2',
                             elevation: this.props.order.album.length - index
                         }}
-                        imageStyle={{ borderRadius: 20 }}
                         source={{ uri: cropped }}>
                     </ImageBackground>
                 </TouchableOpacity>
@@ -108,7 +105,7 @@ class Album extends Component {
                 renderItem={this.renderItem} />
 
             {!this.props.order.album || this.props.order.album.length == 0 ? null : (
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "column" }}>
                     <Text style={styles.pickerTitle}>Formato: </Text>
                     <View style={styles.pickerContainer}>
                         <Picker
@@ -123,11 +120,7 @@ class Album extends Component {
                             <Picker.Item label="15 x 20" value="15x20" />
                         </Picker>
                     </View>
-                </View>
-            )}
 
-            {!this.props.order.album || this.props.order.album.length == 0 ? null : (
-                <View style={{ flexDirection: "row", marginBottom: 10 }}>
                     <Text style={styles.pickerTitle}>Quantidade: </Text>
                     <View style={styles.pickerContainer}>
                         <Picker

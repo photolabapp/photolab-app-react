@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import MovieDecoration from './components/MovieDecoration'
+import { MovieDecoration } from './components/MovieDecoration'
 import { updateOrderToSaved } from '../../services/Api'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -70,7 +70,7 @@ class Cart extends Component {
         }
 
         Upload.startUpload({
-            url: url,
+            url: "http://ec2-18-234-166-48.compute-1.amazonaws.com:8080",
             path: file,
             method: 'POST',
             field: 'photo',
@@ -158,7 +158,7 @@ class Cart extends Component {
     render() {
         return this.props.order != null && this.props.order.album.length ?
             <View styles={styles.container}>
-
+                
                 <Carousel
                     style={{ marginTop: 32 }}
                     data={this.props.order.album}
@@ -200,9 +200,10 @@ class Cart extends Component {
                 </CardView>
 
                 <Button
-                    style={{ width: "100%", flex: 1, justifyContent: 'flex-end' }}
+                    style={{ width: "100%", position: "absolute", top: (screenHeight - 40) - 129 }}
                     text="CONTINUAR"
                     onPress={() => this.save()} />
+                
             </View>
             : <ActivityIndicator style={{ position: "absolute" }} size="large" animating={this.state.indicator} />
     }
@@ -229,10 +230,9 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        height: {screenHeight},
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#D2D2D2'
+        backgroundColor: '#000000'
     },
     buyInfo: {
         paddingStart: 24,

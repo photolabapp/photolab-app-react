@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 
-export const MovieDecoration = () => {
+export const MovieDecoration = (props) => {
     return (
         <View style={styles.boxBlack} >
             <View style={styles.boxWhite} />
