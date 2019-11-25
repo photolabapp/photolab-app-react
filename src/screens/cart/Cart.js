@@ -70,7 +70,8 @@ class Cart extends Component {
         }
 
         Upload.startUpload({
-            url: "http://ec2-18-234-166-48.compute-1.amazonaws.com:8080",
+            //url: "http://ec2-18-234-166-48.compute-1.amazonaws.com:8080",
+            url: "http://192.168.0.7:8080/order/photo",
             path: file,
             method: 'POST',
             field: 'photo',
@@ -97,7 +98,7 @@ class Cart extends Component {
             /*
             */
             Upload.addListener('error', uploadId, data => {
-                console.log(`LSKDLS -- upload album Error: ${data.error}%`)
+                console.log(`LSKDLS -- upload album Error: ${data.error}`)
             })
             /*
             Upload.addListener('cancelled', uploadId, data => {
