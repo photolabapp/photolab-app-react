@@ -99,7 +99,7 @@ class SignUp extends Component {
                     onChangeText={(password) => this.setState({ password })} />
 
                 <Button
-                    style={{ marginTop: 16 }}
+                    style={{ marginTop: 16, width: "100%" }}
                     text="Salvar"
                     onPress={() => this.save()} />
             </View>

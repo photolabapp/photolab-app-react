@@ -72,12 +72,10 @@ class Login extends Component {
                     text="Login" onPress={() => this.login()} />
 
                 {
-                /*
                 <Button
                     style={{ width: "100%" }}
                     text="Não tenho login"
                     onPress={() => this.props.navigation.navigate('SignUp')} />
-                */
                 }
             </View >
         )
