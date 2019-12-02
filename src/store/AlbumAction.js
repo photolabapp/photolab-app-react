@@ -28,7 +28,7 @@ export const addPhotos = photos => {
     }
 }
 
-export const updatePhoto = (index) => {
+export const updatePhoto = (photo, index) => {
     return {
         type: "UPDATE_PHOTO",
         index: index,
