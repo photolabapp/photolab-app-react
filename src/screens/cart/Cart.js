@@ -70,7 +70,7 @@ class Cart extends Component {
         }
 
         Upload.startUpload({
-            url: "http://ec2-18-234-166-48.compute-1.amazonaws.com:8080/order/photo",
+            url: "http://ec2-18-234-166-48.compute-1.amazonaws.com:8080/photo",
             //url: "http://192.168.0.7:8080/order/photo",
             path: file,
             method: 'POST',
