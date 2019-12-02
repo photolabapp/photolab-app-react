@@ -31,6 +31,7 @@ export default (state = initialState, action) => {
             return { ...state, album: albums }
 
         case "UPDATE_PHOTO":
+            console.log("SLKDLSKDLS --- image reducer " + action.payload.cropped + " " + action.index) 
             var newState = [...state.album]
             newState[action.index].cropped = action.payload.cropped
 

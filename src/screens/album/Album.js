@@ -39,6 +39,7 @@ class Album extends Component {
             height: this.height,
             mediaType: 'photo'
         }).then(image => {
+            console.log("SLKDLSKDLS --- image " + image.path)
             this.props.updatePhoto({ uri: image.path }, index)
         }).catch((err) => {
             console.log("crop error " + err)
