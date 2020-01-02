@@ -1,24 +1,6 @@
-import React, { Component } from 'react'
-import { TouchableHighlight, StyleSheet, View, Text } from 'react-native'
+import React from 'react'
+import { StyleSheet } from 'react-native'
 import { Input } from 'react-native-elements';
-
-export const Button = (props) => {
-    return (
-        <TouchableHighlight
-            style={[styles.buttonContainer, styles.button, { ...props.style }]}
-            onPress={props.onPress}>
-            <Text style={{ color: '#FFF', fontSize: 16 }}>{props.text}</Text>
-        </TouchableHighlight>
-    )
-}
-
-export const CardView = (props) => {
-    return (
-        <View style={[styles.cardViewContainer, { ...props.style }]}>
-            {props.children}
-        </View>
-    )
-}
 
 export const TextInput = (props) => {
     props.size = 200

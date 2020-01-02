@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { MovieDecoration } from './components/MovieDecoration'
-import { updateOrderToSaved } from '../../services/Api'
+import { updateOrderToSaved } from '~/services/Api'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updateOrder } from '../../store/OrderAction'
-import { getLastOrderCreated, createOrder, url } from '../../services/Api'
+import { updateOrder } from '~/store/OrderAction'
+import { getLastOrderCreated, createOrder, url } from '~/services/Api'
 import { StyleSheet, Text, View, Dimensions, ImageBackground, Alert, ActivityIndicator } from 'react-native';
-import { CardView, Button, TextInput } from '../../components/UIKit'
+import { PlabCardView, PlabButton } from '~/components'
 import Carousel from 'react-native-snap-carousel'
 import Upload from 'react-native-background-upload'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -171,7 +171,7 @@ class Cart extends Component {
                     onSnapToItem={index => this.onSnapItem(index)}
                     renderItem={this.renderItem} />
 
-                <CardView style={{ marginStart: 16, marginEnd: 16, marginTop: 24 }}>
+                <PlabCardView style={{ marginStart: 16, marginEnd: 16, marginTop: 24 }}>
                     <Text style={styles.shippingHeader}>Resumo do pedido</Text>
 
                     <View style={styles.buyInfo}>
@@ -198,9 +198,9 @@ class Cart extends Component {
                         <Text style={styles.buyTitleText}>Valor total das fotos:</Text>
                         <Text style={styles.buyDescText}> R$ {this.state.value * this.props.order.album.length}</Text>
                     </View>
-                </CardView>
+                </PlabCardView>
 
-                <Button
+                <PlabButton
                     style={{ width: "100%", position: "absolute", top: (screenHeight - 40) - 129 }}
                     text="CONTINUAR"
                     onPress={() => this.save()} />

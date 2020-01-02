@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updatePhoto, updateQuantity, updateFormat, removePhoto } from '../../store/AlbumAction'
+import { updatePhoto, updateQuantity, updateFormat, removePhoto } from '~/store/AlbumAction'
 import { bindActionCreators } from 'redux'
 import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, FlatList, Text, Alert } from 'react-native'
 import { Picker } from '@react-native-community/picker'
-import { Button } from '../../components/UIKit'
+import { PlabButton } from '~/components'
 import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
 import { TabView } from 'react-native-tab-view';
-import Login from '../login/Login';
 
 class Album extends Component {
     constructor(props) {
@@ -173,7 +172,7 @@ class Album extends Component {
                 }}
             />
 
-            <Button
+            <PlabButton
                 style={{ width: "100%" }}
                 text="FINALIZAR COMPRA"
                 onPress={() => this.checkout()} />

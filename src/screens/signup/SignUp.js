@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { create } from '../../services/Api'
+import { create } from '~/services/Api'
 import validate from './Validate'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updateUser } from '../../store/UserAction'
+import { updateUser } from '~/store/UserAction'
 import { StyleSheet, View, Image, Alert, ActivityIndicator } from 'react-native'
-import { Button, TextInput } from '../../components/UIKit'
+import { PlabButton, PlabTextInput } from '~/components'
 
 class SignUp extends Component {
 
@@ -70,20 +70,20 @@ class SignUp extends Component {
                 <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
                     style={{ width: 150, height: 30, marginBottom: 48 }} />
 
-                <TextInput
+                <PlabTextInput
                     style={{ width: "100%" }}
                     placeholder="nome"
                     errorMessage={this.state.error.get("name")}
                     onChangeText={(name) => this.setState({ name })} />
 
-                <TextInput
+                <PlabTextInput
                     style={{ width: "100%" }}
                     placeholder="e-mail"
                     keyboardType="email-address"
                     errorMessage={this.state.error.get("email")}
                     onChangeText={(email) => this.setState({ email })} />
 
-                <TextInput
+                <PlabTextInput
                     style={{ width: "100%" }}
                     placeholder="celular"
                     keyboardType="phone-pad"
@@ -91,14 +91,14 @@ class SignUp extends Component {
                     errorMessage={this.state.error.get("cellPhone")}
                     onChangeText={(cellPhone) => this.setState({ cellPhone })} />
 
-                <TextInput
+                <PlabTextInput
                     style={{ width: "100%" }}
                     placeholder="senha"
                     secureTextEntry={true}
                     errorMessage={this.state.error.get("password")}
                     onChangeText={(password) => this.setState({ password })} />
 
-                <Button
+                <PlabButton
                     style={{ marginTop: 16, width: "100%" }}
                     text="Salvar"
                     onPress={() => this.save()} />

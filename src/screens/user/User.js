@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
-import { CardView, Button } from '../../components/UIKit'
+import { PlabCardView, PlabButton } from '~/components'
 
 class User extends Component {
 
@@ -17,7 +17,7 @@ class User extends Component {
         return (
             <View styles={styles.container}>
 
-                <CardView style={styles.cardViewContainer}>
+                <PlabCardView style={styles.cardViewContainer}>
                     <Text style={styles.cardHeader}>Dados do usuário</Text>
 
                     <View style={styles.containerInfo}>
@@ -40,12 +40,12 @@ class User extends Component {
                         <Text style={styles.textDesc}>{this.props.user.dtCreated}</Text>
                     </View>
 
-                    <Button
+                    <PlabButton
                         style={{ marginTop: 16, marginBottom: 8, width: "90%" }}
                         text="Alterar senha"
                         onPress={() => this.resetPassword()} />
 
-                </CardView>
+                </PlabCardView>
             </View>
         )
     }
