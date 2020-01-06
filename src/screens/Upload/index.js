@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { View, BackHandler, ActivityIndicator, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addPhoto } from '~/store/AlbumAction'
+import { addPhoto } from '../store/AlbumAction'
 import ImagePicker from 'react-native-image-crop-picker'
 import { withNavigationFocus } from 'react-navigation'
 
-class Add extends Component {
+class Upload extends Component {
 
     constructor(props) {
         super(props);
@@ -68,4 +68,4 @@ const mapDispatchToProps = dispatch => (
     bindActionCreators({ addPhoto }, dispatch)
 )
 
-export default connect(state => ({ order: state.order }), mapDispatchToProps)(withNavigationFocus(Add))
+export default connect(state => ({ order: state.order }), mapDispatchToProps)(withNavigationFocus(Upload))

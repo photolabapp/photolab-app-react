@@ -1,4 +1,4 @@
-import React, { Component } from 'React'
+import React, { Component } from 'react'
 import { AsyncStorage, View } from 'react-native'
 import { connect } from 'react-redux'
 import { createStackNavigator, createAppContainer, createSwitchNavigator } from 'react-navigation';

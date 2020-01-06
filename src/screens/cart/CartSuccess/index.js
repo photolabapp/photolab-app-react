@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-import Colors from '~/utils/Colors'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { clearOrder } from '../../store/OrderAction'
-import { PlabButton, PlabCardView } from '~/components'
+import { PlabButton, PlabCardView } from '../../components'
+import styles from './styles'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class CartSuccess extends Component {
@@ -53,41 +53,7 @@ class CartSuccess extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#D2D2D2'
-    },
-    text: {
-        marginStart: 16,
-        marginEnd: 16,
-        textAlignVertical: "center",
-        textAlign: "center"
-    },
-    textBold: {
-        color: "black",
-        fontWeight: "bold"
-    },
-    textNormal: {
-        color: "black",
-    },
-    textOrange: {
-        color: Colors.orange,
-        fontSize: 24,
-        fontWeight: "bold"
-    },
-    cardViewHeader: {
-        paddingStart: 16,
-        height: 40,
-        backgroundColor: "#D2D2D2",
-        color: "black",
-        textAlignVertical: "center",
-        textAlign: "left",
-        fontWeight: "bold"
-    },
-})
+
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({ clearOrder }, dispatch)

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { create } from '~/services/Api'
-import validate from './Validate'
+import { create } from '../services/Api'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updateUser } from '~/store/UserAction'
-import { StyleSheet, View, Image, Alert, ActivityIndicator } from 'react-native'
-import { PlabButton, PlabTextInput } from '~/components'
+import { updateUser } from '../store/UserAction'
+import { View, Image, Alert, ActivityIndicator } from 'react-native'
+import styles from './styles'
+import validate from './validate'
+import { PlabButton, PlabTextInput } from '../components'
 
 class SignUp extends Component {
 
@@ -106,18 +107,6 @@ class SignUp extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        paddingStart: 24,
-        paddingEnd: 24,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#31383E',
-    }
-})
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({ updateUser }, dispatch)

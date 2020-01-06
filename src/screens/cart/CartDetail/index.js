@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import { MovieDecoration } from './components/MovieDecoration'
-import { updateOrderToSaved } from '~/services/Api'
+import { MovieDecoration } from '../components/MovieDecoration'
+import { updateOrderToSaved } from '../../services/Api'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updateOrder } from '~/store/OrderAction'
-import { getLastOrderCreated, createOrder, url } from '~/services/Api'
+import { updateOrder } from '../store/OrderAction'
+import { getLastOrderCreated, createOrder, url } from '../../services/Api'
 import { StyleSheet, Text, View, Dimensions, ImageBackground, Alert, ActivityIndicator } from 'react-native';
-import { PlabCardView, PlabButton } from '~/components'
+import { PlabCardView, PlabButton } from '../components'
 import Carousel from 'react-native-snap-carousel'
 import Upload from 'react-native-background-upload'
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation'
 
 class Cart extends Component {
 
@@ -70,7 +70,7 @@ class Cart extends Component {
         }
 
         Upload.startUpload({
-            url: "http://ec2-3-84-164-8.compute-1.amazonaws.com:8080/photo",
+            url: "http://ec2-54-173-117-10.compute-1.amazonaws.com:8080/photo",
             //url: "http://192.168.0.7:8080/order/photo",
             path: file,
             method: 'POST',
@@ -276,3 +276,4 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
+

@@ -1,5 +1,5 @@
 import React from 'react'
-import Colors from '../utils/Colors'
+import Colors from '~/utils/Colors'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
     createStackNavigator,
@@ -8,18 +8,18 @@ import {
     createBottomTabNavigator,
     HeaderBackButton
 } from 'react-navigation'
-import Login from '../screens/login/Login'
-import SignUp from '../screens/signup/SignUp'
-import Add from '../screens/add/Add'
-import Splash from '../screens/splash/Splash'
-import Credit from '../screens/credit/Credit'
-import Cart from '../screens/cart/Cart'
-import CartAddress from '../screens/cart/CartAddress'
-import CartSuccess from '../screens/cart/CartSuccess'
-import Album from '../screens/album/Album'
-import User from '../screens/user/User'
+import Login from '~/screens/Login'
+import SignUp from '~/screens/SignUp'
+import Upload from '~/screens/Upload'
+import Splash from '~/screens/Splash'
+import Credit from '~/screens/Credit'
+import Cart from '~/screens/Cart'
+import CartAddress from '~/screens/Cart/CartAddress'
+import CartSuccess from '~/screens/Cart/CartSuccess'
+import Album from '~/screens/Album'
+import User from '~/screens/User'
 
-import HeaderLogo from '../components/HeaderLogo'
+//import HeaderLogo from '../components/HeaderLogo'
 
 // LOGIN AND SIGNUP SCREEN
 const loginStackNavigator = createStackNavigator({
@@ -53,7 +53,7 @@ const albumStackNavigator = createStackNavigator({
 
 const uploadStackNavigator = createStackNavigator({
     Upload: {
-        screen: Add,
+        screen: Upload,
         navigationOptions: { header: null }
     }
 })

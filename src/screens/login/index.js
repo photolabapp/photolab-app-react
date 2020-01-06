@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { login } from '../../services/Api'
+import { login } from '../services/Api'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updateUser } from '../../store/UserAction'
-import { StyleSheet, View, Image, ActivityIndicator, Alert } from 'react-native';
-import { PlabTextInput, PlabButton } from '~/components'
-import validate from './Validate'
+import { updateUser } from '../store/UserAction'
+import { View, Image, ActivityIndicator, Alert } from 'react-native';
+import { PlabTextInput, PlabButton } from '../components'
+import validate from './validate'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class Login extends Component {
@@ -81,17 +81,6 @@ class Login extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingStart: 24,
-        paddingEnd: 24,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#31383E',
-    }
-});
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({ updateUser }, dispatch)
