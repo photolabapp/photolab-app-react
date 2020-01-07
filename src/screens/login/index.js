@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { login } from '../services/Api'
+import { login } from '../../services/Api'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updateUser } from '../store/UserAction'
+import { updateUser } from '../../store/UserAction'
 import { View, Image, ActivityIndicator, Alert } from 'react-native';
-import { PlabTextInput, PlabButton } from '../components'
+import { PlabTextInput, PlabButton } from '../../components'
 import validate from './validate'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 

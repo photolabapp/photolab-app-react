@@ -1,5 +1,5 @@
 import React from 'react'
-import Colors from '~/utils/Colors'
+import Colors from '../utils/Colors'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
     createStackNavigator,
@@ -8,16 +8,16 @@ import {
     createBottomTabNavigator,
     HeaderBackButton
 } from 'react-navigation'
-import Login from '~/screens/Login'
-import SignUp from '~/screens/SignUp'
-import Upload from '~/screens/Upload'
-import Splash from '~/screens/Splash'
-import Credit from '~/screens/Credit'
-import Cart from '~/screens/Cart'
-import CartAddress from '~/screens/Cart/CartAddress'
-import CartSuccess from '~/screens/Cart/CartSuccess'
-import Album from '~/screens/Album'
-import User from '~/screens/User'
+import Login from '../screens/Login'
+import SignUp from '../screens/SignUp'
+import Upload from '../screens/Upload'
+import Splash from '../screens/Splash'
+import Credit from '../screens/Credit'
+import CartDetail from '../screens/Cart/CartDetail'
+import CartAddress from '../screens/Cart/CartAddress'
+import CartSuccess from '../screens/Cart/CartSuccess'
+import Album from '../screens/Album'
+import User from '../screens/User'
 
 //import HeaderLogo from '../components/HeaderLogo'
 
@@ -91,8 +91,8 @@ const userStackNavigator = createStackNavigator({
 })
 
 const cartStackNavigator = createStackNavigator({
-    Cart: {
-        screen: Cart,
+    CartDetail: {
+        screen: CartDetail,
         navigationOptions: {
             headerTintColor: '#ffffff',
             headerMode: 'screen',

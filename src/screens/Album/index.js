@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updatePhoto, updateQuantity, updateFormat, removePhoto } from '../store/AlbumAction'
+import { updatePhoto, updateQuantity, updateFormat, removePhoto } from '../../store/AlbumAction'
 import { bindActionCreators } from 'redux'
 import { View, Dimensions, ImageBackground, TouchableOpacity, FlatList, Text, Alert } from 'react-native'
 import styles from './styles'
 import { Picker } from '@react-native-community/picker'
-import { PlabButton } from '../components'
+import { PlabButton } from '../../components'
 import Carousel from 'react-native-snap-carousel'
 import ImagePicker from 'react-native-image-crop-picker'
 import { TabView } from 'react-native-tab-view';

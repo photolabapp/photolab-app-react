@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { clearOrder } from '../../store/OrderAction'
-import { PlabButton, PlabCardView } from '../../components'
+import { clearOrder } from '../../../store/OrderAction'
+import { PlabButton, PlabCardView } from '../../../components'
 import styles from './styles'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 

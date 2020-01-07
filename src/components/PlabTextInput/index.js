@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Input } from 'react-native-elements';
 
-export const TextInput = (props) => {
+export default PlabTextInput = (props) => {
     props.size = 200
     props.secureTextEntry = false
 
