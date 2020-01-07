@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        top: (screenHeight - 73) - 50,
+        //top: (screenHeight - 73) - 50,
         position: "absolute"
     },
     buttonAddAddressContainer: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        top: (screenHeight - 73) - 120,
+        //top: (screenHeight - 73) - 120,
         position: "absolute"
     },
     cardViewContainer: {

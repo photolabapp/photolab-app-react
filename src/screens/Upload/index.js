@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, BackHandler, ActivityIndicator, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addPhoto } from '../store/AlbumAction'
+import { addPhoto } from '../../store/AlbumAction'
 import ImagePicker from 'react-native-image-crop-picker'
 import { withNavigationFocus } from 'react-navigation'
 

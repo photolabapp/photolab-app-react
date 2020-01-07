@@ -6,6 +6,7 @@ import { updateUser } from '../../store/UserAction'
 import { View, Image, ActivityIndicator, Alert } from 'react-native';
 import { PlabTextInput, PlabButton } from '../../components'
 import validate from './validate'
+import styles from './styles'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class Login extends Component {

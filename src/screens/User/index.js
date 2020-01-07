@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Text, View, Dimensions } from 'react-native';
-import { PlabCardView, PlabButton } from '../components'
+import PlabCardView from '../../components/PlabCardView'
+import PlabButton from '../../components/PlabButton'
 import styles from './styles'
 
 class User extends Component {

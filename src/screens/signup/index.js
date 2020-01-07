@@ -5,8 +5,9 @@ import { bindActionCreators } from 'redux'
 import { updateUser } from '../../store/UserAction'
 import { View, Image, Alert, ActivityIndicator } from 'react-native'
 import styles from './styles'
-import validate from './validate'
-import { PlabButton, PlabTextInput } from '../components'
+import Validate from './Validate'
+import { PlabButton, PlabTextInput } from '../../components'
+
 
 class SignUp extends Component {
 
@@ -31,7 +32,7 @@ class SignUp extends Component {
             cellPhone: this.state.cellPhone
         }
 
-        let error = validate(user)
+        let error = Validate(user)
         if (error.size > 0) {
             this.setState({ error: error })
             this.setState({ indicator: false })
