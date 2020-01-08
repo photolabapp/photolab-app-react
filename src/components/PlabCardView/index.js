@@ -1,4 +1,5 @@
 import React from 'react'
+import { StyleSheet } from 'react-native'
 import { View } from 'react-native'
 
 export default PLabCardView = (props) => {
@@ -8,3 +9,11 @@ export default PLabCardView = (props) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    cardViewContainer: {
+        borderRadius: 2,
+        backgroundColor: "white",
+        elevation: 2
+    }
+})

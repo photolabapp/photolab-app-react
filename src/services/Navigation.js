@@ -41,8 +41,8 @@ const loginStackNavigator = createStackNavigator({
         }
     }
 }, {
-    initialRouteName: 'Login'
-})
+        initialRouteName: 'Login'
+    })
 
 const albumStackNavigator = createStackNavigator({
     Album: {
@@ -136,35 +136,35 @@ const bottomTab = createBottomTabNavigator({
     Credito: creditStackNavigator,
     User: userStackNavigator,
 }, {
-    initialRouteName: 'Album',
-    navigationOptions: {
-        header: null
-    },
-    defaultNavigationOptions: ({ navigation }) => ({
-        tabBarIcon: ({ tintColor }) => {
-            const { routeName } = navigation.state
-            if (routeName === 'Add') {
-                return <Icon name="add-circle-outline" size={40} color="#fff" />
-            } else if (routeName === 'Album') {
-                return <Icon name="photo-album" size={22} color="#fff" />
-            } else if (routeName === 'Cart') {
-                return <Icon name="shopping-cart" size={22} color="#fff" />
-            } else if (routeName === 'Credito') {
-                return <Icon name="credit-card" size={25} color="#fff" />
-            } else if (routeName === 'User') {
-                return <Icon name="perm-identity" size={25} color="#fff" />
+        initialRouteName: 'Album',
+        navigationOptions: {
+            header: null
+        },
+        defaultNavigationOptions: ({ navigation }) => ({
+            tabBarIcon: ({ tintColor }) => {
+                const { routeName } = navigation.state
+                if (routeName === 'Add') {
+                    return <Icon name="add-circle-outline" size={40} color="#fff" />
+                } else if (routeName === 'Album') {
+                    return <Icon name="photo-album" size={22} color="#fff" />
+                } else if (routeName === 'Cart') {
+                    return <Icon name="shopping-cart" size={22} color="#fff" />
+                } else if (routeName === 'Credito') {
+                    return <Icon name="credit-card" size={25} color="#fff" />
+                } else if (routeName === 'User') {
+                    return <Icon name="perm-identity" size={25} color="#fff" />
+                }
             }
+        }),
+        tabBarOptions: {
+            inactiveTintColor: 'white',
+            showIcon: true,
+            showLabel: false,
+            inactiveBackgroundColor: Colors.greyPrimary,
+            activeBackgroundColor: Colors.greySecundary,
+            activeTintColor: 'white'
         }
-    }),
-    tabBarOptions: {
-        inactiveTintColor: 'white',
-        showIcon: true,
-        showLabel: false,
-        inactiveBackgroundColor: Colors.greyPrimary,
-        activeBackgroundColor: Colors.greySecundary,
-        activeTintColor: 'white'
-    }
-})
+    })
 
 const switchNavigator = createSwitchNavigator({
     Splash: { screen: Splash, headerMode: 'none' },

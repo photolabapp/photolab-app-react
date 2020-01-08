@@ -22,19 +22,6 @@ export default PlabTextInput = (props) => {
 }
 
 const styles = StyleSheet.create({
-    buttonContainer: {
-        height: 40,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    button: {
-        backgroundColor: "#00b5ec",
-    },
-    cardViewContainer: {
-        borderRadius: 2,
-        backgroundColor: "white",
-        elevation: 2
-    },
     input: {
         height: 45,
         marginLeft: 16,
