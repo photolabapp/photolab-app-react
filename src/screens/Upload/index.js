@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { addPhoto } from '../../store/AlbumAction'
 import ImagePicker from 'react-native-image-crop-picker'
 import { withNavigationFocus } from 'react-navigation'
+import ImageEditor from '@react-native-community/image-editor'
 
 class Upload extends Component {
 
@@ -38,7 +39,17 @@ class Upload extends Component {
             multiple: true
         }).then(images => {
             for (i = 0; i < images.length; i++) {
-                this.props.addPhoto(images[i].path)
+                cropData = {
+                    offset: { x: 200, y: 200 },
+                    size: { width: images[i].width, height: images[i].height },
+                    //displaySize: { width: number, height: number },
+                    resizeMode: 'contain',
+                };
+
+                ImageEditor.cropImage(images[i].path, cropData).then(url => {
+                    this.props.addPhoto(url)
+                })
+
                 if (i == (images.length - 1)) {
                     this.handleBackPress()
                 }
