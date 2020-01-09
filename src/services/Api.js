@@ -1,8 +1,8 @@
 import Axios from 'axios'
 
 const axios = Axios.create({
-    baseURL: "http://ec2-54-173-117-10.compute-1.amazonaws.com:8080",
-    //baseURL: "http://192.168.0.7:8080",
+    //baseURL: "http://ec2-54-173-117-10.compute-1.amazonaws.com:8080",
+    baseURL: "http://192.168.0.7:8080",
     responseType: "json"
 });
 

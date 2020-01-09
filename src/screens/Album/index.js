@@ -143,7 +143,7 @@ class Album extends Component {
                 </View>
             )}
 
-            <Button
+            <PlabButton
                 style={{ width: "100%" }}
                 text="FINALIZAR COMPRA"
                 onPress={() => this.checkout()} />
