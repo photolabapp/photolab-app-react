@@ -39,15 +39,19 @@ class Upload extends Component {
             multiple: true
         }).then(images => {
             for (i = 0; i < images.length; i++) {
+                console.log("RESOLUTION ALTURA " + images[i].height + " LARGURA " + images[i].width)
                 cropData = {
-                    offset: { x: 200, y: 200 },
-                    size: { width: images[i].width, height: images[i].height },
-                    //displaySize: { width: number, height: number },
-                    resizeMode: 'contain',
+                    offset: { x: 0, y: 0 },
+                    size: { width: 640, height: 960 },
+                    //displaySize: { width: 30, height: 30 },
+                    resizeMode: 'center',
                 };
 
-                ImageEditor.cropImage(images[i].path, cropData).then(url => {
-                    this.props.addPhoto(url)
+                var photo = images[i]
+                console.log("LSDKLSDKLS photo raw " + photo.path)
+                ImageEditor.cropImage(photo.path, cropData).then(crop => {
+                    console.log("LSDKLSDKLS photo cropped " + crop)
+                    this.props.addPhoto(photo.path, crop)
                 })
 
                 if (i == (images.length - 1)) {

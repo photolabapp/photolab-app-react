@@ -1,9 +1,9 @@
-export const addPhoto = photo => {
+export const addPhoto = (raw, cropped) => {
     return {
         type: "ADD_PHOTO",
         payload: {
-            raw: photo,
-            cropped: photo,
+            raw: raw,
+            cropped: cropped,
             quantity: 1,
             format: "10x15"
         }
