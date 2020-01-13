@@ -33,17 +33,13 @@ class Album extends Component {
 
     cropPhoto = (index) => {
         let photo = this.props.order.album[index]
-        console.log("OIREOJFOM " + photo.raw)
         ImagePicker.openCropper({
             width: 640,
             height: 960,
             path: photo.raw,
             mediaType: 'photo'
-        }).then(image => {
-            //console.log("SLKDLSKDLS --- image " + image.path)
-            console.log("RESOLUTION CROP LARGURA " + image.width + " ALTURA " + image.height)
-            this.props.updatePhoto({ uri: image.path }, index)
-        }).catch((err) => console.log("crop error " + err))
+        }).then(image => this.props.updatePhoto({ uri: image.path }, index))
+        .catch(err => console.log("crop error " + err))
     }
 
     dialogRemovePhoto = (index) => { this.firstRoute

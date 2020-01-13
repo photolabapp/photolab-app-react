@@ -42,9 +42,9 @@ class Upload extends Component {
                 console.log("RESOLUTION ALTURA " + images[i].height + " LARGURA " + images[i].width)
                 cropData = {
                     offset: { x: 0, y: 0 },
-                    size: { width: 640, height: 960 },
-                    //displaySize: { width: 30, height: 30 },
-                    resizeMode: 'center',
+                    size: { width: images[i].width, height: images[i].height },
+                    displaySize: { width: 853.33, height: 1280 },
+                    resizeMode: 'contain',
                 };
 
                 var photo = images[i]
