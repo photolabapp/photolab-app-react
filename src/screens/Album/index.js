@@ -158,7 +158,7 @@ class Album extends Component {
                 renderItem={({ item, index }) => {
                     return (
                         <View style={styles.imageFlatList}>
-                            <TouchableOpacity onPress={() => this.cropImage(index)}>
+                            <TouchableOpacity onPress={() => this.cropPhoto(index)}>
                                 <ImageBackground
                                     style={{ width: 100, height: 150, }}
                                     source={{ uri: item.cropped }}>

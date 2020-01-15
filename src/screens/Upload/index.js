@@ -59,6 +59,9 @@ class Upload extends Component {
                 }
             }
             this.setState({ animating: false })
+        }).catch(err => {
+            this.setState({ animating: false })
+            this.handleBackPress()
         });
     }
 
