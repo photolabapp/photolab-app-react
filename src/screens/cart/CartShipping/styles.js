@@ -63,6 +63,8 @@ const styles = StyleSheet.create({
         position: "absolute"
     },
     cardViewContainer: {
+        flex: 1,
+        flexDirection: 'row',
         marginTop: 16,
         marginStart: 16,
         marginEnd: 16,

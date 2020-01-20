@@ -98,37 +98,40 @@ const CartShipping = () => {
                         <Text style={styles.buyDescText}>R$ {total}</Text>
                     </View>
                 </PlabCardView>
-                <Text style={{color: 'black', marginTop: 8}}>Selecine um tipo de entrega:</Text>
+                <Text style={{ color: 'black', marginTop: 8 }}>Selecine um tipo de entrega:</Text>
                 {data.map(shipping => (
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         onPress={() => updateShipping(shipping.index)}
                         activeOpacity={1}>
                         <PlabCardView style={styles.cardViewContainer}>
-                            <Text style={styles.shippingTitle}>{shipping.title}</Text>
-                            <View style={styles.buyInfo}>
-                                <Text style={styles.buyTitleText}>Endereço:</Text>
-                                <Text style={styles.buyDescText}>{shipping.address}</Text>
-                            </View>
-                            <View style={styles.buyInfo}>
-                                <Text style={styles.buyTitleText}>Cidade:</Text>
-                                <Text style={styles.buyDescText}>{shipping.city}</Text>
-                            </View>
-                            {(shipping.complement !== null) ?
+                            <View styles={{width: 10, backgroudColor: '#000'}} />
+                            <View>
                                 <View style={styles.buyInfo}>
-                                    <Text style={styles.buyTitleText}>Complemento:</Text>
-                                    <Text style={styles.buyDescText}>{shipping.complement}</Text>
+                                    <Text style={styles.buyDescText}>{shipping.title}</Text>
                                 </View>
-                                : null}
-                            <View style={styles.buyInfo}>
-                                <Text style={styles.buyTitleText}>Cep:</Text>
-                                <Text style={styles.buyDescText}>{shipping.cep}</Text>
-                            </View>
-                            {(shipping.complement !== null) ?
+                                {(shipping.recipient !== null) ?
+                                    <View style={styles.buyInfo}>
+                                        <Text style={styles.buyDescText}>{shipping.recipient}</Text>
+                                    </View>
+                                    : null}
                                 <View style={styles.buyInfo}>
-                                    <Text style={styles.buyTitleText}>Destinatário:</Text>
-                                    <Text style={styles.buyDescText}>{shipping.recipient}</Text>
+                                    <Text style={styles.buyDescText}>{shipping.address}</Text>
                                 </View>
-                                : null}
+                                <View style={styles.buyInfo}>
+                                    <Text style={styles.buyDescText}>{shipping.city}</Text>
+                                </View>
+                                {(shipping.complement !== null) ?
+                                    <View style={styles.buyInfo}>
+                                        <Text style={styles.buyTitleText}>Complemento:</Text>
+                                        <Text style={styles.buyDescText}>{shipping.complement}</Text>
+                                    </View>
+                                    : null}
+                                <View style={styles.buyInfo}>
+                                    <Text style={styles.buyTitleText}>Cep:</Text>
+                                    <Text style={styles.buyDescText}>{shipping.cep}</Text>
+                                </View>
+
+                            </View>
                         </PlabCardView>
                     </TouchableOpacity>
                 ))}
