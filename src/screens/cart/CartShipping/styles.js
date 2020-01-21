@@ -8,11 +8,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#D2D2D2',
         marginEnd: 24
     },
-    cardViewContainer: {
-        marginStart: 16, 
-        marginEnd: 16, 
-        marginBottom: 24
-    },
     shippingTitle: {
         paddingStart: 16,
         height: 40,
@@ -29,11 +24,30 @@ const styles = StyleSheet.create({
         paddingBottom: 2
     },
     buyInfo: {
-        paddingStart: 24,
+        paddingStart: 8,
         paddingEnd: 24,
         marginBottom: 3,
         marginTop: 2,
         flexDirection: "row",
+    },
+    infoDetailContainer: {
+        paddingStart: 16,
+        paddingEnd: 24,
+        marginBottom: 3,
+        marginTop: 2,
+        flexDirection: "row",
+    },
+    infoDetailDesc: {
+        flex: 1,
+        fontSize: 14,
+        textAlign: "right",
+        color: "black"
+    },
+    buyDescText: {
+        flex: 1,
+        fontSize: 14,
+        textAlign: "left",
+        color: "black"
     },
     buyTitleText: {
         fontSize: 14,
@@ -43,7 +57,7 @@ const styles = StyleSheet.create({
     buyDescText: {
         flex: 1,
         fontSize: 14,
-        textAlign: "right",
+        textAlign: "left",
         color: "black"
     },
     buttonContainer: {
@@ -63,12 +77,17 @@ const styles = StyleSheet.create({
         position: "absolute"
     },
     cardViewContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        marginTop: 16,
+        marginBottom: 16,
         marginStart: 16,
         marginEnd: 16,
-        paddingBottom: 4,
+        backgroundColor: "white",
+        elevation: 2
+    },
+    cardViewContainerDetail: {
+        marginTop: 16,
+        marginBottom: 24,
+        marginStart: 16,
+        marginEnd: 16,
         backgroundColor: "white",
         elevation: 2
     },

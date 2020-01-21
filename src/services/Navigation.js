@@ -14,7 +14,7 @@ import Upload from '../screens/Upload'
 import Splash from '../screens/Splash'
 import Credit from '../screens/Credit'
 import CartDetail from '../screens/Cart/CartDetail'
-import CartAddress from '../screens/Cart/CartAddress'
+import CartShipping from '../screens/Cart/CartShipping'
 import CartSuccess from '../screens/Cart/CartSuccess'
 import Album from '../screens/Album'
 import User from '../screens/User'
@@ -104,11 +104,20 @@ const cartStackNavigator = createStackNavigator({
             title: 'Sacola de compras'
         }
     },
-    CartAddress: {
-        screen: CartAddress,
+    CartShipping: {
+        screen: CartShipping,
         navigationOptions: {
+            headerTintColor: '#ffffff',
             headerMode: 'screen',
-            title: 'Meus endereços'
+            headerStyle: {
+                backgroundColor: '#31383E',
+                elevation: 0,
+                shadowOpacity: 0
+            },
+            title: 'Entrega',
+            tabBarOptions: {
+                tabBarVisible: false
+            }
         }
     },
     CartSuccess: {
@@ -127,6 +136,8 @@ const cartStackNavigator = createStackNavigator({
             }
         },
     }
+}, {
+    initialRouteName: 'CartShipping'
 })
 
 const bottomTab = createBottomTabNavigator({
@@ -172,4 +183,4 @@ const switchNavigator = createSwitchNavigator({
     Auth: loginStackNavigator,
 }, { initialRouteName: 'Splash' })
 
-export default createAppContainer(switchNavigator)
+export default createAppContainer(cartStackNavigator)
