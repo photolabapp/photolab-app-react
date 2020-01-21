@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { View, Dimensions, Text, TouchableHighlight, TouchableOpacity, ScrollView } from 'react-native'
 import { PlabCardView } from '../../../components'
@@ -10,6 +10,11 @@ const CartShipping = () => {
     const [total, setTotal] = useState(orderAmount)
     const [shippingType, setShippingType] = useState(null)
     const [shippingDeadLine, setShippingDeadLine] = useState(null)
+    const [data, setData] = useState(null)
+
+    useEffect(() => {
+        setData(mock)
+    }, []);
 
     const mock = [
         {
@@ -28,16 +33,13 @@ const CartShipping = () => {
         },
     ]
 
-    const [data, setData] = useState(mock)
+    const updateShipping = item => {
+        const newData = { ...mock }
+        newData.forEach(shipping => {
+            newData.selected = (shipping.id === item.id)
+        })
 
-    const updateShipping = index => {
-        console.log("LSKDLSKD call " + index)
-        for (key in data) {
-            console.log("LSKDLSKD call key " + key)
-            mock[key].selected = (key === index)
-        }
-
-        setData(mock)
+        setData(newData)
         setTotal(orderAmount + mock[index].price)
         setShippingType(mock[index].title)
         setShippingDeadLine(mock[index].deadLine)
@@ -74,7 +76,7 @@ const CartShipping = () => {
                 <Text style={{ color: 'black', marginBottom: 6, paddingStart: 24 }}>Selecine um tipo de entrega:</Text>
                 {data.map(shipping => (
                     <TouchableOpacity
-                        onPress={() => updateShipping(shipping.index)}
+                        onPress={() => updateShipping(shipping)}
                         activeOpacity={1}>
                         <PlabCardView style={styles.cardViewContainer}>
                             <View style={{ flex: 1, flexDirection: 'row' }}>
