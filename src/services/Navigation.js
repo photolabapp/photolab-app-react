@@ -18,6 +18,8 @@ import CartShipping from '../screens/Cart/CartShipping'
 import CartSuccess from '../screens/Cart/CartSuccess'
 import Album from '../screens/Album'
 import User from '../screens/User'
+import CreateAddress from '../screens/Address/CreateAddress'
+import { createAddress } from './Api';
 
 //import HeaderLogo from '../components/HeaderLogo'
 
@@ -86,6 +88,22 @@ const userStackNavigator = createStackNavigator({
                 shadowOpacity: 0
             },
             title: 'Usuário'
+        }
+    }
+})
+
+const addressStackNavigator = createStackNavigator({
+    CreateAddress: {
+        screen: createAddress,
+        navigationOptions: {
+            headerTintColor: '#ffffff',
+            headerMode: 'screen',
+            headerStyle: {
+                backgroundColor: '#31383E',
+                elevation: 0,
+                shadowOpacity: 0
+            },
+            title: 'Adiciona Endereço'
         }
     }
 })

@@ -3,38 +3,34 @@ import { connect } from 'react-redux'
 import { View, Dimensions, Text, TouchableHighlight, TouchableOpacity, ScrollView } from 'react-native'
 import { PlabCardView } from '../../../components'
 import styles from './styles'
+import { getShippingAddress } from '../../../services/Api'
 
-const CartShipping = () => {
+const CartShipping = props => {
     const orderAmount = 123.3
 
+    const [loading, setLoading] = useState(null)
     const [total, setTotal] = useState(orderAmount)
     const [shippingType, setShippingType] = useState(null)
     const [shippingDeadLine, setShippingDeadLine] = useState(null)
     const [data, setData] = useState(null)
 
     useEffect(() => {
-        setData(mock)
+        setLoading(true)
+
+        const getData = () => {
+            getShippingAddress(user).then(response => {
+                setLoading(false)
+                setData(response)
+            }).catch(error => {
+                setLoading(false)
+                Alert.alert("Carrinho", "Error ao obter os endereços")
+            });
+        }
+        getData()
     }, []);
 
-    const mock = [
-        {
-            index: 0,
-            id: 1,
-            title: "Retirada na loja",
-            address: "Rua sddd, 753",
-            complement: null,
-            cep: "00000-000",
-            city: "São Paulo - SP",
-            recipient: "Mauricio",
-            deletable: false,
-            deadLine: "1 dia útil",
-            price: 0.0,
-            selected: true,
-        },
-    ]
-
     const updateShipping = item => {
-        const newData = { ...mock }
+        const newData = { ...data }
         newData.forEach(shipping => {
             newData.selected = (shipping.id === item.id)
         })
@@ -43,6 +39,10 @@ const CartShipping = () => {
         setTotal(orderAmount + mock[index].price)
         setShippingType(mock[index].title)
         setShippingDeadLine(mock[index].deadLine)
+    }
+
+    const addAddress = () => {
+        this.props.navigation.navigate('CreateAddress')
     }
 
     return (
@@ -108,28 +108,13 @@ const CartShipping = () => {
                     </TouchableOpacity>
                 ))}
             </View>
+            <TouchableHighlight onPress={() => addAddress()}>Adicionar endereço</TouchableHighlight>
+            <PlabButton
+                style={styles.button}
+                text="CONTINUAR"
+                onPress={() => this.save()} />
         </ScrollView >
     )
 }
 
 export default CartShipping
-
-/*
-class CartShipping extends Component {
-    constructor(props) {
-        super(props)
-    }
-
-    render() {
-
-    }
-}
-
-const screenHeight = Math.round(Dimensions.get('window').height)
-
-const mapStateToProps = state => {
-    return { address: state.address }
-}
-
-export default connect(mapStateToProps)(CartAddress)
-*/
