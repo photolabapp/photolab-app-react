@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, TouchableHighlight, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
 import { PlabCardView } from '../../../components'
+import { DetailOrderCardView } from '../components/DetailOrderCardView'
 import styles from './styles'
 import { getShippingAddress } from '../../../services/Api'
 
@@ -13,10 +14,17 @@ const CartShipping = props => {
     const [shippingType, setShippingType] = useState(null)
     const [shippingDeadLine, setShippingDeadLine] = useState(null)
     const [data, setData] = useState(null)
+    const [order, setOrder] = useState(null)
+
+    const mockOrder = {
+        status: "DRAWN",
+        album: [{ price: 23.00, format: "10x15", quantity: 5 }, { price: 23.00, format: "10x15", quantity: 2 }]
+    }
 
     useEffect(() => {
         console.log("SLDLSKDLSDK CALL")
         setLoading(true)
+        setOrder(mockOrder)
 
         const getData = () => {
             getShippingAddress({ id: 1 }).then(response => {
@@ -32,7 +40,11 @@ const CartShipping = props => {
     }, []);
 
     const updateShipping = item => {
-        const newData = [ ...data ]
+        const newOrder = { ...order }
+        newOrder.shipping = item
+        setOrder(newOrder)
+
+        const newData = [...data]
         newData.forEach(shipping => {
             newData.selected = (shipping.id === item.id)
         })
@@ -54,31 +66,8 @@ const CartShipping = props => {
             return (
                 <ScrollView>
                     <View styles={styles.container}>
-                        <PlabCardView style={styles.cardViewContainerDetail}>
-                            <Text style={styles.shippingTitle}>Detalhe do pedido</Text>
-                            <View style={styles.infoDetailContainer}>
-                                <Text style={styles.buyTitleText}>Valor do pedido:</Text>
-                                <Text style={styles.infoDetailDesc}>R$ {orderAmount}</Text>
-                            </View>
-                            {(shippingType !== null) ?
-                                <View style={styles.infoDetailContainer}>
-                                    <Text style={styles.buyTitleText}>Tipo de entrega:</Text>
-                                    <Text style={styles.infoDetailDesc}>{shippingType}</Text>
-                                </View>
-                                : null
-                            }
-                            {(shippingDeadLine !== null) ?
-                                <View style={styles.infoDetailContainer}>
-                                    <Text style={styles.buyTitleText}>Prazo de entrega:</Text>
-                                    <Text style={styles.infoDetailDesc}>{shippingDeadLine}</Text>
-                                </View>
-                                : null
-                            }
-                            <View style={styles.infoDetailContainer}>
-                                <Text style={styles.buyTitleText}>Valor total:</Text>
-                                <Text style={styles.infoDetailDesc}>R$ {total}</Text>
-                            </View>
-                        </PlabCardView>
+                        <DetailOrderCardView order={order} />
+
                         <Text style={{ color: 'black', marginBottom: 6, paddingStart: 24 }}>Selecine um tipo de entrega:</Text>
                         {data.map(shipping => (
                             <TouchableOpacity

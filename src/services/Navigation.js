@@ -19,7 +19,6 @@ import CartSuccess from '../screens/Cart/CartSuccess'
 import Album from '../screens/Album'
 import User from '../screens/User'
 import CreateAddress from '../screens/Address/CreateAddress'
-import { createAddress } from './Api';
 
 //import HeaderLogo from '../components/HeaderLogo'
 
@@ -94,7 +93,7 @@ const userStackNavigator = createStackNavigator({
 
 const addressStackNavigator = createStackNavigator({
     CreateAddress: {
-        screen: createAddress,
+        screen: CreateAddress,
         navigationOptions: {
             headerTintColor: '#ffffff',
             headerMode: 'screen',

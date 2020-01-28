@@ -173,8 +173,9 @@ class Cart extends Component {
                 <PlabCardView style={{ marginStart: 16, marginEnd: 16, marginTop: 24 }}>
                     <Text style={styles.shippingHeader}>Resumo do pedido</Text>
 
+                    {  /*
                     <View style={styles.buyInfo}>
-                        <Text style={styles.buyTitleText}>Quantidade da foto:</Text>
+                        <Text style={styles.buyTitleText}>Quantidade de fotos:</Text>
                         <Text style={styles.buyDescText}>{this.state.quantity}</Text>
                     </View>
 
@@ -182,6 +183,7 @@ class Cart extends Component {
                         <Text style={styles.buyTitleText}>Formato da foto:</Text>
                         <Text style={styles.buyDescText}>{this.state.format}</Text>
                     </View>
+                    */ }   
 
                     <View style={styles.buyInfo}>
                         <Text style={styles.buyTitleText}>Valor da foto:</Text>
