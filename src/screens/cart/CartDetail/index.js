@@ -1,15 +1,122 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigation } from 'react-navigation-hooks'
 import { MovieDecoration } from '../components/MovieDecoration'
-import { updateOrderToSaved, getLastOrderCreated, createOrder } from '../../../services/Api'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { getLastOrderCreated, createOrder } from '../../../services/Api'
 import { updateOrder } from '../../../store/OrderAction'
-import { StyleSheet, Text, View, Dimensions, ImageBackground, Alert, ActivityIndicator } from 'react-native';
+import { Text, View, ImageBackground, Alert, ActivityIndicator } from 'react-native';
 import { PlabCardView, PlabButton } from '../../../components'
+import DetailOrderCardView from '../components/DetailOrderCardView'
 import Carousel from 'react-native-snap-carousel'
-import Upload from 'react-native-background-upload'
-import { createStackNavigator, createAppContainer } from 'react-navigation'
+//import Upload from 'react-native-background-upload'
+import styles from './styles'
 
+const CartDetail = () => {
+
+    const [quantity, setQuantity] = useState(null)
+    const [format, setFormat] = useState(null)
+    const [total, setTotal] = useState(null)
+    const [loading, setLoading] = useState(true)
+
+    const order = useSelector(state => state.order);
+    const user = useSelector(state => state.user.user);
+    const dispatch = useDispatch();
+    
+    const { navigate } = useNavigation();
+
+    useEffect(() => {
+        const order = () => {
+            getLastOrderCreated(user, order).then(response => {
+                dispatch(updateOrder({ ...response.data, album: order.album }))
+                setLoading(false)
+            }).catch(error => {
+                if (error.response && error.response.status == 412) {
+                    createOrder(this.props.user).then(response => {
+                        dispatch(updateOrder({ ...response.data, album: order.album }))
+                        setLoading(false)
+                    }).catch(error => {
+                        setLoading(false)
+                        console.log("Create order error " + error)
+                    })
+                }
+                setLoading(false)
+                console.log("Get order error " + error)
+            });
+
+            this.props.updateOrder(order)
+        }
+        order()
+
+        setFormat(order.album[0].format)
+        setQuantity(order.album[0].quantity)
+        setTotal(order.album[0].quantity * 23.3)
+    }, [])
+
+    const next = () => {
+        navigate('CartShipping')
+    }
+
+    const onSnapItem = (index) => {
+        setFormat(order.album[index].format)
+        setQuantity(order.album[index].quantity)
+        setTotal(order.album[index].quantity * 23.3)
+    }
+
+    const renderItem = ({ item, index }) => {
+        const { cropped } = item
+        return (
+            <View style={{ marginTop: 16 }}>
+                <MovieDecoration />
+                <ImageBackground
+                    style={{ width: width, height: height, backgroundColor: "black" }}
+                    source={{ uri: cropped }}>
+                </ImageBackground>
+                <MovieDecoration />
+            </View>
+        )
+    }
+
+    return (
+        (loading) ?
+            <ActivityIndicator style={{ position: "absolute" }} size="large" animating={true} />
+            :
+            <View styles={styles.container}>
+                <Carousel
+                    style={{ marginTop: 32 }}
+                    data={order.album}
+                    layout="default"
+                    zoomScale={0}
+                    itemWidth={width}
+                    sliderWidth={screenWidth}
+                    itemHeight={height}
+                    onSnapToItem={onSnapItem}
+                    renderItem={renderItem} />
+                <DetailOrderCardView order={order} />
+                <PlabCardView style={{ marginStart: 16, marginEnd: 16, marginTop: 24 }}>
+                    <View style={styles.buyInfo}>
+                        <Text style={styles.buyInfoTitle}>Quantidade de fotos:</Text>
+                        <Text style={styles.buyInfoDesc}>{quantity}</Text>
+                    </View>
+                    <View style={styles.buyInfo}>
+                        <Text style={styles.buyInfoTitle}>Formato das fotos:</Text>
+                        <Text style={styles.buyInfoDesc}>{format}</Text>
+                    </View>
+                    <View style={styles.buyInfo}>
+                        <Text style={styles.buyInfoTitle}>Valor por foto:</Text>
+                        <Text style={styles.buyInfoDesc}>{total}</Text>
+                    </View>
+                </PlabCardView>
+                <PlabButton
+                    style={{ width: "100%", position: "absolute", top: (screenHeight - 40) - 129 }}
+                    text="CONTINUAR"
+                    onPress={() => next()} />
+            </View>
+    )
+}
+
+export default CartDetail
+
+/*
 class Cart extends Component {
 
     constructor(props) {
@@ -28,7 +135,7 @@ class Cart extends Component {
 
     componentDidMount() {
         this.focusHandler = this.props.navigation.addListener('didFocus', () => this.order())
-        
+
         if (this.props.order != null && this.props.order.album.length > 0) {
             this.setState({ format: this.props.order.album[0].format })
             this.setState({ quantity: this.props.order.album[0].quantity })
@@ -90,20 +197,15 @@ class Cart extends Component {
                 onCompleteMessage: "Foto enviada com sucesso!!"
             }
         }).then(uploadId => {
-            /*
             Upload.addListener('progress', uploadId, data => {
                 console.log(`LSKDLS -- Progress: ${data.progress}%`)
             })
-            /*
-            */
             Upload.addListener('error', uploadId, data => {
                 console.log(`LSKDLS -- upload album Error: ${data.error}`)
             })
-            /*
             Upload.addListener('cancelled', uploadId, data => {
                 console.log(`LSKDLS -- Cancelled!`)
             })
-            */
             Upload.addListener('completed', uploadId, data => {
                 console.log('LSKDLS -- Completed!')
             })
@@ -158,7 +260,7 @@ class Cart extends Component {
     render() {
         return this.props.order != null && this.props.order.album.length ?
             <View styles={styles.container}>
-                
+
                 <Carousel
                     style={{ marginTop: 32 }}
                     data={this.props.order.album}
@@ -173,7 +275,7 @@ class Cart extends Component {
                 <PlabCardView style={{ marginStart: 16, marginEnd: 16, marginTop: 24 }}>
                     <Text style={styles.shippingHeader}>Resumo do pedido</Text>
 
-                    {  /*
+                    {
                     <View style={styles.buyInfo}>
                         <Text style={styles.buyTitleText}>Quantidade de fotos:</Text>
                         <Text style={styles.buyDescText}>{this.state.quantity}</Text>
@@ -183,7 +285,7 @@ class Cart extends Component {
                         <Text style={styles.buyTitleText}>Formato da foto:</Text>
                         <Text style={styles.buyDescText}>{this.state.format}</Text>
                     </View>
-                    */ }   
+                   }
 
                     <View style={styles.buyInfo}>
                         <Text style={styles.buyTitleText}>Valor da foto:</Text>
@@ -205,65 +307,13 @@ class Cart extends Component {
                     style={{ width: "100%", position: "absolute", top: (screenHeight - 40) - 129 }}
                     text="CONTINUAR"
                     onPress={() => this.save()} />
-                
+
             </View>
             : <ActivityIndicator style={{ position: "absolute" }} size="large" animating={this.state.indicator} />
     }
 }
 
-const screenWidth = Math.round(Dimensions.get('window').width);
-const screenHeight = Math.round(Dimensions.get('window').height);
-const width = 50
-const height = 65
 
-const styles = StyleSheet.create({
-    header: {
-        height: 55,
-        backgroundColor: "#D2D2D2",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    headerTitle: {
-        flex: 1,
-        flexDirection: "column",
-        color: "black",
-        fontSize: 18,
-        textAlignVertical: "center"
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#000000'
-    },
-    buyInfo: {
-        paddingStart: 24,
-        paddingEnd: 24,
-        marginBottom: 3,
-        marginTop: 2,
-        flexDirection: "row",
-    },
-    buyTitleText: {
-        fontSize: 14,
-        fontWeight: "bold",
-        color: "black",
-    },
-    buyDescText: {
-        flex: 1,
-        fontSize: 14,
-        textAlign: "right",
-        color: "black"
-    },
-    shippingHeader: {
-        paddingStart: 16,
-        height: 40,
-        backgroundColor: "#D2D2D2",
-        color: "black",
-        textAlignVertical: "center",
-        textAlign: "left",
-        fontWeight: "bold"
-    }
-})
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({ updateOrder }, dispatch)
@@ -277,4 +327,4 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
-
+*/

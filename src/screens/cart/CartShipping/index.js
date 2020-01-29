@@ -1,33 +1,28 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigation } from 'react-navigation-hooks'
+import { updateOrder } from '../../../store/OrderAction'
 import { View, Text, TouchableHighlight, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
 import { PlabCardView } from '../../../components'
 import DetailOrderCardView from '../components/DetailOrderCardView'
 import styles from './styles'
 import { getShippingAddress } from '../../../services/Api'
 
-const CartShipping = props => {
-    const orderAmount = 123.3
+const CartShipping = () => {
 
     const [loading, setLoading] = useState(true)
-    const [total, setTotal] = useState(orderAmount)
-    const [shippingType, setShippingType] = useState(null)
-    const [shippingDeadLine, setShippingDeadLine] = useState(null)
+    const [selected, setSelected] = useState(null)
     const [data, setData] = useState(null)
-    const [order, setOrder] = useState(null)
 
-    const mockOrder = {
-        status: "DRAWN",
-        album: [{ price: 23.00, format: "10x15", quantity: 5 }, { price: 23.00, format: "10x15", quantity: 2 }]
-    }
+    const order = useSelector(state => state.order);
+    const user = useSelector(state => state.user.user);
+    const dispatch = useDispatch();
+
+    const { navigate } = useNavigation();
 
     useEffect(() => {
-        console.log("SLDLSKDLSDK CALL")
-        setLoading(true)
-        setOrder(mockOrder)
-
         const getData = () => {
-            getShippingAddress({ id: 1 }).then(response => {
-                console.log("SLDLSKDLSDK CALL response " + JSON.stringify(response.data))
+            getShippingAddress(user).then(response => {
                 setData(response.data)
                 setLoading(false)
             }).catch(error => {
@@ -39,23 +34,16 @@ const CartShipping = props => {
     }, []);
 
     const updateShipping = item => {
-        const newOrder = { ...order, shipping: item }
-        setOrder(newOrder)
-
-        const newData = [...data]
-        newData.forEach(shipping => {
-            console.log("LSDLSKDLS " + shipping.id + " " + item.id + " " + (shipping.id === item.id))
-            newData.selected = (shipping.id === item.id)
-        })
-
-        setData(newData)
-        setTotal(orderAmount + item.price)
-        setShippingType(item.type)
-        setShippingDeadLine(item.deadLine)
+        setSelected(item)
+        dispatch(updateOrder({ ...order, shipping: item }))
     }
 
     const addAddress = () => {
-        this.props.navigation.navigate('CreateAddress')
+        navigate('CreateAddress')
+    }
+
+    const next = () => {
+        navigate('CartPayment')
     }
 
     const render = () => {
@@ -72,38 +60,42 @@ const CartShipping = props => {
                             <TouchableOpacity
                                 onPress={() => updateShipping(shipping)}
                                 activeOpacity={1}>
-                                {
-                                    console.log("LSDLSKDLS " + shipping.selected)
-                                }
                                 <PlabCardView style={styles.cardViewContainer}>
                                     <View style={{ flex: 1, flexDirection: 'row' }}>
-                                        <View style={{ width: "3%", backgroundColor: (shipping.selected) ? '#535f69' : '#FFF' }} />
+                                        <View style={{ width: "3%", backgroundColor: (shipping.id === selected.id) ? '#535f69' : '#FFF' }} />
                                         <View style={{ width: "97%" }}>
-                                            <View style={styles.buyInfo}>
-                                                <Text style={styles.buyDescText}>{shipping.type}</Text>
+                                            <View style={styles.infoContainer}>
+                                                <Text style={styles.infoDesc}>{shipping.type}</Text>
                                             </View>
                                             {(shipping.recipient !== null) ?
-                                                <View style={styles.buyInfo}>
-                                                    <Text style={styles.buyDescText}>{shipping.recipient}</Text>
+                                                <View style={styles.infoContainer}>
+                                                    <Text style={styles.infoDesc}>{shipping.recipient}</Text>
                                                 </View>
                                                 : null}
-                                            <View style={styles.buyInfo}>
-                                                <Text style={styles.buyDescText}>
+                                            <View style={styles.infoContainer}>
+                                                <Text style={styles.infoDesc}>
                                                     {shipping.address + ", " + shipping.number}
                                                     {(typeof shipping.complement !== 'undefined') ? " " + shipping.complement : null}
                                                 </Text>
                                             </View>
-                                            <View style={styles.buyInfo}>
-                                                <Text style={styles.buyDescText}>{shipping.city + " - " + shipping.state}</Text>
+                                            <View style={styles.infoContainer}>
+                                                <Text style={styles.infoDesc}>{shipping.city + " - " + shipping.state}</Text>
                                             </View>
-                                            <View style={styles.buyInfo}>
-                                                <Text style={styles.buyDescText}>{shipping.cep}</Text>
+                                            <View style={styles.infoContainer}>
+                                                <Text style={styles.infoDesc}>{shipping.cep}</Text>
                                             </View>
                                         </View>
                                     </View>
                                 </PlabCardView>
                             </TouchableOpacity>
                         ))}
+                        <TouchableHighlight onPress={() => addAddress()}>
+                            <Text style={{ color: '#FFF', fontSize: 14 }}>Adicionar endereço</Text>
+                        </TouchableHighlight>
+                        <PlabButton
+                            style={{ width: "100%", position: "absolute", top: (screenHeight - 40) - 129 }}
+                            text="CONTINUAR"
+                            onPress={() => next()} />
                     </View>
                 </ScrollView >
             )
