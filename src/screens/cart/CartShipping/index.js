@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
 import { View, Text, TouchableHighlight, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
 import { PlabCardView } from '../../../components'
-import { DetailOrderCardView } from '../components/DetailOrderCardView'
+import DetailOrderCardView from '../components/DetailOrderCardView'
 import styles from './styles'
 import { getShippingAddress } from '../../../services/Api'
 
@@ -40,12 +39,12 @@ const CartShipping = props => {
     }, []);
 
     const updateShipping = item => {
-        const newOrder = { ...order }
-        newOrder.shipping = item
+        const newOrder = { ...order, shipping: item }
         setOrder(newOrder)
 
         const newData = [...data]
         newData.forEach(shipping => {
+            console.log("LSDLSKDLS " + shipping.id + " " + item.id + " " + (shipping.id === item.id))
             newData.selected = (shipping.id === item.id)
         })
 
@@ -73,6 +72,9 @@ const CartShipping = props => {
                             <TouchableOpacity
                                 onPress={() => updateShipping(shipping)}
                                 activeOpacity={1}>
+                                {
+                                    console.log("LSDLSKDLS " + shipping.selected)
+                                }
                                 <PlabCardView style={styles.cardViewContainer}>
                                     <View style={{ flex: 1, flexDirection: 'row' }}>
                                         <View style={{ width: "3%", backgroundColor: (shipping.selected) ? '#535f69' : '#FFF' }} />
@@ -87,8 +89,8 @@ const CartShipping = props => {
                                                 : null}
                                             <View style={styles.buyInfo}>
                                                 <Text style={styles.buyDescText}>
-                                                    {shipping.address}
-                                                    {(shipping.complement !== null) ? " " + shipping.complement : null}
+                                                    {shipping.address + ", " + shipping.number}
+                                                    {(typeof shipping.complement !== 'undefined') ? " " + shipping.complement : null}
                                                 </Text>
                                             </View>
                                             <View style={styles.buyInfo}>

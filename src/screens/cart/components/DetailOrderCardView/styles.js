@@ -5,7 +5,7 @@ const screenHeight = Math.round(Dimensions.get('window').height);
 const width = 50
 const height = 65
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
     header: {
         height: 55,
         backgroundColor: "#D2D2D2",
@@ -26,13 +26,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#000000'
     },
     orderInfoContainer: {
-        paddingStart: 24,
-        paddingEnd: 24,
+        paddingStart: 16,
+        paddingEnd: 16,
         marginBottom: 3,
         marginTop: 2,
         flexDirection: "row",
     },
-    OrderInfoTitle: {
+    orderInfoTitle: {
         fontSize: 14,
         fontWeight: "bold",
         color: "black",
