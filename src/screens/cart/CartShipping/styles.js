@@ -8,6 +8,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#D2D2D2',
         marginEnd: 24
     },
+    cardViewContainer: {
+        marginStart: 16,
+        marginEnd: 16,
+        marginBottom: 8,
+    },
     infoContainer: {
         paddingStart: 8,
         paddingEnd: 24,

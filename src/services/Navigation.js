@@ -15,7 +15,7 @@ import Splash from '../screens/Splash'
 import Credit from '../screens/Credit'
 import CartDetail from '../screens/Cart/CartDetail'
 import CartShipping from '../screens/Cart/CartShipping'
-import CartShipping from '../screens/Cart/CartPayment'
+import CartPayment from '../screens/Cart/CartPayment'
 import CartSuccess from '../screens/Cart/CartSuccess'
 import Album from '../screens/Album'
 import User from '../screens/User'
@@ -110,11 +110,17 @@ const cartStackNavigator = createStackNavigator({
         screen: CartShipping,
         navigationOptions: ({ navigation }) => {
             return {
-                headerLeft: (<HeaderBackButton onPress={_ => {
+                headerLeft: (<HeaderBackButton tintColor={'white'} onPress={_ => {
                     navigation.navigate("CartDetail")
                     navigation.popToTop()
                 }} />),
                 headerMode: 'screen',
+                headerStyle: {
+                    backgroundColor: '#31383E',
+                    elevation: 0,
+                    shadowOpacity: 0
+                },
+                headerTintColor: '#ffffff',
                 title: 'Entrega',
                 tabBarOptions: {
                     tabBarVisible: false
