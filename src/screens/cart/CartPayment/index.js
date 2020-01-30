@@ -2,17 +2,28 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigation } from 'react-navigation-hooks'
 import { updateOrder } from '../../../store/OrderAction'
-import { View, Text, TouchableHighlight, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
+import {
+    View,
+    Text,
+    TouchableHighlight,
+    TouchableOpacity,
+    ScrollView,
+    ActivityIndicator,
+    Image
+} from 'react-native'
 import { PlabCardView } from '../../../components'
 import DetailOrderCardView from '../components/DetailOrderCardView'
 import styles from './styles'
 import { getShippingAddress } from '../../../services/Api'
 
+import visa from '~/assets/visa.png';
+import mastercard from '~/assets/mastercard.png';
+
 const CartPayment = () => {
 
     const [loading, setLoading] = useState(true)
-    const [selected, setSelected] = useState({ id: -1 })
-    const [data, setData] = useState(null)
+    const [creditCards, setCreditCards] = useState(null)
+    const [credit, setCredit] = useState(null)
 
     const order = useSelector(state => state.order);
     const user = useSelector(state => state.user.user);
@@ -21,29 +32,42 @@ const CartPayment = () => {
     const { navigate } = useNavigation();
 
     useEffect(() => {
-        const getData = () => {
-            getShippingAddress(user).then(response => {
-                setData(response.data)
+        const getData = async () => {
+
+            try {
+                const creditCard = await getCreditCard({ id: 1 })
+                setCreditCards(creditCard.data)
+
+                const credit = await getCredit({ id: 1 })
+                setCredit(credit.data)
+
                 setLoading(false)
-            }).catch(error => {
+            } catch (err) {
                 setLoading(false)
-                Alert.alert("Carrinho", "Error ao obter os endereços")
-            });
+                Alert.alert("Carrinho", "Error ao obter os cartões")
+            }
         }
         getData()
     }, []);
 
-    const updateShipping = item => {
-        setSelected(item)
-        dispatch(updateOrder({ ...order, shipping: item }))
+    const updateCredit = item => {
+        dispatch(updateOrder({ ...order, payment: { ...item, type: "CREDIT" } }))
     }
 
-    const addAddress = () => {
-        navigate('CreateAddress')
+    const updateCreditCard = item => {
+        dispatch(updateOrder({ ...order, payment: { ...item, type: "CREDITCARD" } }))
+    }
+
+    const addCreditCard = () => {
+        navigate('CreateCreditCard')
     }
 
     const next = () => {
-        navigate('CartPayment')
+        if (order.payment.type === "CREDIT") {
+            navigate('CartCheckout')
+        } else {
+            navigate('CartCreditCard')
+        }
     }
 
     const render = () => {
@@ -51,53 +75,41 @@ const CartPayment = () => {
             return (<ActivityIndicator size="large" animating={loading} />)
         } else {
             return (
-                <ScrollView>
-                    <View styles={styles.container}>
-                        <DetailOrderCardView order={order} />
+                <>
+                    <ScrollView>
+                        <View styles={styles.container}>
+                            <DetailOrderCardView order={order} />
 
-                        <Text style={{ color: 'black', marginBottom: 6, paddingStart: 24 }}>Selecine um tipo de entrega:</Text>
-                        {data.map(shipping => (
-                            <TouchableOpacity
-                                onPress={() => updateShipping(shipping)}
-                                activeOpacity={1}>
-                                <PlabCardView style={styles.cardViewContainer}>
-                                    <View style={{ flex: 1, flexDirection: 'row' }}>
-                                        <View style={{ width: "3%", backgroundColor: (shipping.id === selected.id) ? '#535f69' : '#FFF' }} />
-                                        <View style={{ width: "97%" }}>
-                                            <View style={styles.infoContainer}>
-                                                <Text style={styles.infoDesc}>{shipping.type}</Text>
-                                            </View>
-                                            {(shipping.recipient !== null) ?
+                            <Text style={{ color: 'black', marginBottom: 6, paddingStart: 24 }}>Selecine um tipo de entrega:</Text>
+                            {data.map(payment => (
+                                <TouchableOpacity
+                                    onPress={() => updateCreditCard(payment)}
+                                    activeOpacity={1}>
+                                    <PlabCardView style={styles.cardViewContainer}>
+                                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                                            <View style={{ width: "3%", backgroundColor: (typeof order.shipping !== 'undefined' && shipping.id === order.shipping.id) ? '#535f69' : '#FFF' }} />
+                                            <View style={{ width: "97%" }}>
                                                 <View style={styles.infoContainer}>
-                                                    <Text style={styles.infoDesc}>{shipping.recipient}</Text>
-                                                </View>
-                                                : null}
-                                            <View style={styles.infoContainer}>
-                                                <Text style={styles.infoDesc}>
-                                                    {shipping.address + ", " + shipping.number}
-                                                    {(typeof shipping.complement !== 'undefined') ? " " + shipping.complement : null}
-                                                </Text>
-                                            </View>
-                                            <View style={styles.infoContainer}>
-                                                <Text style={styles.infoDesc}>{shipping.city + " - " + shipping.state}</Text>
-                                            </View>
-                                            <View style={styles.infoContainer}>
-                                                <Text style={styles.infoDesc}>{shipping.cep}</Text>
+                                                    <Text style={styles.infoDesc}>{payment.number}</Text>
+                                                    <Image style={style.infoIcon} src={payment.brand} />
+                                                </View>=
                                             </View>
                                         </View>
-                                    </View>
-                                </PlabCardView>
-                            </TouchableOpacity>
-                        ))}
-                        <TouchableHighlight onPress={() => addAddress()}>
-                            <Text style={{ color: '#FFF', fontSize: 14 }}>Adicionar endereço</Text>
-                        </TouchableHighlight>
-                        <PlabButton
-                            style={{ width: "100%", position: "absolute", top: (screenHeight - 40) - 129 }}
-                            text="CONTINUAR"
-                            onPress={() => next()} />
-                    </View>
-                </ScrollView >
+                                    </PlabCardView>
+                                </TouchableOpacity>
+                            ))}
+
+                            <TouchableHighlight onPress={() => addCreditCard()}>
+                                <Text style={styles.buttonAddPaymentContainer}>click aqui para adicionar novo endereço</Text>
+                            </TouchableHighlight>
+                        </View>
+                    </ScrollView >
+
+                    <PlabButton
+                        style={{ width: "100%", position: "absolute", bottom: 0 }}
+                        text="CONTINUAR"
+                        onPress={() => next()} />
+                </>
             )
         }
     }

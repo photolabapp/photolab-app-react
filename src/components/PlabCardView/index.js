@@ -13,6 +13,7 @@ export default PLabCardView = (props) => {
 const styles = StyleSheet.create({
     cardViewContainer: {
         borderRadius: 2,
+        shadowRadius: 2,
         backgroundColor: "white",
         elevation: 2
     }
