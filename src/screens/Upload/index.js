@@ -5,7 +5,9 @@ import { bindActionCreators } from 'redux';
 import { addPhoto } from '../../store/AlbumAction'
 import ImagePicker from 'react-native-image-crop-picker'
 import { withNavigationFocus } from 'react-navigation'
+import { height10x15, width10x15, height15x20, widtht15x20 } from '../../utils/Constrain'
 import ImageEditor from '@react-native-community/image-editor'
+import RNFS from 'react-native-fs'
 
 class Upload extends Component {
 
@@ -32,26 +34,54 @@ class Upload extends Component {
         return true;
     }
 
+    cropOptions10x15 = image => {
+        const options = {
+            offset: { x: 0, y: 0 },
+            size: { width: image.width, height: image.height },
+            displaySize: { width: width10x15, height: height10x15 },
+            resizeMode: 'contain',
+        }
+        return options
+    }
+
+    cropOptions15x20 = image => {
+        const options = {
+            offset: { x: 0, y: 0 },
+            size: { width: image.width, height: image.height },
+            displaySize: { width: widtht15x20, height: height15x20 },
+            resizeMode: 'contain',
+        }
+        return options
+    }
+
     uploadPicker = () => {
         this.setState({ animating: true })
 
         ImagePicker.openPicker({
-            multiple: true
-        }).then(images => {
+            multiple: true,
+            mediaType: 'photo',
+        }).then(async images => {
             for (i = 0; i < images.length; i++) {
-                console.log("RESOLUTION ALTURA " + images[i].height + " LARGURA " + images[i].width)
-                cropData = {
-                    offset: { x: 0, y: 0 },
-                    size: { width: images[i].width, height: images[i].height },
-                    displaySize: { width: 853.33, height: 1280 },
-                    resizeMode: 'contain',
-                };
 
-                var photo = images[i]
-                console.log("LSDKLSDKLS photo raw " + photo.path)
-                ImageEditor.cropImage(photo.path, cropData).then(crop => {
-                    console.log("LSDKLSDKLS photo cropped " + crop)
-                    this.props.addPhoto(photo.path, crop)
+                console.log("PHOOTORKOKTR -------- openPicker " + JSON.stringify(images[i]))
+
+                const crop10x15 = await ImageEditor.cropImage(images[i].path, this.cropOptions10x15(images[i]))
+                console.log("PHOOTORKOKTR -------- crop10x15 " + JSON.stringify(crop10x15))
+                const crop15x20 = await ImageEditor.cropImage(images[i].path, this.cropOptions15x20(images[i]))
+                console.log("PHOOTORKOKTR -------- crop15x20 " + JSON.stringify(crop15x20))
+
+                const extension = images[i].mime.split("/")[1]
+                const uriRaw = await this.moveToStorage(images[i].path, extension)
+                console.log("PHOOTORKOKTR -------- uriRaw " + JSON.stringify(uriRaw))
+                const uri10x15 = await this.moveToStorage(crop10x15, extension)
+                console.log("PHOOTORKOKTR -------- uri10x15 " + JSON.stringify(uri10x15))
+                const uri15x20 = await this.moveToStorage(crop15x20, extension)
+                console.log("PHOOTORKOKTR -------- uri15x20 " + JSON.stringify(uri15x20))
+
+                this.props.addPhoto({
+                    raw: "file://" + uriRaw,
+                    cropped10x15: "file://" + uri10x15,
+                    cropped15x20: "file://" + uri15x20,
                 })
 
                 if (i == (images.length - 1)) {
@@ -60,9 +90,28 @@ class Upload extends Component {
             }
             this.setState({ animating: false })
         }).catch(err => {
+            console.log("PHOOTORKOKTR -------- openPicker error " + JSON.stringify(err) + " " + err)
             this.setState({ animating: false })
             this.handleBackPress()
         });
+    }
+
+    moveToStorage = async (uri, extension) => {
+        console.log("PHOOTORKOKTR ----- move uri " + uri + " extension " + extension)
+        try {
+            if (Platform.OS == "android") {
+                uri = uri.replace("file://", "");
+            }
+            const newFile = RNFS.PicturesDirectoryPath + "/" + Math.random().toString(20) + "." + extension
+            console.log("PHOOTORKOKTR ----- newFile " + newFile)
+            _ = await RNFS.copyFile(uri, newFile)
+
+            return newFile
+        } catch (err) {
+            console.log("PHOOTORKOKTR ----- moveToStorage error " + err)
+        }
+
+        return null
     }
 
     render() {

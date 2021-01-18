@@ -1,31 +1,59 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, ActivityIndicator } from 'react-native'
+import { MaskService } from 'react-native-masked-text'
 import { Input } from 'react-native-elements';
 
 export default PlabTextInput = (props) => {
-    props.size = 200
-    props.secureTextEntry = false
+    const {
+        maxLength,
+        secureTextEntry,
+        placeholder,
+        keyboardType,
+        errorMessage,
+        onChangeText,
+        loading,
+        style,
+        value
+    } = props
 
     return (
         <Input
-                inputStyle={[styles.input, { ...props.style }]}
-                containerStyle={{ marginBottom: 8, height: 70 }}
-                placeholderTextColor="#787d82"
-                errorStyle={{ color: 'red' }}
-                secureTextEntry={props.secureTextEntry}
-                placeholder={props.placeholder}
-                keyboardType={props.keyboardType}
-                size={props.size}
-                errorMessage={props.errorMessage}
-                onChangeText={props.onChangeText} />
+            inputStyle={[styles.input, { ...style }]}
+            inputContainerStyle={styles.inputContainerStyle}
+            containerStyle={styles.containerStyle}
+            placeholderTextColor="#787d82"
+            errorStyle={styles.errorStyle}
+            value={value}
+            rightIcon={
+                <ActivityIndicator size="small" animating={(typeof loading === 'undefined') ? false : loading} />
+            }
+            secureTextEntry={secureTextEntry}
+            placeholder={placeholder}
+            keyboardType={keyboardType}
+            maxLength={maxLength}
+            errorMessage={errorMessage}
+            onChangeText={onChangeText} />
     )
 }
 
 const styles = StyleSheet.create({
     input: {
         height: 45,
-        marginLeft: 16,
-        marginRight: 16,
         color: '#FFFFFF',
+    },
+    inputContainerStyle: {
+        borderBottomWidth: 0,
+        borderColor: "#FFF"
+    },
+    containerStyle: {
+        //flex: 1,
+        height: 50,
+        borderWidth: 1,
+        borderRadius: 4,
+        marginBottom: 16,
+        borderColor: "#787d82"
+    },
+    errorStyle: {
+        color: 'red'
     }
 })

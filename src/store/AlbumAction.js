@@ -1,9 +1,13 @@
-export const addPhoto = (raw, cropped) => {
+import React from 'react'
+
+export const addPhoto = (photo) => {
+    //console.log("PHOOTORKOKTR -------- raw " + photo.raw + " 1015 " + photo.cropped10x15 + " 15x20 " + cropped15x20)
     return {
         type: "ADD_PHOTO",
         payload: {
-            raw: raw,
-            cropped: cropped,
+            raw: photo.raw,
+            cropped10x15: photo.cropped10x15,
+            cropped15x20: photo.cropped15x20,
             quantity: 1,
             format: "10x15"
         }
@@ -28,9 +32,19 @@ export const addPhotos = photos => {
     }
 }
 
-export const updatePhoto = (photo, index) => {
+export const updatePhoto10x15 = (photo, index) => {
     return {
-        type: "UPDATE_PHOTO",
+        type: "UPDATE_PHOTO_10X15",
+        index: index,
+        payload: {
+            cropped: photo.uri
+        }
+    }
+}
+
+export const updatePhoto15x20 = (photo, index) => {
+    return {
+        type: "UPDATE_PHOTO_15X20",
         index: index,
         payload: {
             cropped: photo.uri

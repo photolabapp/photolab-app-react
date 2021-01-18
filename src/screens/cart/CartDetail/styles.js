@@ -1,16 +1,20 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
-const screenWidth = Math.round(Dimensions.get('window').width);
-const screenHeight = Math.round(Dimensions.get('window').height);
-const width = 50
-const height = 65
-
 export default StyleSheet.create({
     header: {
         height: 55,
         backgroundColor: "#D2D2D2",
         justifyContent: "center",
         alignItems: "center"
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     headerTitle: {
         flex: 1,

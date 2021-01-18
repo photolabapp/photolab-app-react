@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: "#00b5ec",
     },
-    buttonDisable: {
-        backgroundColor: "#2f2f2f"
+    buttonDisabled: {
+        backgroundColor: "#d9d9d9"
     }
 })

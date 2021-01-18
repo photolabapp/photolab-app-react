@@ -16,12 +16,22 @@ import Credit from '../screens/Credit'
 import CartDetail from '../screens/Cart/CartDetail'
 import CartShipping from '../screens/Cart/CartShipping'
 import CartPayment from '../screens/Cart/CartPayment'
-import CartSuccess from '../screens/Cart/CartSuccess'
+import CartCheckout from '../screens/Cart/CartCheckout'
+import CartCreditCardCheckout from '../screens/Cart/CartCreditCardCheckout'
 import Album from '../screens/Album'
 import User from '../screens/User'
 import CreateAddress from '../screens/Address/CreateAddress'
+import CreateCreditCard from '../screens/CreditCard/CreateCreditCard'
 
 //import HeaderLogo from '../components/HeaderLogo'
+
+const headerStyle = () => {
+    return {
+        backgroundColor: '#31383E',
+        elevation: 0,
+        shadowOpacity: 0
+    }
+}
 
 // LOGIN AND SIGNUP SCREEN
 const loginStackNavigator = createStackNavigator({
@@ -34,11 +44,7 @@ const loginStackNavigator = createStackNavigator({
         headerMode: 'screen',
         navigationOptions: {
             headerTintColor: '#ffffff',
-            headerStyle: {
-                backgroundColor: '#31383E',
-                elevation: 0,
-                shadowOpacity: 0
-            },
+            headerStyle: headerStyle(),
             title: 'Cadastro'
         }
     }
@@ -66,11 +72,7 @@ const creditStackNavigator = createStackNavigator({
         navigationOptions: {
             headerTintColor: '#ffffff',
             headerMode: 'screen',
-            headerStyle: {
-                backgroundColor: '#31383E',
-                elevation: 0,
-                shadowOpacity: 0
-            },
+            headerStyle: headerStyle(),
             title: 'Crédito'
         }
     }
@@ -82,46 +84,87 @@ const userStackNavigator = createStackNavigator({
         navigationOptions: {
             headerTintColor: '#ffffff',
             headerMode: 'screen',
-            headerStyle: {
-                backgroundColor: '#31383E',
-                elevation: 0,
-                shadowOpacity: 0
-            },
+            headerStyle: headerStyle(),
             title: 'Usuário'
         }
     }
 })
 
+const addressStackNavigator = createStackNavigator({
+    CreateAddress: {
+        screen: CreateAddress,
+        navigationOptions: ({ navigation }) => {
+            return {
+                headerLeft: (<HeaderBackButton tintColor={'white'} onPress={_ => {
+                    navigation.popToTop()
+                    navigation.navigate('CartShipping')
+                } } />),
+                //headerMode: 'screen',
+                //mode: 'modal',
+                headerStyle: headerStyle(),
+                headerTintColor: '#ffffff',
+                title: 'Adicionar endereço',
+                tabBarOptions: {
+                    tabBarVisible: false
+                }
+            }
+        },
+    }
+}, {
+    mode: 'modal',
+    headerMode: 'screen',
+})
+
+const creditCardStackNavigator = createStackNavigator({
+    CreateCreditCard: {
+        screen: CreateCreditCard,
+        navigationOptions: ({ navigation }) => {
+            return {
+                headerLeft: (<HeaderBackButton tintColor={'white'} onPress={_ => {
+                    navigation.popToTop()
+                    navigation.navigate('CartPayment')
+                } } />),
+                //headerMode: 'screen',
+                //mode: 'modal',
+                headerStyle: headerStyle(),
+                headerTintColor: '#ffffff',
+                title: 'Adicionar cartão de crédito',
+                tabBarOptions: {
+                    tabBarVisible: false
+                }
+            }
+        },
+    }
+}, {
+    mode: 'modal',
+    headerMode: 'screen',
+})
+
 const cartStackNavigator = createStackNavigator({
     CartDetail: {
         screen: CartDetail,
-        navigationOptions: {
-            headerTintColor: '#ffffff',
-            headerMode: 'screen',
-            headerStyle: {
-                backgroundColor: '#31383E',
-                elevation: 0,
-                shadowOpacity: 0
-            },
-            title: 'Sacola de compras'
-        }
+        navigationOptions: ({ navigation }) => {
+            return {
+                headerLeft: (<HeaderBackButton tintColor={'white'} onPress={_ => navigation.navigate("Album")} />),
+                headerMode: 'screen',
+                headerStyle: headerStyle(),
+                headerTintColor: '#ffffff',
+                title: 'Sacola de compra',
+                tabBarVisible: false,
+                tabBarOptions: {
+                    tabBarVisible: false
+                }
+            }
+        },
     },
     CartShipping: {
         screen: CartShipping,
         navigationOptions: ({ navigation }) => {
             return {
-                headerLeft: (<HeaderBackButton tintColor={'white'} onPress={_ => {
-                    navigation.navigate("CartDetail")
-                    navigation.popToTop()
-                }} />),
                 headerMode: 'screen',
-                headerStyle: {
-                    backgroundColor: '#31383E',
-                    elevation: 0,
-                    shadowOpacity: 0
-                },
+                headerStyle: headerStyle(),
                 headerTintColor: '#ffffff',
-                title: 'Entrega',
+                title: 'Tipo de entrega',
                 tabBarOptions: {
                     tabBarVisible: false
                 }
@@ -132,36 +175,52 @@ const cartStackNavigator = createStackNavigator({
         screen: CartPayment,
         navigationOptions: ({ navigation }) => {
             return {
-                headerLeft: (<HeaderBackButton onPress={_ => {
-                    navigation.navigate("CartShipping")
-                    navigation.popToTop()
-                }} />),
                 headerMode: 'screen',
-                title: 'Pagamento',
+                headerStyle: headerStyle(),
+                headerTintColor: '#ffffff',
+                title: 'Forma de pagamento',
                 tabBarOptions: {
                     tabBarVisible: false
                 }
             }
         },
     },
-    CartSuccess: {
-        screen: CartSuccess,
+    CartCreditCardCheckout: {
+        screen: CartCreditCardCheckout,
         navigationOptions: ({ navigation }) => {
             return {
-                headerLeft: (<HeaderBackButton onPress={_ => {
-                    navigation.navigate("Album")
-                    navigation.popToTop()
-                }} />),
                 headerMode: 'screen',
-                title: 'Sucesso',
+                headerStyle: headerStyle(),
+                headerTintColor: '#ffffff',
+                title: 'Cartão de Crédito',
                 tabBarOptions: {
                     tabBarVisible: false
                 }
             }
         },
-    }
+    },
+    CartCheckout: {
+        screen: CartCheckout,
+        navigationOptions: ({ navigation }) => {
+            return {
+                headerLeft: (<HeaderBackButton tintColor={'white'} onPress={_ => {
+                    navigation.popToTop()
+                    navigation.navigate("Album")
+                }} />),
+                headerMode: 'screen',
+                headerStyle: headerStyle(),
+                headerTintColor: '#ffffff',
+                title: 'Pedido finalizado',
+                tabBarOptions: {
+                    tabBarVisible: false
+                }
+            }
+        },
+    },
 }, {
-    initialRouteName: 'CartShipping'
+    navigationOptions: ({ navigation }) => ({
+        tabBarVisible: false,
+    })
 })
 
 const bottomTab = createBottomTabNavigator({
@@ -205,6 +264,8 @@ const switchNavigator = createSwitchNavigator({
     Splash: { screen: Splash, headerMode: 'none' },
     App: bottomTab,
     Auth: loginStackNavigator,
+    Address: addressStackNavigator,
+    CreditCard: creditCardStackNavigator
 }, { initialRouteName: 'Splash' })
 
-export default createAppContainer(cartStackNavigator)
+export default createAppContainer(switchNavigator)

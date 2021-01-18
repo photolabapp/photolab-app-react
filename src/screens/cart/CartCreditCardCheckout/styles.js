@@ -34,29 +34,15 @@ export default StyleSheet.create({
         position: 'absolute', 
         right: 0
     },
+    input: {
+        fontSize: 14,
+        color: "#787d82"
+    },
     buttonContainer: {
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
         position: "absolute"
-    },
-    buttonAddPaymentContainer: {
-        color: '#000', 
-        fontSize: 14, 
-        marginStart: 16, 
-        paddingTop: 8, 
-        paddingBottom: 8, 
-        marginBottom: 50,
-        textAlign: "center"
-    },
-    buttonBuyCredit: {
-        color: '#000', 
-        fontSize: 14, 
-        marginStart: 16, 
-        paddingTop: 8, 
-        paddingBottom: 8, 
-        marginBottom: 16,
-        textAlign: "center"
     }
 })

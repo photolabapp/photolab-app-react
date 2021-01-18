@@ -10,7 +10,9 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case "UPDATE_ORDER":
-            return { ...state.order, order: action.payload, album: [...state.album] }
+            const newOrder = { ...state.order, ...action.payload }
+            console.log("SLSKDLSDKLSD UPDATE ORDER" + JSON.stringify(newOrder))
+            return newOrder
 
         case "CLEAR_ORDER":
             return initialState
@@ -31,11 +33,22 @@ export default (state = initialState, action) => {
             return { ...state, album: albums }
 
         case "UPDATE_PHOTO":
-            console.log("SLKDLSKDLS --- image reducer " + action.payload.cropped + " " + action.index) 
             var newState = [...state.album]
             newState[action.index].cropped = action.payload.cropped
 
             return { ...state, album: newState }
+
+        case "UPDATE_PHOTO_10X15":
+            var newState = [...state.album]
+            newState[action.index].cropped10x15 = action.payload.cropped
+
+            return { album: newState }
+
+        case "UPDATE_PHOTO_15X20":
+            var newState = [...state.album]
+            newState[action.index].cropped15x20 = action.payload.cropped
+
+            return { album: newState }
 
         case "UPDATE_PHOTO_QUANTITY":
             var newState = [...state.album]
@@ -44,7 +57,6 @@ export default (state = initialState, action) => {
             return { ...state, album: newState }
 
         case "UPDATE_PHOTO_FORMAT":
-            console.log("LSKDLKDL format " + action.payload.format + " index " + action.index)
             var newState = [...state.album]
             newState[action.index].format = action.payload.format
 

@@ -8,6 +8,8 @@ import styles from './styles'
 import validate from './validate'
 import { PlabButton, PlabTextInput } from '../../components'
 
+import logo from '../../assets/logophotolab.png';
+import { ScrollView } from 'react-native-gesture-handler'
 
 class SignUp extends Component {
 
@@ -66,11 +68,11 @@ class SignUp extends Component {
 
     render() {
         return (
+
             <View style={styles.container}>
                 <ActivityIndicator size="large" animating={this.state.indicator} />
 
-                <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
-                    style={{ width: 150, height: 30, marginBottom: 48 }} />
+                <Image source={logo} style={{ width: 150, height: 30, marginBottom: 48 }} />
 
                 <PlabTextInput
                     style={{ width: "100%" }}

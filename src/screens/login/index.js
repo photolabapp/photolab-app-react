@@ -9,6 +9,9 @@ import validate from './validate'
 import styles from './styles'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
+import logo from '../../assets/logophotolab.png';
+import { ScrollView } from 'react-native-gesture-handler';
+
 class Login extends Component {
 
     constructor(props) {
@@ -38,47 +41,49 @@ class Login extends Component {
                 this.props.navigation.navigate('App')
                 this.setState({ indicator: false })
                 console.log(response)
-            }).catch(error => { 
+            }).catch(error => {
                 console.log("Login error " + error)
                 this.setState({ indicator: false })
-                Alert.alert("Cadastro", "Erro no cadastro, tente novamamente!!!!")
+                Alert.alert("Cadastro", "Erro no login, tente novamamente!!!!")
             })
         }
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <ActivityIndicator size="large" animating={this.state.indicator} />
+            <>
+                <View style={styles.container}>
+                    <ActivityIndicator size="large" animating={this.state.indicator} />
+                    <Image source={logo} style={{ width: 150, height: 30, marginBottom: 48 }} />
 
-                <Image source={{ uri: 'https://www.photolab1.com.br/img/logo-topo.png' }}
-                    style={{ width: 150, height: 30, marginBottom: 48 }} />
+                    <View style={{ height: 300, width: '100%' }}>
 
-                <PlabTextInput
-                    style={{ width: "100%" }}
-                    placeholder="e-mail"
-                    keyboardType="email-address"
-                    errorMessage={this.state.error.get("email")}
-                    onChangeText={(email) => this.setState({ email })} />
+                        <PlabTextInput
+                            style={{ width: "100%", height: 45 }}
+                            placeholder="e-mail"
+                            keyboardType="email-address"
+                            errorMessage={this.state.error.get("email")}
+                            onChangeText={(email) => this.setState({ email })} />
 
-                <PlabTextInput
-                    style={{ width: "100%" }}
-                    placeholder="senha"
-                    secureTextEntry={true}
-                    errorMessage={this.state.error.get("password")}
-                    onChangeText={(password) => this.setState({ password })} />
+                        <PlabTextInput
+                            style={{ width: "100%", heigth: 45 }}
+                            placeholder="senha"
+                            secureTextEntry={true}
+                            errorMessage={this.state.error.get("password")}
+                            onChangeText={(password) => this.setState({ password })} />
 
-                <PlabButton
-                    style={{ marginBottom: 32, marginTop: 16, width: "100%" }}
-                    text="Login" onPress={() => this.login()} />
+                        <PlabButton
+                            style={{ marginBottom: 32, marginTop: 16, width: "100%" }}
+                            text="Login" onPress={() => this.login()} />
 
-                {
-                <PlabButton
-                    style={{ width: "100%" }}
-                    text="Não tenho login"
-                    onPress={() => this.props.navigation.navigate('SignUp')} />
-                }
-            </View >
+                        <PlabButton
+                            style={{ width: "100%" }}
+                            text="Não tenho login"
+                            onPress={() => this.props.navigation.navigate('SignUp')} />
+
+                    </View>
+                </View>
+            </>
         )
     }
 }
